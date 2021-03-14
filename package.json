@@ -1,0 +1,17 @@
+{
+  "name": "modular-slider",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "snowpack dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@snowpack/plugin-typescript": "^1.2.1",
+    "snowpack": "^3.0.13",
+    "typescript": "^4.2.3"
+  }
+}
