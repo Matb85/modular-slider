@@ -6,9 +6,28 @@
     <meta name="description" content="Starter Snowpack App" />
     <title>Starter Snowpack App</title>
     <link rel="stylesheet" href="./style/main.css" />
+    <link rel="stylesheet" href="./style/modular-slider.css" />
   </head>
   <body>
-    <h1>Welcome to Snowpack!</h1>
-    <script type="module" src="/index.js"></script>
+    <h1>Welcome to the Modular Slider!</h1>
+    <section class="slider-con">
+      <div class="slider-test">
+        <div class="slider-item"></div>
+        <div class="slider-item">h</div>
+        <div class="slider-item">he</div>
+        <div class="slider-item">hel</div>
+        <div class="slider-item">hell</div>
+        <div class="slider-item">hello</div>
+      </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+    <script>
+      var slider = tns({
+        container: ".slider-test",
+        items: 2,
+        slideBy: 1,
+        mouseDrag: true,
+      });
+    </script>
   </body>
 </html>
