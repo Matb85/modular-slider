@@ -1,7 +1,7 @@
 import { Pipe, carousel, buttons, noloop, pagination } from "../src/index.js";
 console.log(carousel);
 
-const Slider = Pipe([noloop, buttons, pagination]);
+const Slider = Pipe([carousel, buttons, pagination]);
 
 new Slider({
   container: ".slider-test",

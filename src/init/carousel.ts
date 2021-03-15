@@ -3,6 +3,7 @@ import { MergeCtor, MixinBase } from "@/types";
 
 export default function carousel<TBase extends MixinBase>(Base: TBase) {
   const Derived = class Carousel extends (Base as any) {
+    carousel = true;
     move = {
       for: () => {
         this.updateContainer();
@@ -46,7 +47,6 @@ export default function carousel<TBase extends MixinBase>(Base: TBase) {
       if (this.counter > this.slides.length - 1) this.counter = 0;
     }
     ending(direction, dur) {
-      console.log(this.settings.transitionSpeed);
       this.countercheck();
       setTimeout(() => {
         this.container.style.transition = "";
@@ -57,7 +57,6 @@ export default function carousel<TBase extends MixinBase>(Base: TBase) {
     slideNext(dur = this.settings.transitionSpeed) {
       this.counter++;
       this.container.style.transform = "translateX(" + this.slideWidth * -2 + "px)";
-      console.log(this.settings.transitionSpeed);
       this.container.style.transition = "transform " + dur + "ms";
       this.ending(this.move.for, dur);
     }
@@ -150,6 +149,5 @@ export default function carousel<TBase extends MixinBase>(Base: TBase) {
       );
     }
   };
-
   return Derived as MergeCtor<typeof Derived, TBase>;
 }

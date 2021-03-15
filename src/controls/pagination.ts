@@ -3,17 +3,22 @@ import { MergeCtor, MixinBase } from "@/types";
 
 export default function pagination<TBase extends MixinBase>(Base: TBase) {
   const Derived = class extends (Base as any) {
-    dots: NodeListOf<HTMLElement>;
+    dots: Array<HTMLElement> = [];
     constructor(setings: Defaults) {
       super(setings);
       const pagcontainer = document.querySelector(this.settings.pagination.container);
-      const dots = document.querySelector(this.settings.pagination.dots);
+      const dots = document.querySelector(this.settings.pagination.dots) as HTMLElement;
       pagcontainer.innerHTML = "";
 
-      const dotsamount = this.settings.carousel ? this.slides.length : this.slides.length - this.slideDisplay + 1;
-      for (let i = 0; i < dotsamount; i++) pagcontainer.appendChild(dots.cloneNode(true));
-
-      this.dots = document.querySelectorAll(this.settings.pagination.dots);
+      const dotsamount = this.carousel ? this.slides.length : this.slides.length - this.slideDisplay + 1;
+      console.log(this.slides.length);
+      for (let i = 0; i < dotsamount; i++) {
+        const node = dots.cloneNode(true) as HTMLElement;
+        console.dir(node);
+        node.dataset.id = i.toString();
+        pagcontainer.appendChild(node);
+        this.dots.push(node);
+      }
       this.addDotClickHandler();
       this.types[this.settings.pagination.type](this.dots[Math.abs(this.counter)]);
       this.container.addEventListener("dragStop", () => {
@@ -50,9 +55,6 @@ export default function pagination<TBase extends MixinBase>(Base: TBase) {
           this.slideTo(this.whichdot(element));
           this.types[this.settings.pagination.type](element);
           this.container.addEventListener("transitionend", this.addDotClickHandler.bind(this), { once: true });
-          this.dots.forEach(el => {
-            el.onclick = null;
-          });
         };
       });
     }
