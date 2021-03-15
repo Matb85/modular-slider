@@ -9,14 +9,46 @@ body {
   box-sizing: border-box;
 }
 .slider-con {
-  width: 80%;
   margin: 0 auto;
   .slider-test .slider-item {
     height: 10rem;
     @for $i from 1 through 6 {
       &:nth-of-type(6n + #{$i}) {
-        background-color: rgb(random(255), random(255), random(255));
+        background-color: blue;
       }
     }
   }
+}
+
+:root {
+  --revWidth: 300px;
+  --revMargin: 25px;
+  --revDisplay: 2;
+}
+
+.slider-con {
+  position: relative;
+  height: auto;
+  width: calc((var(--revWidth) + 2 * var(--revMargin)) * var(--revDisplay));
+  margin: auto;
+  border: 1px solid red;
+  overflow: hidden;
+}
+.slider-test {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  height: auto;
+  width: auto;
+}
+.slider-test .slider-item {
+  flex-shrink: 0;
+  flex-grow: 0;
+  user-select: none;
+  height: var(--revWidth);
+  width: var(--revWidth);
+  background-color: blue;
+  color: white;
+  text-align: center;
+  margin: 0 var(--revMargin);
 }
