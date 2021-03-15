@@ -20,41 +20,31 @@ export default function pagination<TBase extends MixinBase>(Base: TBase) {
         this.dots.push(node);
       }
       this.addDotClickHandler();
-      this.types[this.settings.pagination.type](this.dots[Math.abs(this.counter)]);
+      this.updatePagination(this.dots[Math.abs(this.counter)]);
       this.container.addEventListener("dragStop", () => {
-        this.types[this.settings.pagination.type](this.dots[Math.abs(this.counter)]);
+        this.updatePagination(this.dots[Math.abs(this.counter)]);
       });
     }
-    types = {
-      normal: el => {
-        this.dots.forEach(element => {
-          element.classList.remove(this.settings.pagination.addClass);
-        });
-        el.classList.add(this.settings.pagination.addClass);
-      },
-      multiple: el => {
-        this.dots.forEach(element => {
-          element.classList.remove(...this.settings.pagination.addClass);
-        });
-        el.classList.add(this.settings.pagination.addClass[0]);
+    updatePagination(dot) {
+      const dotID = parseInt(dot.dataset.id);
+      this.dots.forEach(element => {
+        element.classList.remove(...this.settings.pagination.addClass);
+      });
+      dot.classList.add(this.settings.pagination.addClass[0]);
+      if (this.settings.pagination.addClass[1])
         for (let i = 0; i < this.settings.pagination.addClass.length; i++) {
-          if (this.dots[this.whichdot(el) + i])
-            this.dots[this.whichdot(el) + i].classList.add(this.settings.pagination.addClass[i]);
-          if (this.dots[this.whichdot(el) - i])
-            this.dots[this.whichdot(el) - i].classList.add(this.settings.pagination.addClass[i]);
+          if (this.dots[dotID + i]) this.dots[dotID + i].classList.add(this.settings.pagination.addClass[i]);
+          if (this.dots[dotID - i]) this.dots[dotID - i].classList.add(this.settings.pagination.addClass[i]);
         }
-      },
-    };
-    whichdot(dot): number {
-      for (let i = 0; i < this.dots.length; i++) if (Object.values(this.dots)[i] === dot) return i;
-      return 0;
     }
     addDotClickHandler() {
-      this.dots.forEach(element => {
-        element.onclick = () => {
-          this.slideTo(this.whichdot(element));
-          this.types[this.settings.pagination.type](element);
-          this.container.addEventListener("transitionend", this.addDotClickHandler.bind(this), { once: true });
+      this.dots.forEach(d => {
+        d.onclick = () => {
+          this.slideTo(d.dataset.id);
+          this.updatePagination(d);
+          this.container.addEventListener("transitionend", this.addDotClickHandler.bind(this), {
+            once: true,
+          });
         };
       });
     }

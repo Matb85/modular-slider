@@ -1,9 +1,8 @@
 import { Pipe, carousel, buttons, noloop, pagination } from "../src/index.js";
-console.log(carousel);
 
 const Slider = Pipe([carousel, buttons, pagination]);
 
-new Slider({
+const slider = new Slider({
   container: ".slider-test",
   slidesPerView: 2,
   navigation: {
@@ -13,7 +12,9 @@ new Slider({
   pagination: {
     container: ".slider-pagination",
     dots: ".dot",
-    type: "normal",
-    addClass: "current",
+    type: "multiple",
+    addClass: ["current", "adjacent"],
   },
 });
+
+console.log(slider);

@@ -19,7 +19,7 @@ export interface Defaults {
     container: string;
     dots: string;
     type: "normal" | "multiple";
-    addClass: string;
+    addClass: string | string[];
   };
   initialSlide?: number;
   slidesPerView: number;
