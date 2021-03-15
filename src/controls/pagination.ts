@@ -49,13 +49,7 @@ export default function pagination<TBase extends MixinBase>(Base: TBase) {
         element.onclick = () => {
           this.slideTo(this.whichdot(element));
           this.types[this.settings.pagination.type](element);
-          this.container.addEventListener(
-            "transitionend",
-            () => {
-              this.addDotClickHandler();
-            },
-            { once: true }
-          );
+          this.container.addEventListener("transitionend", this.addDotClickHandler.bind(this), { once: true });
           this.dots.forEach(el => {
             el.onclick = null;
           });

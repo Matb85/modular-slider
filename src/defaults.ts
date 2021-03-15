@@ -1,6 +1,6 @@
 const defaults = {
   transitionSpeed: 300,
-  interval: 5000,
+  interval: 1000,
   navigation: null,
   pagination: null,
   initialSlide: 1,

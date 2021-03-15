@@ -4,7 +4,7 @@ import carousel from "./init/carousel";
 import noloop from "./init/noloop";
 import buttons from "./controls/buttons";
 import pagination from "./controls/pagination";
-import interval from "./other/interval";
+import interval from "./addons/interval";
 export { carousel, noloop, buttons, pagination, interval };
 
 export function Pipe(decorators: Array<any>, n: number = decorators.length): typeof Slider {
@@ -71,7 +71,8 @@ function pointerDown(this: Slider, pEvent: PointerEvent) {
       break;
   }
 }
-function mouseMove(this: Slider, mEvent) {
+
+function mouseMove(this: Slider, mEvent: MouseEvent) {
   this.pos.x1 = this.pos.x2 - mEvent.clientX;
   this.pos.x2 = mEvent.clientX;
   this.container.style.transform = "translateX(" + (this.getTransX() - this.pos.x1) + "px)";
