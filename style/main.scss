@@ -52,3 +52,22 @@ body {
   text-align: center;
   margin: 0 var(--revMargin);
 }
+
+.slider-btn {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  button {
+    display: block;
+  }
+  .dot {
+    border-color: blue;
+    background-color: blue;
+    padding: 0.5rem;
+  }
+  .dot.current {
+    border-color: red;
+    background-color: red;
+  }
+}

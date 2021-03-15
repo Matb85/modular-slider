@@ -2,7 +2,7 @@ import { Defaults } from "@/defaults";
 import { MergeCtor, MixinBase } from "@/types";
 
 export default function noloop<TBase extends MixinBase>(Base: TBase) {
-  const Derived = class Carousel extends (Base as any) {
+  const Derived = class extends (Base as any) {
     constructor(props: Defaults) {
       super(props);
       this.slideNext(this.settings.initialSlide, 0);

@@ -1,6 +1,20 @@
-import { Pipe, carousel } from "../src/index.js";
+import { Pipe, carousel, buttons, pagination, interval } from "../src/index.js";
 console.log(carousel);
 
-const Slider = Pipe([carousel]);
+const Slider = Pipe([carousel, buttons, pagination, interval]);
 
-new Slider({ container: ".slider-test" });
+const slider = new Slider({
+  container: ".slider-test",
+  navigation: {
+    nextBtn: "#next",
+    prevBtn: "#prev",
+  },
+  pagination: {
+    container: ".slider-pagination",
+    dots: ".dot",
+    type: "normal",
+    addClass: "current",
+  },
+});
+
+console.log(slider.dots);

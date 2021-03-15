@@ -1,8 +1,6 @@
 const defaults = {
   transitionSpeed: 300,
-  interval: false,
-  intervalPeriod: 5000,
-  carousel: false,
+  interval: 5000,
   navigation: null,
   pagination: null,
   initialSlide: 1,
@@ -12,11 +10,17 @@ const defaults = {
 
 export interface Defaults {
   transitionSpeed?: number;
-  interval?: boolean;
-  intervalPeriod?: number;
-  carousel?: boolean;
-  navigation?: null;
-  pagination?: null;
+  interval?: number;
+  navigation?: {
+    nextBtn: string;
+    prevBtn: string;
+  } | null;
+  pagination?: {
+    container: string;
+    dots: string;
+    type: "normal" | "multiple";
+    addClass: string;
+  } | null;
   initialSlide?: number;
   slidesPerView?: number;
   container: string;
