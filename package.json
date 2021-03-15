@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "snowpack dev"
+    "dev": "snowpack dev",
+    "release": "standard-version"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.22.0",
     "snowpack": "^3.0.13",
+    "standard-version": "^9.1.1",
     "typescript": "^4.2.3"
   }
 }
