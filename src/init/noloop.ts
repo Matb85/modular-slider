@@ -12,6 +12,7 @@ export default function noloop<TBase extends MixinBase>(Base: TBase) {
       if (this.counter > 0) this.counter = 0;
       if (this.counter < -1 * (this.slides.length - this.slideDisplay))
         this.counter = -1 * (this.slides.length - this.slideDisplay);
+
       this.container.style.transition = "transform " + dur + "ms";
       this.container.style.transform = "translateX(" + this.slideWidth * this.counter + "px)";
       setTimeout(() => {
@@ -35,7 +36,7 @@ export default function noloop<TBase extends MixinBase>(Base: TBase) {
       this.slideBy(to - Math.abs(this.counter));
     }
     slideBy(dist = 0) {
-      if (dist == 0) return;
+      if (dist === 0) return;
       if (dist > 0) this.slideNext(dist);
       else this.slidePrev(dist);
     }

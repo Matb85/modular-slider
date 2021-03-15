@@ -1,14 +1,19 @@
 {
   "name": "modular-slider",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "a dependency free typescript slider with a modular approach",
   "scripts": {
     "dev": "snowpack dev",
     "release": "standard-version"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "slider",
+    "vanilla",
+    "js",
+    "ts",
+    "typescript"
+  ],
+  "author": "matb85",
   "license": "ISC",
   "devDependencies": {
     "@snowpack/plugin-sass": "^1.3.0",
