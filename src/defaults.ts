@@ -1,8 +1,8 @@
 const defaults = {
   transitionSpeed: 300,
   interval: 1000,
-  navigation: null,
-  pagination: null,
+  navigation: undefined,
+  pagination: undefined,
   initialSlide: 1,
   slidesPerView: 2,
   container: "",
@@ -14,21 +14,21 @@ export interface Defaults {
   navigation?: {
     nextBtn: string;
     prevBtn: string;
-  } | null;
+  };
   pagination?: {
     container: string;
     dots: string;
     type: "normal" | "multiple";
     addClass: string;
-  } | null;
+  };
   initialSlide?: number;
-  slidesPerView?: number;
+  slidesPerView: number;
   container: string;
 }
 
 export default defaults;
 
-export function extend(options: Defaults): Required<Defaults> {
+export function extend(options: Defaults): Defaults {
   const extended = Object.assign({}, defaults);
   for (const counter in defaults) {
     if (options[counter]) {

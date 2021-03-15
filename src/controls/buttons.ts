@@ -7,6 +7,7 @@ export default function controls<TBase extends MixinBase>(Base: TBase) {
     prevBtn: HTMLElement;
     constructor(setings: Defaults) {
       super(setings);
+      console.log(this.settings);
       this.nextBtn = document.querySelector(this.settings.navigation.nextBtn);
       this.prevBtn = document.querySelector(this.settings.navigation.prevBtn);
       this.nextBtn.addEventListener("click", this.btnAct.bind(this, { btn: this.nextBtn, dist: 1 }), { once: true });

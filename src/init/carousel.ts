@@ -46,6 +46,7 @@ export default function carousel<TBase extends MixinBase>(Base: TBase) {
       if (this.counter > this.slides.length - 1) this.counter = 0;
     }
     ending(direction, dur) {
+      console.log(this.settings.transitionSpeed);
       this.countercheck();
       setTimeout(() => {
         this.container.style.transition = "";

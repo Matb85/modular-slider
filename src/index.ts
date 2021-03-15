@@ -1,5 +1,9 @@
 console.time("loop");
+/** import default settings + types */
 import { extend, Defaults } from "./defaults";
+/**import event handlers */
+import SlideHandler from "./slidehander";
+/**import mixins */
 import carousel from "./init/carousel";
 import noloop from "./init/noloop";
 import buttons from "./controls/buttons";
@@ -14,7 +18,7 @@ export function Pipe(decorators: Array<any>, n: number = decorators.length): typ
 
 //object
 export class Slider {
-  settings: Required<Defaults>;
+  settings: Defaults;
   container: HTMLElement;
   slides: HTMLCollectionOf<HTMLElement>;
   pos = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
@@ -30,7 +34,7 @@ export class Slider {
     this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
     this.slideWidth = this.calcslideWidth();
     this.slideDisplay = this.settings.slidesPerView;
-    this.container.onpointerdown = pEvent => pointerDown.call(this, pEvent);
+    this.container.addEventListener("pointerdown", pEvent => SlideHandler.call(this, pEvent), { once: true });
     window.addEventListener("resize", () => {
       this.slideWidth = this.calcslideWidth();
     });
@@ -57,55 +61,5 @@ export class Slider {
 }
 
 //listeners
-function pointerDown(this: Slider, pEvent: PointerEvent) {
-  console.log(this.counter);
-  this.pos.start = this.getTransX();
-  switch (pEvent.pointerType) {
-    case "mouse":
-      document.onmousemove = mEvent => mouseMove.call(this, mEvent);
-      document.onmouseup = () => dragStop.call(this);
-      break;
-    case "touch":
-      document.ontouchmove = tEvent => touchMove.call(this, tEvent);
-      document.ontouchend = () => dragStop.call(this);
-      break;
-  }
-}
-
-function mouseMove(this: Slider, mEvent: MouseEvent) {
-  this.pos.x1 = this.pos.x2 - mEvent.clientX;
-  this.pos.x2 = mEvent.clientX;
-  this.container.style.transform = "translateX(" + (this.getTransX() - this.pos.x1) + "px)";
-  this.container.dispatchEvent(new CustomEvent("moving"));
-}
-function touchMove(this: Slider, tEvent: TouchEvent) {
-  this.pos.x1 = this.pos.x2 - tEvent.touches[0].clientX;
-  this.pos.x2 = tEvent.touches[0].clientX;
-  this.pos.y1 = this.pos.y2 - tEvent.touches[0].clientY;
-  this.pos.y2 = tEvent.touches[0].clientY;
-  if (Math.abs(this.pos.y1) < Math.abs(this.pos.x1))
-    this.container.style.transform = "translateX(" + (this.getTransX() - this.pos.x1) + "px)";
-  this.container.dispatchEvent(new CustomEvent("moving"));
-}
-
-function dragStop(this: Slider) {
-  document.onmousemove = null;
-  document.ontouchmove = null;
-  this.container.onpointerdown = null;
-  if (this.pos.start != this.getTransX()) {
-    if (this.pos.start > this.getTransX()) {
-      this.slideNext();
-    } else {
-      this.slidePrev();
-    }
-  }
-  this.container.dispatchEvent(new CustomEvent("dragStop", {}));
-  setTimeout(() => {
-    this.container.onpointerdown = pEvent => pointerDown.call(this, pEvent);
-    this.container.dispatchEvent(new CustomEvent("transitioned", {}));
-  }, this.settings.transitionSpeed);
-  document.ontouchend = null;
-  document.onmouseup = null;
-}
 
 console.timeEnd("loop");
