@@ -1,4 +1,3 @@
-console.time("loop");
 /** import default settings + types */
 import { extend, Defaults } from "./defaults";
 /**import event handlers */
@@ -11,13 +10,48 @@ import pagination from "./controls/pagination";
 import autoplay from "./addons/autoplay";
 export { carousel, noloop, pagination, autoplay, buttons };
 
-export function Pipe(decorators: Array<any>, n: number = decorators.length): typeof Slider {
-  if (n == 0) return Slider;
-  return decorators[n - 1](Pipe(decorators, n - 1));
+type SliderConstructor<T = Slider> = new (settings: Defaults) => T;
+
+export function Pipe(...constructors: any[]): SliderConstructor {
+  const base = Base as any;
+  constructors.forEach(baseCtor => {
+    Object.keys(baseCtor).forEach(name => {
+      Object.defineProperty(
+        base.prototype,
+        name,
+        Object.getOwnPropertyDescriptor(baseCtor, name) || Object.create(null)
+      );
+    });
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+      Object.defineProperty(
+        base.prototype,
+        name,
+        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) || Object.create(null)
+      );
+    });
+  });
+  return base;
 }
 
-//object
-export class Slider {
+export interface Slider {
+  carousel: boolean;
+  settings: Required<Defaults>;
+  container: HTMLElement;
+  slides: HTMLCollectionOf<HTMLElement>;
+  pos: { start: number; x1: number; x2: number; y1: number; y2: number };
+  slideWidth: number;
+  slideDisplay: number;
+  counter: number;
+  slideNext(dist?: number, dur?: number): Promise<void>;
+  slidePrev(dist?: number, dur?: number): Promise<void>;
+  slideBy(dist?: number): Promise<void>;
+  slideTo(to?: number): Promise<void>;
+  getTransX(): number;
+  calcslideWidth(): number;
+  updateContainer(): void;
+}
+
+export abstract class Base implements Slider {
   carousel: boolean;
   settings: Required<Defaults>;
   container: HTMLElement;
@@ -25,11 +59,12 @@ export class Slider {
   pos = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
   slideWidth: number;
   slideDisplay: number;
-  counter = 1;
-  slideNext: (dist?: number, dur?: number) => Promise<void>;
-  slidePrev: (dist?: number, dur?: number) => Promise<void>;
-  slideBy: (dist?: number) => Promise<void>;
-  slideTo: (to?: number) => Promise<void>;
+  counter = 0;
+  abstract init(): void;
+  abstract slideNext(dist?: number, dur?: number): Promise<void>;
+  abstract slidePrev(dist?: number, dur?: number): Promise<void>;
+  abstract slideBy(dist?: number): Promise<void>;
+  abstract slideTo(to?: number): Promise<void>;
 
   constructor(settings: Defaults) {
     this.settings = extend(settings);
@@ -41,6 +76,8 @@ export class Slider {
     window.addEventListener("resize", () => {
       this.slideWidth = this.calcslideWidth();
     });
+    this.init();
+    this.counter = 0;
     for (const plugin of this.settings.plugins) plugin.call(this);
   }
 
@@ -63,7 +100,3 @@ export class Slider {
     this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
   }
 }
-
-//listeners
-
-console.timeEnd("loop");

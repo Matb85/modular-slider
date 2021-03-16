@@ -2,12 +2,8 @@ import { Slider } from "@/index";
 
 export default (interval = 5000) =>
   function pagination(this: Slider) {
-    let autoplay = setInterval(() => {
-      this.slideNext();
-    }, interval);
-    this.container.addEventListener("pointerdown", () => {
-      clearInterval(autoplay);
-    });
+    let autoplay = setInterval(() => this.slideNext(), interval);
+    this.container.addEventListener("pointerdown", () => clearInterval(autoplay));
     this.container.addEventListener("dragStop", () => {
       autoplay = setInterval(() => {
         this.slideNext();

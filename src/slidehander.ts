@@ -1,7 +1,6 @@
 import { Slider } from "./index";
 
 export default function pointerDown(this: Slider, pEvent: PointerEvent) {
-  console.log(this.counter);
   this.pos.start = this.getTransX();
   this.pos.x2 = pEvent.clientX;
   switch (pEvent.pointerType) {
@@ -43,7 +42,6 @@ async function dragStop(this: Slider) {
     else await this.slidePrev();
   }
   this.container.dispatchEvent(new CustomEvent("dragStop", {}));
-  console.log(this.settings.transitionSpeed);
   this.container.onpointerdown = pEvent => pointerDown.call(this, pEvent);
   this.container.dispatchEvent(new CustomEvent("transitioned", {}));
 }

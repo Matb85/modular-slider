@@ -1,53 +1,51 @@
-import { Defaults } from "@/defaults";
-import { MergeCtor, MixinBase } from "@/types";
+import { Slider } from "@/index";
 
-export default function pagination<TBase extends MixinBase>(Base: TBase) {
-  const Derived = class extends (Base as any) {
-    dots: Array<HTMLElement> = [];
-    constructor(setings: Defaults) {
-      super(setings);
-      const pagcontainer = document.querySelector(this.settings.pagination.container);
-      const dots = document.querySelector(this.settings.pagination.dots) as HTMLElement;
-      pagcontainer.innerHTML = "";
+interface Options {
+  container: string;
+  dots: string;
+  addClass: string[];
+}
 
-      const dotsamount = this.carousel ? this.slides.length : this.slides.length - this.slideDisplay + 1;
-      console.log(this.slides.length);
-      for (let i = 0; i < dotsamount; i++) {
-        const node = dots.cloneNode(true) as HTMLElement;
-        console.dir(node);
-        node.dataset.id = i.toString();
-        pagcontainer.appendChild(node);
-        this.dots.push(node);
-      }
-      this.addDotClickHandler();
-      this.updatePagination();
-      this.container.addEventListener("dragStop", () => {
-        this.updatePagination();
-      });
+export default (options: Options) =>
+  function pagination(this: Slider) {
+    const pagcontainer = document.querySelector(options.container) as HTMLElement;
+    const dots = [document.querySelector(options.dots) as HTMLElement];
+    dots[0].dataset.id = "0";
+    const dotsamount = this.carousel ? this.slides.length : this.slides.length - this.slideDisplay + 1;
+    console.log(dotsamount, this.carousel);
+    for (let i = 1; i < dotsamount; i++) {
+      const node = dots[0].cloneNode(true) as HTMLElement;
+      node.dataset.id = i.toString();
+      pagcontainer.appendChild(node);
+      dots.push(node);
     }
-    updatePagination() {
-      const curdot = this.dots[Math.abs(this.counter)];
+    addDotClickHandler.call(this);
+    updatePagination.call(this);
+    this.container.addEventListener("dragStop", () => {
+      updatePagination.call(this);
+    });
+
+    function updatePagination(this: Slider) {
+      console.log(this.counter);
+      const curdot = dots[Math.abs(this.counter)];
       const curdotID = parseInt(curdot.dataset.id as string);
-      this.dots.forEach(d => {
-        d.classList.remove(...this.settings.pagination.addClass);
+      dots.forEach(d => {
+        d.classList.remove(...options.addClass);
       });
-      curdot.classList.add(this.settings.pagination.addClass[0]);
+      curdot.classList.add(options.addClass[0]);
       /** if the user provided more class, apply them to the neighboring dots */
-      if (this.settings.pagination.addClass[1])
-        for (let i = 0; i < this.settings.pagination.addClass.length; i++) {
-          if (this.dots[curdotID + i]) this.dots[curdotID + i].classList.add(this.settings.pagination.addClass[i]);
-          if (this.dots[curdotID - i]) this.dots[curdotID - i].classList.add(this.settings.pagination.addClass[i]);
+      if (options.addClass[1])
+        for (let i = 0; i < options.addClass.length; i++) {
+          if (dots[curdotID + i]) dots[curdotID + i].classList.add(options.addClass[i]);
+          if (dots[curdotID - i]) dots[curdotID - i].classList.add(options.addClass[i]);
         }
     }
-    addDotClickHandler() {
-      this.dots.forEach(d => {
+    function addDotClickHandler(this: Slider) {
+      dots.forEach(d => {
         d.onclick = async () => {
-          this.updatePagination();
-          await this.slideTo(d.dataset.id);
-          this.addDotClickHandler.bind(this);
+          this.slideTo(parseInt(d.dataset.id as string)).then(() => addDotClickHandler.call(this));
+          updatePagination.call(this);
         };
       });
     }
   };
-  return Derived as MergeCtor<typeof Derived, TBase>;
-}

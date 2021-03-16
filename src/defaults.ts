@@ -1,7 +1,6 @@
 const defaults = {
   transitionSpeed: 300,
-  pagination: {},
-  initialSlide: 1,
+  initialSlide: 0,
   slidesPerView: 2,
   container: "",
   plugins: [],
@@ -10,11 +9,6 @@ const defaults = {
 export interface Defaults {
   transitionSpeed?: number;
   plugins?: Array<() => void>;
-  pagination: {
-    container?: string;
-    dots?: string;
-    addClass?: string[];
-  };
   initialSlide?: number;
   slidesPerView: number;
   container: string;
