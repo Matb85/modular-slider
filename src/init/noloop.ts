@@ -1,18 +1,20 @@
 import { Defaults } from "@/defaults";
+import { Slider } from "@/base";
 
-export default abstract class {
+export default abstract class implements Slider {
   movedSlide: HTMLElement;
   container: HTMLElement;
-  slides: HTMLElement[];
+  slides: HTMLCollectionOf<HTMLElement>;
   slideDisplay: number;
   settings: Required<Defaults>;
   pos: { start: number; x1: number; x2: number; y1: number; y2: number };
   slideWidth: number;
   counter: number;
+  carousel: boolean;
+  static carousel = false;
   abstract getTransX(): number;
   abstract calcslideWidth(): number;
   abstract updateContainer(): void;
-  static carousel = false;
   init() {
     console.log(this.settings.initialSlide);
     this.slideNext(this.settings.initialSlide, 0);

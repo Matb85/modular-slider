@@ -1,4 +1,4 @@
-import { Slider } from "@/index";
+import { Slider } from "@/base";
 
 interface Options {
   container: string;

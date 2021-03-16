@@ -1,4 +1,4 @@
-import { Slider } from "./index";
+import { Slider } from "./base";
 
 export default function pointerDown(this: Slider, pEvent: PointerEvent) {
   this.pos.start = this.getTransX();

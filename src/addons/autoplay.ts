@@ -1,4 +1,4 @@
-import { Slider } from "@/index";
+import { Slider } from "@/base";
 
 export default (interval = 5000) =>
   function pagination(this: Slider) {

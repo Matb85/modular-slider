@@ -14,9 +14,7 @@ export interface Defaults {
   container: string;
 }
 
-export default defaults;
-
-export function extend(options: Defaults): Required<Defaults> {
+export default function extend(options: Defaults): Required<Defaults> {
   const extended = Object.assign({}, defaults);
   for (const counter in defaults) {
     if (options[counter]) {

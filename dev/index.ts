@@ -1,6 +1,6 @@
-import { Pipe, Base, carousel, buttons, noloop, pagination, autoplay } from "../src/index.js";
+import { setup, carousel, buttons, noloop, pagination, autoplay } from "../src/index.js";
 
-const Slider = Pipe(carousel);
+const Slider = setup(carousel);
 console.dir(Slider);
 const slider = new Slider({
   container: ".slider-test",
