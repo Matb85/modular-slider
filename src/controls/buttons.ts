@@ -17,13 +17,11 @@ export default function controls<TBase extends MixinBase>(Base: TBase) {
       this.prevBtn.addEventListener("click", this.btnAct.bind(this, { btn: this.prevBtn, dist: -1 }), { once: true });
     }
 
-    btnAct(params: Params): void {
-      this.slideBy(params.dist);
+    async btnAct(params: Params): Promise<void> {
+      await this.slideBy(params.dist);
       // this.container.dispatchEvent(new PointerEvent("pointerdown", {}));
-      setTimeout(() => {
-        this.container.dispatchEvent(new CustomEvent("dragStop", {}));
-        params.btn.addEventListener("click", this.btnAct.bind(this, params), { once: true });
-      }, this.settings.transitionSpeed);
+      this.container.dispatchEvent(new CustomEvent("dragStop", {}));
+      params.btn.addEventListener("click", this.btnAct.bind(this, params), { once: true });
     }
   };
   return Derived as MergeCtor<typeof Derived, TBase>;

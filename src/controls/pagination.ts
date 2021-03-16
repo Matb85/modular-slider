@@ -42,9 +42,7 @@ export default function pagination<TBase extends MixinBase>(Base: TBase) {
         d.onclick = () => {
           this.slideTo(d.dataset.id);
           this.updatePagination(d);
-          this.container.addEventListener("transitionend", this.addDotClickHandler.bind(this), {
-            once: true,
-          });
+          this.container.addEventListener("transitionend", this.addDotClickHandler.bind(this), { once: true });
         };
       });
     }

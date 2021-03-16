@@ -32,20 +32,18 @@ function touchMove(this: Slider, tEvent: TouchEvent) {
   this.container.dispatchEvent(new CustomEvent("moving"));
 }
 
-function dragStop(this: Slider) {
+async function dragStop(this: Slider) {
   document.onmousemove = null;
   document.ontouchmove = null;
-  this.container.onpointerdown = null;
-  if (this.pos.start != this.getTransX()) {
-    if (this.pos.start > this.getTransX()) this.slideNext();
-    else this.slidePrev();
-  }
-  this.container.dispatchEvent(new CustomEvent("dragStop", {}));
-
-  setTimeout(() => {
-    this.container.onpointerdown = pEvent => pointerDown.call(this, pEvent);
-    this.container.dispatchEvent(new CustomEvent("transitioned", {}));
-  }, this.settings.transitionSpeed);
   document.ontouchend = null;
   document.onmouseup = null;
+  this.container.onpointerdown = null;
+  if (this.pos.start != this.getTransX()) {
+    if (this.pos.start > this.getTransX()) await this.slideNext();
+    else await this.slidePrev();
+  }
+  this.container.dispatchEvent(new CustomEvent("dragStop", {}));
+  console.log(this.settings.transitionSpeed);
+  this.container.onpointerdown = pEvent => pointerDown.call(this, pEvent);
+  this.container.dispatchEvent(new CustomEvent("transitioned", {}));
 }

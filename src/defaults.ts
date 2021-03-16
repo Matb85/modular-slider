@@ -18,8 +18,7 @@ export interface Defaults {
   pagination?: {
     container: string;
     dots: string;
-    type: "normal" | "multiple";
-    addClass: string | string[];
+    addClass: string[];
   };
   initialSlide?: number;
   slidesPerView: number;

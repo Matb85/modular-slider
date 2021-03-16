@@ -46,74 +46,80 @@ export default function carousel<TBase extends MixinBase>(Base: TBase) {
       if (this.counter < 0) this.counter = this.slides.length - 1;
       if (this.counter > this.slides.length - 1) this.counter = 0;
     }
-    ending(direction, dur) {
-      this.countercheck();
-      setTimeout(() => {
-        this.container.style.transition = "";
-        direction.call(this);
-        this.container.style.transform = "translateX(" + this.slideWidth * -1 + "px)";
-      }, dur);
-    }
-    slideNext(dur = this.settings.transitionSpeed) {
+    base = (direction, dur): Promise<void> =>
+      new Promise(resolve => {
+        this.countercheck();
+        setTimeout(() => {
+          this.container.style.transition = "";
+          direction.call(this);
+          this.container.style.transform = "translateX(" + this.slideWidth * -1 + "px)";
+          resolve();
+        }, dur);
+      });
+
+    slideNext(dur = this.settings.transitionSpeed): Promise<void> {
       this.counter++;
       this.container.style.transform = "translateX(" + this.slideWidth * -2 + "px)";
       this.container.style.transition = "transform " + dur + "ms";
-      this.ending(this.move.for, dur);
+      return this.base(this.move.for, dur);
     }
-    slidePrev(dur = this.settings.transitionSpeed) {
+    slidePrev(dur = this.settings.transitionSpeed): Promise<void> {
       this.counter--;
       this.container.style.transform = "translateX(" + this.slideWidth * 0 + "px)";
       this.container.style.transition = "transform " + dur + "ms";
-      this.ending(this.move.back, dur);
+      return this.base(this.move.back, dur);
     }
 
-    slideTo(to = 0) {
-      this.slideBy(to - Math.abs(this.counter));
+    slideTo(to = 0): Promise<void> {
+      return this.slideBy(to - Math.abs(this.counter));
     }
-    slideBy(dist = 0) {
-      if (dist == 0) return;
-      for (let i = 0; i < Math.abs(dist); i++) {
-        if (dist > 0) this.counter++;
-        else this.counter--;
+    slideBy = (dist = 0): Promise<void> =>
+      new Promise<void>(resolve => {
+        if (dist == 0) return;
+        /** create an array of void function to run after the transition */
+        const EVENTPIPE: Array<() => void> = [];
+        for (let i = 0; i < Math.abs(dist); i++) {
+          if (dist > 0) this.counter++;
+          else this.counter--;
 
-        if (this.counter < 0) this.counter = this.slides.length - 1;
-        if (this.counter > this.slides.length - 1) this.counter = 0;
-      }
-      const size = this.slides.length;
-      this.move.for();
-      this.updateContainer();
-      this.container.style.transform = "translateX(0px)";
-      this.container.style.transform = "translateX(" + this.getTransX() + ")";
-      if (dist > this.slides.length - this.slideDisplay) {
-        do {
-          for (let i = 0; i < size; i++) {
-            this.container.appendChild(this.slides[i].cloneNode(true));
-            this.updateContainer();
-          }
-        } while (dist > this.slides.length - this.slideDisplay);
-        this.container.addEventListener(
-          "transitionend",
-          () => {
+          if (this.counter < 0) this.counter = this.slides.length - 1;
+          if (this.counter > this.slides.length - 1) this.counter = 0;
+        }
+        const size = this.slides.length;
+        this.move.for();
+        this.updateContainer();
+        this.container.style.transform = "translateX(0px)";
+        this.container.style.transform = "translateX(" + this.getTransX() + ")";
+        /** check if DISTance is longer than the number of slides - slides per view
+         * if so, clone slides so the transition look natural
+         */
+        if (dist > this.slides.length - this.slideDisplay) {
+          do {
+            for (let i = 0; i < size; i++) {
+              this.container.appendChild(this.slides[i].cloneNode(true));
+              this.updateContainer();
+            }
+          } while (dist > this.slides.length - this.slideDisplay);
+          /** remove cloned slides after transition */
+          EVENTPIPE.push(() => {
             do {
               this.container.removeChild(this.slides[this.slides.length - 1]);
               this.updateContainer();
             } while (size < this.slides.length);
-          },
-          { once: true }
-        );
-      }
-      if (dist < 0) {
-        do {
-          for (let i = 0; i < size; i++) {
-            this.container.appendChild(this.slides[i].cloneNode(true));
-            this.updateContainer();
-          }
-        } while (Math.abs(dist) > this.slides.length - this.slideDisplay);
-        this.container.style.left = (this.slides.length - size) * -1 * this.slideWidth + "px";
-        this.container.style.transform = "translateX(" + this.getTransX() + ")";
-        this.container.addEventListener(
-          "transitionend",
-          () => {
+          });
+        }
+        /** the logic of the transition itself */
+        if (dist < 0) {
+          /** go left */
+          do {
+            for (let i = 0; i < size; i++) {
+              this.container.appendChild(this.slides[i].cloneNode(true));
+              this.updateContainer();
+            }
+          } while (Math.abs(dist) > this.slides.length - this.slideDisplay);
+          this.container.style.left = (this.slides.length - size) * -1 * this.slideWidth + "px";
+          this.container.style.transform = "translateX(" + this.getTransX() + ")";
+          EVENTPIPE.push(() => {
             do {
               this.container.removeChild(this.slides[this.slides.length - 1]);
               this.updateContainer();
@@ -123,31 +129,28 @@ export default function carousel<TBase extends MixinBase>(Base: TBase) {
               this.move.back();
             }
             this.container.style.transform = "translateX(" + -1 * this.slideWidth + "px)";
-          },
-          { once: true }
-        );
-      } else {
-        this.container.addEventListener(
-          "transitionend",
-          () => {
+          });
+        } else {
+          /** go right */
+          EVENTPIPE.push(() => {
             for (let i = 0; i < dist - 1; i++) {
               this.move.for();
             }
+          });
+        }
+        this.container.style.transition = "transform " + this.settings.transitionSpeed + "ms";
+        this.container.style.transform = "translateX(" + dist * -1 * this.slideWidth + "px)";
+        this.container.addEventListener(
+          "transitionend",
+          () => {
+            for (const listener of EVENTPIPE) listener();
+            this.container.style.transition = "";
+            this.container.style.transform = "translateX(" + -1 * this.slideWidth + "px)";
+            resolve();
           },
           { once: true }
         );
-      }
-      this.container.style.transition = "transform " + this.settings.transitionSpeed + "ms";
-      this.container.style.transform = "translateX(" + dist * -1 * this.slideWidth + "px)";
-      this.container.addEventListener(
-        "transitionend",
-        () => {
-          this.container.style.transition = "";
-          this.container.style.transform = "translateX(" + -1 * this.slideWidth + "px)";
-        },
-        { once: true }
-      );
-    }
+      });
   };
   return Derived as MergeCtor<typeof Derived, TBase>;
 }
