@@ -8,8 +8,8 @@ import carousel from "./init/carousel";
 import noloop from "./init/noloop";
 import buttons from "./controls/buttons";
 import pagination from "./controls/pagination";
-import interval from "./addons/interval";
-export { carousel, noloop, buttons, pagination, interval };
+import autoplay from "./addons/autoplay";
+export { carousel, noloop, pagination, autoplay, buttons };
 
 export function Pipe(decorators: Array<any>, n: number = decorators.length): typeof Slider {
   if (n == 0) return Slider;
@@ -18,15 +18,18 @@ export function Pipe(decorators: Array<any>, n: number = decorators.length): typ
 
 //object
 export class Slider {
-  settings: Defaults;
+  carousel: boolean;
+  settings: Required<Defaults>;
   container: HTMLElement;
   slides: HTMLCollectionOf<HTMLElement>;
   pos = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
   slideWidth: number;
   slideDisplay: number;
   counter = 1;
-  slideNext: () => void;
-  slidePrev: () => void;
+  slideNext: (dist?: number, dur?: number) => Promise<void>;
+  slidePrev: (dist?: number, dur?: number) => Promise<void>;
+  slideBy: (dist?: number) => Promise<void>;
+  slideTo: (to?: number) => Promise<void>;
 
   constructor(settings: Defaults) {
     this.settings = extend(settings);
@@ -38,6 +41,7 @@ export class Slider {
     window.addEventListener("resize", () => {
       this.slideWidth = this.calcslideWidth();
     });
+    for (const plugin of this.settings.plugins) plugin.call(this);
   }
 
   /** updating utilities */

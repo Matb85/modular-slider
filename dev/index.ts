@@ -1,20 +1,17 @@
-import { Pipe, carousel, buttons, noloop, pagination } from "../src/index.js";
+import { Pipe, carousel, buttons, noloop, pagination, autoplay } from "../src/index.js";
 
-const Slider = Pipe([carousel, buttons, pagination]);
+const Slider = Pipe([carousel, pagination]);
 
 const slider = new Slider({
   container: ".slider-test",
   transitionSpeed: 400,
   slidesPerView: 2,
-  navigation: {
-    nextBtn: "#next",
-    prevBtn: "#prev",
-  },
   pagination: {
     container: ".slider-pagination",
     dots: ".dot",
     addClass: ["current", "adjacent"],
   },
+  plugins: [buttons({ nextBtn: "#next", prevBtn: "#prev" }), autoplay()],
 });
 
 console.log(slider);
