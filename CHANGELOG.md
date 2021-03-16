@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](///compare/v0.2.0...v0.3.0) (2021-03-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* :recycle: change the entry point's structure
+* :art: replace mixins with abstract classes
+* :art: transform autoplay & buttons to plugins
+
+### Features
+
+* :art: transform autoplay & buttons to plugins 155a504
+
+
+* :art: replace mixins with abstract classes cce00c3
+* :recycle: change the entry point's structure 9b24d88
+
 ## [0.2.0](///compare/v0.1.0...v0.2.0) (2021-03-16)
 
 
