@@ -1,12 +1,12 @@
 /**import mixins */
-import carousel from "./init/carousel";
-import noloop from "./init/noloop";
+import carousel from "./mixins/carousel";
+import noloop from "./mixins/noloop";
 export { carousel, noloop };
 
 /** import plugins */
-import buttons from "./controls/buttons";
-import pagination from "./controls/pagination";
-import autoplay from "./addons/autoplay";
+import buttons from "./plugins/controls/buttons";
+import pagination from "./plugins/controls/pagination";
+import autoplay from "./plugins/addons/autoplay";
 export { pagination, autoplay, buttons };
 
 /** import base & setup function */
