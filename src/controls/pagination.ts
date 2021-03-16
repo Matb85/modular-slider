@@ -20,29 +20,31 @@ export default function pagination<TBase extends MixinBase>(Base: TBase) {
         this.dots.push(node);
       }
       this.addDotClickHandler();
-      this.updatePagination(this.dots[Math.abs(this.counter)]);
+      this.updatePagination();
       this.container.addEventListener("dragStop", () => {
-        this.updatePagination(this.dots[Math.abs(this.counter)]);
+        this.updatePagination();
       });
     }
-    updatePagination(dot) {
-      const dotID = parseInt(dot.dataset.id);
-      this.dots.forEach(element => {
-        element.classList.remove(...this.settings.pagination.addClass);
+    updatePagination() {
+      const curdot = this.dots[Math.abs(this.counter)];
+      const curdotID = parseInt(curdot.dataset.id as string);
+      this.dots.forEach(d => {
+        d.classList.remove(...this.settings.pagination.addClass);
       });
-      dot.classList.add(this.settings.pagination.addClass[0]);
+      curdot.classList.add(this.settings.pagination.addClass[0]);
+      /** if the user provided more class, apply them to the neighboring dots */
       if (this.settings.pagination.addClass[1])
         for (let i = 0; i < this.settings.pagination.addClass.length; i++) {
-          if (this.dots[dotID + i]) this.dots[dotID + i].classList.add(this.settings.pagination.addClass[i]);
-          if (this.dots[dotID - i]) this.dots[dotID - i].classList.add(this.settings.pagination.addClass[i]);
+          if (this.dots[curdotID + i]) this.dots[curdotID + i].classList.add(this.settings.pagination.addClass[i]);
+          if (this.dots[curdotID - i]) this.dots[curdotID - i].classList.add(this.settings.pagination.addClass[i]);
         }
     }
     addDotClickHandler() {
       this.dots.forEach(d => {
-        d.onclick = () => {
-          this.slideTo(d.dataset.id);
-          this.updatePagination(d);
-          this.container.addEventListener("transitionend", this.addDotClickHandler.bind(this), { once: true });
+        d.onclick = async () => {
+          this.updatePagination();
+          await this.slideTo(d.dataset.id);
+          this.addDotClickHandler.bind(this);
         };
       });
     }

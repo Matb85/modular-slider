@@ -11,6 +11,7 @@ const defaults = {
 export interface Defaults {
   transitionSpeed?: number;
   interval?: number;
+  plugins?: Array<() => void>;
   navigation?: {
     nextBtn: string;
     prevBtn: string;
