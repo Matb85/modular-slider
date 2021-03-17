@@ -12,6 +12,10 @@ export default (interval = 5000) =>
     setAutoplay();
     this.container.addEventListener("pointerdown", () => clearInterval(autoplay));
     this.container.addEventListener("dragstop", () => setAutoplay());
+    document.addEventListener("visibilitychange", function() {
+      if (!document.hidden) clearInterval(autoplay);
+      else setAutoplay();
+    });
     return {
       cancel: () => clearInterval(autoplay),
       resume: () => setAutoplay(),
