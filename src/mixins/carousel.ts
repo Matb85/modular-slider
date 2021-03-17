@@ -10,6 +10,7 @@ export default abstract class implements Slider {
   pos: PositionStore;
   slideWidth: number;
   counter: number;
+  plugins: Record<string, any>;
   carousel: boolean;
   static carousel = true;
   abstract getTransX(): number;

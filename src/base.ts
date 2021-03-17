@@ -92,6 +92,7 @@ export interface Slider {
   slideWidth: number;
   slideDisplay: number;
   counter: number;
+  plugins: Record<string, any>;
   slideNext(dist?: number, dur?: number): Promise<void>;
   slidePrev(dist?: number, dur?: number): Promise<void>;
   slideBy(dist?: number): Promise<void>;

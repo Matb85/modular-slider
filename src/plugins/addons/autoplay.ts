@@ -4,7 +4,6 @@ export default (interval = 5000) =>
   function autoplay(this: Slider) {
     const setAutoplay = () => {
       autoplay = setInterval(async () => {
-        // this.container.dispatchEvent(new PointerEvent("pointerdown", {}));
         await this.slideNext();
         this.container.dispatchEvent(new PointerEvent("transitionend", {}));
       }, interval);

@@ -17,4 +17,4 @@ const slider = new Slider({
   ],
 });
 
-console.log(slider.plugins);
+console.log(slider.plugins.buttons);

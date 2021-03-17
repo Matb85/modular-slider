@@ -10,13 +10,13 @@ export default abstract class implements Slider {
   pos: PositionStore;
   slideWidth: number;
   counter: number;
+  plugins: Record<string, any>;
   carousel: boolean;
   static carousel = false;
   abstract getTransX(): number;
   abstract calcslideWidth(): number;
   abstract updateContainer(): void;
   init() {
-    console.log(this.settings.initialSlide);
     this.slideNext(this.settings.initialSlide, 0);
   }
   base(dist, dur): Promise<void> {

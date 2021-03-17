@@ -10,4 +10,5 @@ import autoplay from "./plugins/addons/autoplay";
 export { pagination, autoplay, buttons };
 
 /** export the setup function */
-export { setup } from "@/base";
+import { setup } from "./base";
+export { setup };
