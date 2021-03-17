@@ -1,14 +1,13 @@
-import { setup, slidehandler, carousel, buttons, pagination, autoplay } from "../src/index.js";
+import { setup, slidehandler, carousel, buttons, pagination } from "../src/index.js";
 
 const Slider = setup(carousel, slidehandler);
 console.dir(Slider);
 const slider = new Slider({
-  container: ".slider-test",
+  container: ".ms-inner-con",
   transitionSpeed: 400,
   slidesPerView: 2,
   plugins: [
     buttons({ nextBtn: "#next", prevBtn: "#prev" }),
-    autoplay(3000),
     pagination({
       container: ".slider-pagination",
       dots: ".dot",

@@ -7,7 +7,7 @@ module.exports = {
     dev: "/",
     src: "/js",
     style: "/style",
-    /* ... */
+    assets: "/assets",
   },
   plugins: ["@snowpack/plugin-typescript", "@snowpack/plugin-sass"],
   packageOptions: {
