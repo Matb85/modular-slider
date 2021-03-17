@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](///compare/v0.3.0...v0.4.0) (2021-03-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* :truck: move slidehandler.ts to mixins
+* :alien: allow every mixin to have an init function
+
+### Features
+
+* **plugins:** :children_crossing: pause autoplay when the page is hidden 93c7f49
+* :alien: allow every mixin to have an init function 42dc980
+
+
+### Bug Fixes
+
+* :art: improve the structure of imports and exports 51144d5
+* :bug: autoplay now can update pagination; minor refactoring 262907e
+
+
+* :truck: move slidehandler.ts to mixins d057aff
+
 ## [0.3.0](///compare/v0.2.0...v0.3.0) (2021-03-16)
 
 
