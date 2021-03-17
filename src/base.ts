@@ -7,7 +7,9 @@ type SliderConstructor = new (settings: Defaults) => Slider;
 
 export function setup(...constructors: any[]): SliderConstructor {
   const base = Base as any;
+  base.prototype.inits = [];
   constructors.forEach(baseCtor => {
+    if (Object.hasOwnProperty.call(baseCtor.prototype, "init")) base.prototype.inits.push(baseCtor.prototype.init);
     Object.keys(baseCtor).forEach(name => {
       Object.defineProperty(
         base.prototype,
@@ -35,9 +37,9 @@ export default abstract class Base implements Slider {
   slideWidth: number;
   slideDisplay: number;
   plugins: Record<string, any> = {};
+  inits: Array<() => void> = [];
   counter = 0;
 
-  abstract init(): void;
   abstract slideNext(dist?: number, dur?: number): Promise<void>;
   abstract slidePrev(dist?: number, dur?: number): Promise<void>;
   abstract slideBy(dist?: number): Promise<void>;
@@ -55,12 +57,11 @@ export default abstract class Base implements Slider {
     window.addEventListener("resize", () => {
       this.slideWidth = this.calcslideWidth();
     });
-    this.init();
+
+    for (const init of this.inits) init();
+
     this.counter = 0;
-    for (const plugin of this.settings.plugins) {
-      console.log(plugin.name);
-      this.plugins[plugin.name] = plugin.call(this);
-    }
+    for (const plugin of this.settings.plugins) this.plugins[plugin.name] = plugin.call(this);
   }
 
   /** updating utilities */
