@@ -1,15 +1,18 @@
 /** import default settings + types */
 import extend, { Defaults } from "./defaults";
-/**import event handlers */
-import SlideHandler from "./slidehander";
 
 type SliderConstructor = new (settings: Defaults) => Slider;
 
+/** copies methods and properties from mixin classes to the derived class
+ * it is a modified version of the function here: {@link https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern}
+ */
 export function setup(...constructors: any[]): SliderConstructor {
   const base = Base as any;
   base.prototype.inits = [];
   constructors.forEach(baseCtor => {
+    /** copy the init functions to the inits array */
     if (Object.hasOwnProperty.call(baseCtor.prototype, "init")) base.prototype.inits.push(baseCtor.prototype.init);
+    /** copy statis properties */
     Object.keys(baseCtor).forEach(name => {
       Object.defineProperty(
         base.prototype,
@@ -17,6 +20,7 @@ export function setup(...constructors: any[]): SliderConstructor {
         Object.getOwnPropertyDescriptor(baseCtor, name) || Object.create(null)
       );
     });
+    /** copy methods */
     Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
       Object.defineProperty(
         base.prototype,
@@ -37,9 +41,8 @@ export default abstract class Base implements Slider {
   slideWidth: number;
   slideDisplay: number;
   plugins: Record<string, any> = {};
-  inits: Array<() => void> = [];
+  inits: Array<() => void>;
   counter = 0;
-
   abstract slideNext(dist?: number, dur?: number): Promise<void>;
   abstract slidePrev(dist?: number, dur?: number): Promise<void>;
   abstract slideBy(dist?: number): Promise<void>;
@@ -51,16 +54,15 @@ export default abstract class Base implements Slider {
     this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
     this.slideWidth = this.calcslideWidth();
     this.slideDisplay = this.settings.slidesPerView;
-    this.container.addEventListener("pointerdown", pEvent => SlideHandler.call(this, pEvent), {
-      once: true,
-    });
+
     window.addEventListener("resize", () => {
       this.slideWidth = this.calcslideWidth();
     });
-
-    for (const init of this.inits) init();
-
+    /** initiate mixins */
+    for (const init of this.inits) init.call(this);
+    /** reset counter after initialization */
     this.counter = 0;
+    /** initiate plugins */
     for (const plugin of this.settings.plugins) this.plugins[plugin.name] = plugin.call(this);
   }
 

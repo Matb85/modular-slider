@@ -1,6 +1,6 @@
-import { setup, carousel, buttons, pagination, autoplay } from "../src/index.js";
+import { setup, slidehandler, carousel, buttons, pagination, autoplay } from "../src/index.js";
 
-const Slider = setup(carousel);
+const Slider = setup(carousel, slidehandler);
 console.dir(Slider);
 const slider = new Slider({
   container: ".slider-test",

@@ -1,7 +1,8 @@
 /** export mixins */
 import carousel from "./mixins/carousel";
 import noloop from "./mixins/noloop";
-export { carousel, noloop };
+import slidehandler from "./mixins/slidehander";
+export { carousel, noloop, slidehandler };
 
 /** export plugins */
 import buttons from "./plugins/controls/buttons";

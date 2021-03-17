@@ -1,6 +1,31 @@
-import { Slider } from "./base";
+import { Defaults } from "@/defaults";
+import { Slider, PositionStore } from "@/base";
 
-export default function pointerDown(this: Slider, pEvent: PointerEvent) {
+export default abstract class implements Slider {
+  carousel: boolean;
+  settings: Required<Defaults>;
+  container: HTMLElement;
+  slides: HTMLCollectionOf<HTMLElement>;
+  pos: PositionStore;
+  slideWidth: number;
+  slideDisplay: number;
+  counter: number;
+  plugins: Record<string, any>;
+  abstract slideNext(dist?: number, dur?: number): Promise<void>;
+  abstract slidePrev(dist?: number, dur?: number): Promise<void>;
+  abstract slideBy(dist?: number): Promise<void>;
+  abstract slideTo(to?: number): Promise<void>;
+  abstract getTransX(): number;
+  abstract calcslideWidth(): number;
+  abstract updateContainer(): void;
+  init() {
+    this.container.addEventListener("pointerdown", pEvent => pointerDown.call(this, pEvent), {
+      once: true,
+    });
+  }
+}
+
+function pointerDown(this: Slider, pEvent: PointerEvent) {
   this.pos.start = this.getTransX();
   this.pos.x2 = pEvent.clientX;
   switch (pEvent.pointerType) {
