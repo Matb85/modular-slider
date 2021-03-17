@@ -1,4 +1,4 @@
-import { setup, carousel, buttons, noloop, pagination, autoplay } from "../src/index.js";
+import { setup, carousel, buttons, pagination, autoplay } from "../src/index.js";
 
 const Slider = setup(carousel);
 console.dir(Slider);
@@ -8,7 +8,7 @@ const slider = new Slider({
   slidesPerView: 2,
   plugins: [
     buttons({ nextBtn: "#next", prevBtn: "#prev" }),
-    // autoplay(),
+    autoplay(3000),
     pagination({
       container: ".slider-pagination",
       dots: ".dot",
@@ -17,5 +17,4 @@ const slider = new Slider({
   ],
 });
 
-console.log(slider);
-// console.dir(carousel);
+console.log(slider.plugins);

@@ -1,5 +1,5 @@
 import { Defaults } from "@/defaults";
-import { Slider } from "@/base";
+import { Slider, PositionStore } from "@/base";
 
 export default abstract class implements Slider {
   movedSlide: HTMLElement;
@@ -7,7 +7,7 @@ export default abstract class implements Slider {
   slides: HTMLCollectionOf<HTMLElement>;
   slideDisplay: number;
   settings: Required<Defaults>;
-  pos: { start: number; x1: number; x2: number; y1: number; y2: number };
+  pos: PositionStore;
   slideWidth: number;
   counter: number;
   carousel: boolean;

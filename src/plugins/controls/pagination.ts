@@ -21,17 +21,14 @@ export default (options: Options) =>
     }
     addDotClickHandler.call(this);
     updatePagination.call(this);
-    this.container.addEventListener("dragStop", () => {
+    this.container.addEventListener("transitionend", () => {
       updatePagination.call(this);
     });
 
     function updatePagination(this: Slider) {
-      console.log(this.counter);
       const curdot = dots[Math.abs(this.counter)];
       const curdotID = parseInt(curdot.dataset.id as string);
-      dots.forEach(d => {
-        d.classList.remove(...options.addClass);
-      });
+      dots.forEach(d => d.classList.remove(...options.addClass));
       curdot.classList.add(options.addClass[0]);
       /** if the user provided more class, apply them to the neighboring dots */
       if (options.addClass[1])

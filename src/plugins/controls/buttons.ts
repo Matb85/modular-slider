@@ -9,7 +9,7 @@ interface Options {
   prevBtn: string;
 }
 export default (options: Options) =>
-  function pagination(this: Slider) {
+  function buttons(this: Slider) {
     const nextBtn = document.querySelector(options.nextBtn) as HTMLElement;
     const prevBtn = document.querySelector(options.prevBtn) as HTMLElement;
     nextBtn.addEventListener("click", btnAct.bind(this, { btn: nextBtn, dist: 1 }), { once: true });
@@ -17,8 +17,9 @@ export default (options: Options) =>
 
     async function btnAct(this: Slider, params: Params): Promise<void> {
       await this.slideBy(params.dist);
-      // this.container.dispatchEvent(new PointerEvent("pointerdown", {}));
-      this.container.dispatchEvent(new CustomEvent("dragStop", {}));
+      this.container.dispatchEvent(new PointerEvent("pointerdown", {}));
+      this.container.dispatchEvent(new CustomEvent("dragstop", {}));
       params.btn.addEventListener("click", btnAct.bind(this, params), { once: true });
     }
+    return { prevBtn, nextBtn };
   };

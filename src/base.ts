@@ -31,10 +31,12 @@ export default abstract class Base implements Slider {
   settings: Required<Defaults>;
   container: HTMLElement;
   slides: HTMLCollectionOf<HTMLElement>;
-  pos = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
+  pos: PositionStore = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
   slideWidth: number;
   slideDisplay: number;
+  plugins: Record<string, any> = {};
   counter = 0;
+
   abstract init(): void;
   abstract slideNext(dist?: number, dur?: number): Promise<void>;
   abstract slidePrev(dist?: number, dur?: number): Promise<void>;
@@ -47,13 +49,18 @@ export default abstract class Base implements Slider {
     this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
     this.slideWidth = this.calcslideWidth();
     this.slideDisplay = this.settings.slidesPerView;
-    this.container.addEventListener("pointerdown", pEvent => SlideHandler.call(this, pEvent), { once: true });
+    this.container.addEventListener("pointerdown", pEvent => SlideHandler.call(this, pEvent), {
+      once: true,
+    });
     window.addEventListener("resize", () => {
       this.slideWidth = this.calcslideWidth();
     });
     this.init();
     this.counter = 0;
-    for (const plugin of this.settings.plugins) plugin.call(this);
+    for (const plugin of this.settings.plugins) {
+      console.log(plugin.name);
+      this.plugins[plugin.name] = plugin.call(this);
+    }
   }
 
   /** updating utilities */
@@ -81,7 +88,7 @@ export interface Slider {
   settings: Required<Defaults>;
   container: HTMLElement;
   slides: HTMLCollectionOf<HTMLElement>;
-  pos: { start: number; x1: number; x2: number; y1: number; y2: number };
+  pos: PositionStore;
   slideWidth: number;
   slideDisplay: number;
   counter: number;
@@ -92,4 +99,12 @@ export interface Slider {
   getTransX(): number;
   calcslideWidth(): number;
   updateContainer(): void;
+}
+
+export interface PositionStore {
+  start: number;
+  x1: number;
+  x2: number;
+  y1: number;
+  y2: number;
 }
