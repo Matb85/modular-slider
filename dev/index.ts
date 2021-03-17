@@ -3,7 +3,7 @@ import { setup, slidehandler, carousel, buttons, pagination } from "../src/index
 const Slider = setup(carousel, slidehandler);
 console.dir(Slider);
 const slider = new Slider({
-  container: ".ms-inner-con",
+  container: "#first-slider",
   transitionSpeed: 400,
   slidesPerView: 2,
   plugins: [
@@ -17,3 +17,10 @@ const slider = new Slider({
 });
 
 console.log(slider.plugins.buttons);
+
+const imageSlider = new Slider({
+  container: "#image-slider",
+  transitionSpeed: 400,
+  slidesPerView: 2,
+});
+console.log(imageSlider);

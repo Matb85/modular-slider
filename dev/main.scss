@@ -11,7 +11,7 @@ body {
 .ms-outer-con {
   margin: 0 auto;
   border: 1px solid red;
-  margin: auto;
+  margin: 0 auto;
   .ms-inner-con .ms-item {
     height: 10rem;
     background-color: blue;
@@ -41,4 +41,10 @@ body {
     border-color: pink;
     background-color: pink;
   }
+}
+
+.ms-outer-con #image-slider img {
+  object-fit: cover;
+  display: inline-block;
+  user-select: none;
 }
