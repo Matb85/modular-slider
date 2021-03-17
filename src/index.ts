@@ -8,7 +8,8 @@ export { carousel, noloop, slidehandler };
 import buttons from "./plugins/controls/buttons";
 import pagination from "./plugins/controls/pagination";
 import autoplay from "./plugins/addons/autoplay";
-export { pagination, autoplay, buttons };
+import lazyloading from "./plugins/addons/lazyloading";
+export { pagination, autoplay, buttons, lazyloading };
 
 /** export the setup function */
 import { setup } from "./base";

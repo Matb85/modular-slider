@@ -1,4 +1,4 @@
-import { setup, slidehandler, carousel, buttons, pagination } from "../src/index.js";
+import { setup, slidehandler, carousel, buttons, pagination, lazyloading } from "../src/index.js";
 
 const Slider = setup(carousel, slidehandler);
 console.dir(Slider);
@@ -22,5 +22,6 @@ const imageSlider = new Slider({
   container: "#image-slider",
   transitionSpeed: 400,
   slidesPerView: 2,
+  plugins: [lazyloading()],
 });
 console.log(imageSlider);
