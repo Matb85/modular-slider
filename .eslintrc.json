@@ -11,7 +11,7 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
-  "ignorePatterns": ["node_modules"],
+  "ignorePatterns": ["node_modules", "assets"],
   "rules": {
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
