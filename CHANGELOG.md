@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](///compare/v0.4.0...v0.4.1) (2021-03-17)
+
+
+### Features
+
+* **plugins:** :sparkles: add a plugin for lazy-loading images 69133a5
+* :lipstick: add support for sliders with images 598249a
+
 ## [0.4.0](///compare/v0.3.0...v0.4.0) (2021-03-17)
 
 
