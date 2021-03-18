@@ -11,7 +11,7 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
-  "ignorePatterns": ["node_modules", "assets"],
+  "ignorePatterns": ["node_modules", "assets", "postcss.config.js"],
   "rules": {
     "quotes": ["error", "double"],
     "semi": ["error", "always"],

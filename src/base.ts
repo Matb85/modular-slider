@@ -63,6 +63,7 @@ export default abstract class Base implements Slider {
     /** reset counter after initialization */
     this.counter = 0;
     /** initiate plugins */
+    console.log(this.settings.plugins);
     for (const plugin of this.settings.plugins) this.plugins[plugin.name] = plugin.call(this);
   }
 

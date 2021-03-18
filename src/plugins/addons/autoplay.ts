@@ -8,7 +8,7 @@ export default (interval = 5000) =>
         this.container.dispatchEvent(new PointerEvent("transitionend", {}));
       }, interval);
     };
-    let autoplay: number;
+    let autoplay: ReturnType<typeof setInterval>;
     setAutoplay();
     this.container.addEventListener("pointerdown", () => clearInterval(autoplay));
     this.container.addEventListener("dragstop", () => setAutoplay());
