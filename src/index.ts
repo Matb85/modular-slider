@@ -12,5 +12,5 @@ import lazyloading from "./plugins/addons/lazyloading";
 export { pagination, autoplay, buttons, lazyloading };
 
 /** export the setup function */
-import { setup } from "./base";
-export { setup };
+import Base, { setup } from "./base";
+export { setup, Base };
