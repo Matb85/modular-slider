@@ -5,7 +5,7 @@ export default (interval = 5000) =>
     const setAutoplay = () => {
       autoplay = setInterval(async () => {
         await this.slideNext();
-        this.container.dispatchEvent(new PointerEvent("transitionend", {}));
+        this.container.dispatchEvent(new CustomEvent("transitionend", {}));
       }, interval);
     };
     let autoplay: ReturnType<typeof setInterval>;
