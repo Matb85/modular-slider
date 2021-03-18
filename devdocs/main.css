@@ -21,7 +21,7 @@ body {
 }
 
 .ms-inner-con.blue-items .ms-item {
-  @apply h-48 bg-blue-500 text-white text-7xl flex items-center justify-center;
+  @apply h-48 bg-blue-500 text-white text-7xl flex items-center justify-center cursor-pointer;
 }
 
 .button {

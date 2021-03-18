@@ -15,13 +15,13 @@
 <script>
 import SliderCode from "@/components/SliderCode.svelte"
 import { onMount } from "svelte";
-import { setup, slidehandler, carousel, pagination } from "@src/index.js";
+import { setup, Slidehandler, Carousel, pagination } from "@src/index.js";
 
 export const sliderItems = [0,1,2,3,4,5,6]
 
 
 onMount(async () => {
-    const Slider = setup(carousel, slidehandler);
+    const Slider = setup(Carousel, Slidehandler);
     new Slider({
         container: "#slider-with-pagination",
         slidesPerView: 2,
@@ -36,9 +36,9 @@ onMount(async () => {
 })
 
 export const code = 
-`import { setup, slidehandler, carousel, buttons } from "modular-slider";
+`import { setup, Slidehandler, Carousel, buttons } from "modular-slider";
 
-const Slider = setup(carousel, slidehandler);
+const Slider = setup(Carousel, Slidehandler);
 new Slider({
     container: "#slider",
     slidesPerView: 2,
