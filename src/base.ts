@@ -14,9 +14,8 @@ export function setup(...constructors: any[]): SliderConstructor {
   base.prototype.inits = [];
   constructors.forEach(baseCtor => {
     /** copy the init functions to the inits array */
-    if (Object.hasOwnProperty.call(baseCtor.prototype, "init"))
-      base.prototype.inits.push(baseCtor.prototype.init);
-    /** copy statis properties */
+    if (Object.hasOwnProperty.call(baseCtor.prototype, "init")) base.prototype.inits.push(baseCtor.prototype.init);
+    /** copy static properties */
     Object.keys(baseCtor).forEach(name => {
       Object.defineProperty(
         base.prototype,
@@ -29,8 +28,7 @@ export function setup(...constructors: any[]): SliderConstructor {
       Object.defineProperty(
         base.prototype,
         name,
-        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
-          Object.create(null)
+        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) || Object.create(null)
       );
     });
   });
@@ -69,15 +67,12 @@ export default abstract class Base implements Slider {
     /** reset counter after initialization */
     this.counter = 0;
     /** initiate plugins */
-    for (const plugin of this.settings.plugins)
-      this.plugins[plugin.name] = plugin.call(this);
+    for (const plugin of this.settings.plugins) this.plugins[plugin.name] = plugin.call(this);
   }
 
   /** updating utilities */
   getTransX(): number {
-    return parseFloat(
-      window.getComputedStyle(this.container).transform.split(", ")[4]
-    );
+    return parseFloat(window.getComputedStyle(this.container).transform.split(", ")[4]);
   }
   calcslideWidth(): number {
     return (
@@ -90,10 +85,11 @@ export default abstract class Base implements Slider {
     return parseInt(window.getComputedStyle(el).getPropertyValue(elProp));
   }
   updateContainer(): void {
-    this.container = document.querySelector(
-      this.settings.container
-    ) as HTMLElement;
+    this.container = document.querySelector(this.settings.container) as HTMLElement;
     this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
+  }
+  transform(dist: number): void {
+    this.container.style.transform = "translateX(" + this.slideWidth * dist + "px)";
   }
 }
 
@@ -114,6 +110,7 @@ export interface Slider {
   getTransX(): number;
   calcslideWidth(): number;
   updateContainer(): void;
+  transform(dist: number): void;
 }
 
 export interface PositionStore {

@@ -16,6 +16,8 @@ export default abstract class implements Slider {
   abstract getTransX(): number;
   abstract calcslideWidth(): number;
   abstract updateContainer(): void;
+  abstract transform(dist: number): void;
+
   init() {
     this.slideNext(this.settings.initialSlide, 0);
   }
@@ -27,8 +29,7 @@ export default abstract class implements Slider {
         this.counter = -1 * (this.slides.length - this.slideDisplay);
 
       this.container.style.transition = "transform " + dur + "ms";
-      this.container.style.transform =
-        "translateX(" + this.slideWidth * this.counter + "px)";
+      this.transform(this.counter);
       setTimeout(() => {
         this.container.style.transition = "initial";
         resolve();

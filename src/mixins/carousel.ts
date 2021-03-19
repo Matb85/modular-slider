@@ -16,6 +16,8 @@ export default abstract class implements Slider {
   abstract getTransX(): number;
   abstract calcslideWidth(): number;
   abstract updateContainer(): void;
+  abstract transform(dist: number): void;
+
   movefor() {
     this.updateContainer();
     this.movedSlide = this.slides[0];

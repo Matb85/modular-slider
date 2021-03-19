@@ -3,7 +3,7 @@ const defaults = {
   initialSlide: 0,
   slidesPerView: 2,
   container: "",
-  plugins: [],
+  plugins: []
 };
 
 export interface Defaults {
