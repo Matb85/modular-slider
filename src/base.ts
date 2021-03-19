@@ -93,14 +93,14 @@ export default abstract class Base implements Slider {
    * mainly used for transforming to another slide
    */
   transform(dist: number): void {
-    this.container.style.transform = "translateX(" + this.slideWidth * dist + "px)";
+    this.container.style.transform = "translate3d(" + this.slideWidth * dist + "px,0,0)";
   }
   /**
    * a utility for transforming the container by an absolute number of px specified by @param Absolutedist
    * mainly used for handling touch/mouse events
    */
   transformAbsolute(Absolutedist: number): void {
-    this.container.style.transform = "translateX(" + Absolutedist + "px)";
+    this.container.style.transform = "translate3d(" + Absolutedist + "px,0,0)";
   }
 }
 
