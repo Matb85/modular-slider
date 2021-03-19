@@ -2,13 +2,15 @@ import type { Slider } from "@/base";
 
 export default (interval = 5000) =>
   function autoplay(this: Slider) {
-    const setAutoplay = () => {
-      autoplay = setInterval(async () => {
-        await this.slideNext();
-        this.container.dispatchEvent(new CustomEvent("transitionend", {}));
-      }, interval);
-    };
+    let ispaused = false;
     let autoplay: ReturnType<typeof setInterval>;
+    const setAutoplay = () => {
+      if (!ispaused)
+        autoplay = setInterval(async () => {
+          await this.slideNext();
+          this.container.dispatchEvent(new CustomEvent("transitionend", {}));
+        }, interval);
+    };
     setAutoplay();
     this.container.addEventListener("pointerdown", () => clearInterval(autoplay));
     this.container.addEventListener("dragstop", () => setAutoplay());
@@ -17,7 +19,13 @@ export default (interval = 5000) =>
       else setAutoplay();
     });
     return {
-      cancel: () => clearInterval(autoplay),
-      resume: () => setAutoplay(),
+      pause: () => {
+        clearInterval(autoplay);
+        ispaused = true;
+      },
+      resume: () => {
+        ispaused = false;
+        setAutoplay();
+      }
     };
   };

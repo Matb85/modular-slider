@@ -24,7 +24,7 @@ export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 export let ispaused = false;
 let slider: any;
 export function pause() {
-  slider.plugins.autoplay.cancel();
+  slider.plugins.autoplay.pause();
   ispaused = true;
 }
 export function resume() {
