@@ -44,6 +44,18 @@ body {
   margin: 0;
   box-sizing: border-box;
 }
+:root {
+  --slides-per-view: 2;
+  --slide-width: 300px;
+  --slide-margin: 25px;
+}
+@media (max-width: 720px) {
+  :root {
+    --slides-per-view: 1;
+    --slide-width: 250px;
+    --slide-margin: 25px;
+  }
+}
 h1,
 h2,
 h3,

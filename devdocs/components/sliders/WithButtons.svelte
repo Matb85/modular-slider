@@ -23,7 +23,6 @@ export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 onMount(async () => {
   new Slider({
     container: "slider-with-btns",
-    slidesPerView: 2,
     plugins: [buttons({ nextBtn: "#next", prevBtn: "#prev" })],
   });
 });

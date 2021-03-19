@@ -1,17 +1,15 @@
 const defaults = {
   transitionSpeed: 300,
   initialSlide: 0,
-  slidesPerView: 2,
   container: "",
   plugins: []
 };
 
 export interface Defaults {
-  transitionSpeed?: number;
-  plugins?: Array<() => void>;
-  initialSlide?: number;
-  slidesPerView: number;
   container: string;
+  plugins?: Array<() => void>;
+  transitionSpeed?: number;
+  initialSlide?: number;
 }
 
 export default function extend(options: Defaults): Required<Defaults> {

@@ -20,7 +20,6 @@ onMount(async () => {
   new Slider({
     container: "basic-slider",
     transitionSpeed: 400,
-    slidesPerView: 2,
   });
 });
 
