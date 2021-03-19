@@ -11,10 +11,10 @@
 </section>
 <SliderCode>{code}</SliderCode>
 
-<script>
-import SliderCode from "@/components/SliderCode.svelte";
+<script lang="ts">
+import SliderCode from "~/components/SliderCode.svelte";
 import { onMount } from "svelte";
-import { setup, Slidehandler, Carousel, pagination } from "@src/index.js";
+import { setup, Slidehandler, Carousel, pagination } from "@/index";
 
 export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
@@ -27,9 +27,9 @@ onMount(async () => {
       pagination({
         container: "#slider-pagination",
         dots: ".dot",
-        addClass: ["current"]
-      })
-    ]
+        addClass: ["current"],
+      }),
+    ],
   });
 });
 

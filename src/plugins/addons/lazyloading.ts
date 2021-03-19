@@ -1,4 +1,4 @@
-import { Slider } from "@/base";
+import type { Slider } from "@/base";
 
 export default (addClass = "loaded", options: IntersectionObserverInit = { rootMargin: "0px", threshold: 0.5 }) =>
   function autoplay(this: Slider) {

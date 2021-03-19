@@ -24,8 +24,8 @@ module.exports = {
     /* ... */
   },
   alias: {
-    "@": "./",
-    "@src": "../src",
+    "@": "../src",
+    "~": "./",
     "@style": "../style"
   }
 };

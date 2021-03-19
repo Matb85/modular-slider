@@ -28,12 +28,12 @@ import { mdiGithub, mdiHome } from "@mdi/js";
 export const icons = [
   {
     path: mdiGithub,
-    url: "https://github.com/"
+    url: "https://github.com/",
   },
   {
     path: mdiHome,
-    url: "https://github.com/"
-  }
+    url: "https://github.com/",
+  },
 ];
 export { mdiGithub, mdiHome };
 </script>

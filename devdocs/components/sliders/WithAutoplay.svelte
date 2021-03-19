@@ -8,10 +8,10 @@
 </section>
 <SliderCode>{code}</SliderCode>
 
-<script>
-import SliderCode from "@/components/SliderCode.svelte";
+<script lang="ts">
+import SliderCode from "~/components/SliderCode.svelte";
 import { onMount } from "svelte";
-import { setup, Slidehandler, Carousel, autoplay } from "@src/index.js";
+import { setup, Slidehandler, Carousel, autoplay } from "@/index";
 
 export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
@@ -20,7 +20,7 @@ onMount(async () => {
   new Slider({
     container: "#slider-with-autoplay",
     slidesPerView: 2,
-    plugins: [autoplay(2500)]
+    plugins: [autoplay(2500)],
   });
 });
 
