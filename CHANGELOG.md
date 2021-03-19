@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](///compare/v0.4.1...v0.5.0) (2021-03-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* :boom: select the container with getElementById
+* :zap: move over to translate3d transforms
+* :boom: use the transform and transformAbsolute methods in mixins
+* :boom: rename mixins to PascalCase
+
+### Features
+
+* :construction: add a utilitity "transform" as a global method for transforming the container 54a3c7f
+
+
+### Bug Fixes
+
+* **plugins:** :bug: autoplay's resume and pause functions 71735f4
+* :ambulance: the inheritance bug within the setup function 9f28c22
+* :rotating_light: rewrite devdocs to ts & fix linter errors 4ca875c
+
+
+* :boom: rename mixins to PascalCase 63c2669
+* :boom: select the container with getElementById bcfd8e2
+* :boom: use the transform and transformAbsolute methods in mixins c6fdac4
+* :zap: move over to translate3d transforms a1d83e1
+
 ### [0.4.1](///compare/v0.4.0...v0.4.1) (2021-03-17)
 
 
