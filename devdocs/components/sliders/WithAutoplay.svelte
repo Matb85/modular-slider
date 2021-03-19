@@ -6,6 +6,11 @@
     {/each}
   </div>
 </section>
+<section class="flex justify-center gap-4 mt-4">
+  <button on:click="{pause}" disabled="{ispaused}" class="button">pause</button>
+  <button on:click="{resume}" disabled="{!ispaused}" class="button"
+    >resume</button>
+</section>
 <SliderCode>{code}</SliderCode>
 
 <script lang="ts">
@@ -16,11 +21,22 @@ import { autoplay } from "@/index";
 
 export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
+export let ispaused = false;
+let slider: any;
+export function pause() {
+  slider.plugins.autoplay.cancel();
+  ispaused = true;
+}
+export function resume() {
+  slider.plugins.autoplay.resume();
+  ispaused = false;
+}
+
 onMount(async () => {
-  new Slider({
+  slider = new Slider({
     container: "#slider-with-autoplay",
     slidesPerView: 2,
-    plugins: [autoplay(2500)],
+    plugins: [autoplay(1000)],
   });
 });
 
@@ -31,7 +47,7 @@ new Slider({
     container: "#slider",
     slidesPerView: 2,
     plugins: [
-        autoplay(2500),
+        autoplay(3000),
     ]
 });`;
 </script>

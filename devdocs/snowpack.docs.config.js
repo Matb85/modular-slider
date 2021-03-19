@@ -11,7 +11,10 @@ module.exports = {
     "../src": "/js"
   },
   plugins: [
-    ["@snowpack/plugin-svelte", { preprocess: [require("svelte-windicss-preprocess").preprocess()] }],
+    [
+      "@snowpack/plugin-svelte",
+      { preprocess: [sveltePreprocess.typescript(), require("svelte-windicss-preprocess").preprocess()] }
+    ],
     "@snowpack/plugin-typescript",
     // ["@snowpack/plugin-postcss", { config: "./devdocs/postcss.config.js" }],
     "@snowpack/plugin-sass"
