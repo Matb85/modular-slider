@@ -11,6 +11,12 @@
 </section>
 <SliderCode>{code}</SliderCode>
 
+<style>
+.dot {
+  @apply h-4 w-4 rounded-full bg-indigo-600 hover\:bg-indigo-700 focus\:outline-none;
+}
+</style>
+
 <script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount } from "svelte";
