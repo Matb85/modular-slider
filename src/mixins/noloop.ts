@@ -17,6 +17,7 @@ export default abstract class implements Slider {
   abstract calcslideWidth(): number;
   abstract updateContainer(): void;
   abstract transform(dist: number): void;
+  abstract transformAbsolute(Absolutedist: number): void;
 
   init() {
     this.slideNext(this.settings.initialSlide, 0);

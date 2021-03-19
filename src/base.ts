@@ -88,8 +88,19 @@ export default abstract class Base implements Slider {
     this.container = document.querySelector(this.settings.container) as HTMLElement;
     this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
   }
+  /**
+   * a utility for transforming the container by the length of one slide mulitplied by @param dist
+   * mainly used for transforming to another slide
+   */
   transform(dist: number): void {
     this.container.style.transform = "translateX(" + this.slideWidth * dist + "px)";
+  }
+  /**
+   * a utility for transforming the container by an absolute number of px specified by @param Absolutedist
+   * mainly used for handling touch/mouse events
+   */
+  transformAbsolute(Absolutedist: number): void {
+    this.container.style.transform = "translateX(" + Absolutedist + "px)";
   }
 }
 
@@ -111,6 +122,7 @@ export interface Slider {
   calcslideWidth(): number;
   updateContainer(): void;
   transform(dist: number): void;
+  transformAbsolute(Absolutedist: number): void;
 }
 
 export interface PositionStore {

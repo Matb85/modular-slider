@@ -1,6 +1,6 @@
-import { setup, Slidehandler, Noloop, buttons, pagination, lazyloading, autoplay } from "../src/index.js";
+import { setup, Slidehandler, Carousel, buttons, pagination, lazyloading, autoplay } from "../src/index.js";
 
-const Slider = setup(Noloop, Slidehandler);
+const Slider = setup(Carousel, Slidehandler);
 console.dir(Slider);
 const slider = new Slider({
   container: "#first-slider",

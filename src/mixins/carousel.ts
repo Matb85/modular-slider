@@ -17,6 +17,7 @@ export default abstract class implements Slider {
   abstract calcslideWidth(): number;
   abstract updateContainer(): void;
   abstract transform(dist: number): void;
+  abstract transformAbsolute(Absolutedist: number): void
 
   movefor() {
     this.updateContainer();
@@ -48,7 +49,7 @@ export default abstract class implements Slider {
           this.counter--;
         }
         this.countercheck();
-        this.container.style.transform = "translateX(" + this.slideWidth * -1 + "px)";
+        this.transform(-1);
       }
     });
     this.slidePrev(0);
@@ -64,7 +65,7 @@ export default abstract class implements Slider {
       setTimeout(() => {
         this.container.style.transition = "";
         direction.call(this);
-        this.container.style.transform = "translateX(" + this.slideWidth * -1 + "px)";
+        this.transform(-1);
         resolve();
       }, dur);
     });
@@ -72,13 +73,13 @@ export default abstract class implements Slider {
 
   slideNext(dur = this.settings.transitionSpeed): Promise<void> {
     this.counter++;
-    this.container.style.transform = "translateX(" + this.slideWidth * -2 + "px)";
+    this.transform(-2);
     this.container.style.transition = "transform " + dur + "ms";
     return this.base(this.movefor, dur);
   }
   slidePrev(dur = this.settings.transitionSpeed): Promise<void> {
     this.counter--;
-    this.container.style.transform = "translateX(" + this.slideWidth * 0 + "px)";
+    this.transform(0);
     this.container.style.transition = "transform " + dur + "ms";
     return this.base(this.moveback, dur);
   }
@@ -101,8 +102,8 @@ export default abstract class implements Slider {
       const size = this.slides.length;
       this.movefor();
       this.updateContainer();
-      this.container.style.transform = "translateX(0px)";
-      this.container.style.transform = "translateX(" + this.getTransX() + ")";
+      this.transformAbsolute(0);
+      this.transformAbsolute(this.getTransX());
       /** check if DISTance is longer than the number of slides - slides per view
        * if so, clone slides so the transition look natural
        */
@@ -131,7 +132,7 @@ export default abstract class implements Slider {
           }
         } while (Math.abs(dist) > this.slides.length - this.slideDisplay);
         this.container.style.left = (this.slides.length - size) * -1 * this.slideWidth + "px";
-        this.container.style.transform = "translateX(" + this.getTransX() + ")";
+        this.transformAbsolute(this.getTransX());
         EVENTPIPE.push(() => {
           do {
             this.container.removeChild(this.slides[this.slides.length - 1]);
@@ -141,7 +142,7 @@ export default abstract class implements Slider {
           for (let i = 0; i < Math.abs(dist) + 1; i++) {
             this.moveback();
           }
-          this.container.style.transform = "translateX(" + -1 * this.slideWidth + "px)";
+        this.transform(-1);
         });
       } else {
         /** go right */
@@ -152,13 +153,13 @@ export default abstract class implements Slider {
         });
       }
       this.container.style.transition = "transform " + this.settings.transitionSpeed + "ms";
-      this.container.style.transform = "translateX(" + dist * -1 * this.slideWidth + "px)";
+      this.transform(dist * -1 );
       this.container.addEventListener(
         "transitionend",
         () => {
           for (const listener of EVENTPIPE) listener();
           this.container.style.transition = "";
-          this.container.style.transform = "translateX(" + -1 * this.slideWidth + "px)";
+          this.transform(-1);
           resolve();
         },
         { once: true }
