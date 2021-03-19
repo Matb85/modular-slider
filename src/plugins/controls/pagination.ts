@@ -12,7 +12,6 @@ export default (options: Options) =>
     const dots = [document.querySelector(options.dots) as HTMLElement];
     dots[0].dataset.id = "0";
     const dotsamount = this.carousel ? this.slides.length : this.slides.length - this.slideDisplay + 1;
-    console.log(dotsamount, this.carousel);
     for (let i = 1; i < dotsamount; i++) {
       const node = dots[0].cloneNode(true) as HTMLElement;
       node.dataset.id = i.toString();
