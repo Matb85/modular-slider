@@ -56,11 +56,11 @@ export default abstract class Base implements Slider {
     this.settings = extend(settings);
     this.container = document.getElementById(settings.container) as HTMLElement;
     this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
-    this.slideWidth = this.calcslideWidth();
-    this.slideDisplay = this.settings.slidesPerView;
-
+    this.slideWidth = this.calcSlideWidth();
+    this.slideDisplay = this.getSlidesPerView();
     window.addEventListener("resize", () => {
-      this.slideWidth = this.calcslideWidth();
+      this.slideWidth = this.calcSlideWidth();
+      this.slideDisplay = this.getSlidesPerView();
     });
     /** initiate mixins */
     for (const init of this.inits) init.call(this);
@@ -74,15 +74,20 @@ export default abstract class Base implements Slider {
   getTransX(): number {
     return parseFloat(window.getComputedStyle(this.container).transform.split(", ")[4]);
   }
-  calcslideWidth(): number {
+  getProperty(el: HTMLElement, elProp: string): number {
+    return parseInt(window.getComputedStyle(el).getPropertyValue(elProp));
+  }
+
+  calcSlideWidth(): number {
     return (
       this.slides[0].offsetWidth +
       this.getProperty(this.slides[0], "margin-left") +
       this.getProperty(this.slides[0], "margin-right")
     );
   }
-  getProperty(el: HTMLElement, elProp: string): number {
-    return parseInt(window.getComputedStyle(el).getPropertyValue(elProp));
+  getSlidesPerView(): number {
+    const slidesPerView = this.getProperty(this.container.parentElement as HTMLElement, "--slides-per-view");
+    return !isNaN(slidesPerView) ? slidesPerView : this.getProperty(document.documentElement, "--slides-per-view");
   }
   /**
    * a utility for transforming the container by the length of one slide mulitplied by @param dist
@@ -115,7 +120,7 @@ export interface Slider {
   slideBy(dist?: number): Promise<void>;
   slideTo(to?: number): Promise<void>;
   getTransX(): number;
-  calcslideWidth(): number;
+  calcSlideWidth(): number;
   transform(dist: number): void;
   transformAbsolute(Absolutedist: number): void;
 }

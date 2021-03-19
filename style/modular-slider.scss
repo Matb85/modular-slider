@@ -1,28 +1,15 @@
-:root {
-  --revWidth: 300px;
-  --revMargin: 25px;
-  --revDisplay: 2;
-}
-
 .ms-outer-con {
-  position: relative;
   height: auto;
-  width: calc((var(--revWidth) + 2 * var(--revMargin)) * var(--revDisplay));
   overflow: hidden;
   .ms-inner-con {
-    position: relative;
     display: flex;
     flex-wrap: nowrap;
     height: auto;
     width: auto;
     > * {
       flex: 0 0 auto;
-      user-select: none;
-      width: var(--revWidth);
-      margin: 0 var(--revMargin);
-      display: inline-block;
     }
-    > img,
+    > *,
     > * img {
       user-drag: none;
       user-select: none;
@@ -30,6 +17,40 @@
       -webkit-user-drag: none;
       -webkit-user-select: none;
       -ms-user-select: none;
+    }
+  }
+}
+
+/* variant with a specified width of the slides - the container subordinates to them*/
+.ms-outer-con:not(.width-in-percentage) {
+  /*
+  required variables with examples:
+    --slide-width: 15rem; // the width of each slide
+    --slide-margin: 25px; // the left and right margin of each element
+    --slides-per-view: 2; // the number of how many slides are displayed at once
+    they can be put in this element or in the :root 
+*/
+  width: calc((var(--slide-width) + 2 * var(--slide-margin)) * var(--slides-per-view));
+  .ms-inner-con > * {
+    width: var(--slide-width);
+    margin-left: var(--slide-margin);
+    margin-right: var(--slide-margin);
+  }
+}
+
+/* variant with a specified width of the container - the slides subordinate to it*/
+.ms-outer-con.width-in-percentage {
+  /*
+  required variables with examples:
+  --number-of-slides: 6; // the number of the slides, total
+  --slides-per-view: 2; // the number of how many slides are displayed at once
+  */
+  .ms-inner-con {
+    width: calc(100% * var(--number-of-slides) / var(--slides-per-view));
+    > * {
+      margin-left: 0;
+      margin-right: 0;
+      width: calc(100% / var(--number-of-slides));
     }
   }
 }

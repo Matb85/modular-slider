@@ -14,7 +14,7 @@ export default abstract class implements Slider {
   carousel: boolean;
   static carousel = false;
   abstract getTransX(): number;
-  abstract calcslideWidth(): number;
+  abstract calcSlideWidth(): number;
   abstract transform(dist: number): void;
   abstract transformAbsolute(Absolutedist: number): void;
 

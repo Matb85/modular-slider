@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Starter Snowpack App" />
-    <title>Starter Snowpack App</title>
+    <title>Modular Slider's development page</title>
     <link rel="stylesheet" href="./main.css" />
     <link rel="stylesheet" href="./style/modular-slider.css" />
   </head>
@@ -12,7 +12,7 @@
     <h1>Welcome to the Modular Slider!</h1>
     <h2>Slider with pagination and buttons</h2>
     <section class="ms-outer-con">
-      <div id="first-slider" class="ms-inner-con">
+      <div class="ms-inner-con">
         <div class="ms-item">1</div>
         <div class="ms-item">h2</div>
         <div class="ms-item">he3</div>
@@ -29,6 +29,16 @@
       <button class="dot">dot</button>
     </section>
 
+    <section class="ms-outer-con width-in-percentage">
+      <div id="first-slider" class="ms-inner-con">
+        <div class="nested-item"><div>1</div></div>
+        <div class="nested-item"><div>h2</div></div>
+        <div class="nested-item"><div>he3</div></div>
+        <div class="nested-item"><div>hel4</div></div>
+        <div class="nested-item"><div>hell5</div></div>
+        <div class="nested-item"><div>hello6</div></div>
+      </div>
+    </section>
     <h2>Slider with images</h2>
     <section class="ms-outer-con">
       <div id="image-slider" class="ms-inner-con">
