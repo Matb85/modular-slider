@@ -2,5 +2,6 @@
   "svelteSortOrder": "markup-styles-scripts-options",
   "svelteStrictMode": true,
   "svelteBracketNewLine": false,
-  "svelteIndentScriptAndStyle": false
+  "svelteIndentScriptAndStyle": false,
+  "printWidth": 120
 }

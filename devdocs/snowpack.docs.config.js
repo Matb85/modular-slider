@@ -6,13 +6,13 @@ module.exports = {
   mount: {
     "./": "/",
     "../style": "/style",
-    "../src": "/js",
+    "../src": "/js"
   },
   plugins: [
     "@snowpack/plugin-svelte",
     "@snowpack/plugin-typescript",
     ["@snowpack/plugin-postcss", { config: "./devdocs/postcss.config.js" }],
-    "@snowpack/plugin-sass",
+    "@snowpack/plugin-sass"
   ],
   packageOptions: {
     /* ... */
@@ -26,6 +26,6 @@ module.exports = {
   alias: {
     "@": "./",
     "@src": "../src",
-    "@style": "../style",
-  },
+    "@style": "../style"
+  }
 };

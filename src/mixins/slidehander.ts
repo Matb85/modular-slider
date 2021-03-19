@@ -1,5 +1,5 @@
-import { Defaults } from "@/defaults";
-import { Slider, PositionStore } from "@/base";
+import type { Defaults } from "@/defaults";
+import type { Slider, PositionStore } from "@/base";
 
 export default abstract class implements Slider {
   carousel: boolean;
@@ -19,9 +19,13 @@ export default abstract class implements Slider {
   abstract calcslideWidth(): number;
   abstract updateContainer(): void;
   init() {
-    this.container.addEventListener("pointerdown", pEvent => pointerDown.call(this, pEvent), {
-      once: true,
-    });
+    this.container.addEventListener(
+      "pointerdown",
+      (pEvent) => pointerDown.call(this, pEvent),
+      {
+        once: true,
+      }
+    );
   }
 }
 
@@ -30,11 +34,11 @@ function pointerDown(this: Slider, pEvent: PointerEvent) {
   this.pos.x2 = pEvent.clientX;
   switch (pEvent.pointerType) {
     case "mouse":
-      document.onmousemove = mEvent => mouseMove.call(this, mEvent);
+      document.onmousemove = (mEvent) => mouseMove.call(this, mEvent);
       document.onmouseup = () => dragstop.call(this);
       break;
     case "touch":
-      document.ontouchmove = tEvent => touchMove.call(this, tEvent);
+      document.ontouchmove = (tEvent) => touchMove.call(this, tEvent);
       document.ontouchend = () => dragstop.call(this);
       break;
   }
@@ -43,7 +47,8 @@ function pointerDown(this: Slider, pEvent: PointerEvent) {
 function mouseMove(this: Slider, mEvent: MouseEvent) {
   this.pos.x1 = this.pos.x2 - mEvent.clientX;
   this.pos.x2 = mEvent.clientX;
-  this.container.style.transform = "translateX(" + (this.getTransX() - this.pos.x1) + "px)";
+  this.container.style.transform =
+    "translateX(" + (this.getTransX() - this.pos.x1) + "px)";
   this.container.dispatchEvent(new CustomEvent("moving"));
 }
 function touchMove(this: Slider, tEvent: TouchEvent) {
@@ -53,7 +58,8 @@ function touchMove(this: Slider, tEvent: TouchEvent) {
   this.pos.y2 = tEvent.touches[0].clientY;
   /** run only if the finger is moving roughly horizontally */
   if (Math.abs(this.pos.y1) < Math.abs(this.pos.x1))
-    this.container.style.transform = "translateX(" + (this.getTransX() - this.pos.x1) + "px)";
+    this.container.style.transform =
+      "translateX(" + (this.getTransX() - this.pos.x1) + "px)";
   this.container.dispatchEvent(new CustomEvent("moving"));
 }
 
@@ -68,6 +74,6 @@ async function dragstop(this: Slider) {
     if (this.pos.start > this.getTransX()) await this.slideNext();
     else await this.slidePrev();
   }
-  this.container.onpointerdown = pEvent => pointerDown.call(this, pEvent);
+  this.container.onpointerdown = (pEvent) => pointerDown.call(this, pEvent);
   this.container.dispatchEvent(new CustomEvent("transitionend", {}));
 }

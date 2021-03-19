@@ -1,5 +1,5 @@
-import { Defaults } from "@/defaults";
-import { Slider, PositionStore } from "@/base";
+import type { Defaults } from "@/defaults";
+import type { Slider, PositionStore } from "@/base";
 
 export default abstract class implements Slider {
   movedSlide: HTMLElement;
