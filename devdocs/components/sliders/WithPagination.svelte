@@ -36,14 +36,18 @@ onMount(async () => {
 })
 
 export const code = 
-`import { setup, Slidehandler, Carousel, buttons } from "modular-slider";
+`import { setup, Slidehandler, Carousel, pagination } from "modular-slider";
 
 const Slider = setup(Carousel, Slidehandler);
 new Slider({
     container: "#slider",
     slidesPerView: 2,
     plugins: [
-        buttons({ nextBtn: "#next", prevBtn: "#prev" }),
+        pagination({
+            container: "#slider-pagination",
+            dots: ".dot",
+            addClass: ["current"]
+        }),
     ]
 });`
 </script>

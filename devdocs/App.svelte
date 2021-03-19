@@ -5,6 +5,7 @@
   <Carousel/>
   <WithButtons/>
   <WithPagination/>
+  <WithAutoplay/>
 </main>
 
 <script>
@@ -14,6 +15,7 @@
     import Carousel from "@/components/sliders/Carousel.svelte";
     import WithButtons from "@/components/sliders/WithButtons.svelte";
     import WithPagination from "@/components/sliders/WithPagination.svelte";
+    import WithAutoplay from "@/components/sliders/WithAutoplay.svelte";
     import "@style/modular-slider.css";
     import "@/prismjs/prism.js"
     import "@/prismjs/prism.css"
@@ -22,9 +24,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" class="fixed top-full w-0 h-0">
   <filter id="aurora">
     <feTurbulence baseFrequency="0.0007" seed="14" type="fractalNoise" numOctaves="2"/>
-     <feColorMatrix type="saturate" values="10" in="blur" result="colormatrix"/>
+    <feColorMatrix type="saturate" values="10" in="blur" result="colormatrix"/>
+    <feColorMatrix type="hueRotate" values="90" in="colormatrix" result="colormatrix1"/>
     <feGaussianBlur stdDeviation="30" in="turbulence" edgeMode="none" result="blur"/>
-    <feComponentTransfer>
+    <feComponentTransfer> 
     <feFuncA type="linear" slope="0.6"/>
   </feComponentTransfer>
   </filter>
