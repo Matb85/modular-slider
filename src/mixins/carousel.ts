@@ -15,17 +15,14 @@ export default abstract class implements Slider {
   static carousel = true;
   abstract getTransX(): number;
   abstract calcslideWidth(): number;
-  abstract updateContainer(): void;
   abstract transform(dist: number): void;
-  abstract transformAbsolute(Absolutedist: number): void
+  abstract transformAbsolute(Absolutedist: number): void;
 
   movefor() {
-    this.updateContainer();
     this.movedSlide = this.slides[0];
     this.container.appendChild(this.movedSlide);
   }
   moveback() {
-    this.updateContainer();
     this.movedSlide = this.slides[this.slides.length - 1];
     this.container.insertBefore(this.movedSlide, this.slides[0]);
   }
@@ -35,7 +32,6 @@ export default abstract class implements Slider {
       do {
         for (let i = 0, counter = this.slides.length; i < counter; i++) {
           this.container.appendChild(this.slides[i].cloneNode(true));
-          this.updateContainer();
         }
       } while (this.slideDisplay + 2 > this.slides.length);
     }
@@ -101,7 +97,7 @@ export default abstract class implements Slider {
       }
       const size = this.slides.length;
       this.movefor();
-      this.updateContainer();
+
       this.transformAbsolute(0);
       this.transformAbsolute(this.getTransX());
       /** check if DISTance is longer than the number of slides - slides per view
@@ -111,14 +107,12 @@ export default abstract class implements Slider {
         do {
           for (let i = 0; i < size; i++) {
             this.container.appendChild(this.slides[i].cloneNode(true));
-            this.updateContainer();
           }
         } while (dist > this.slides.length - this.slideDisplay);
         /** remove cloned slides after transition */
         EVENTPIPE.push(() => {
           do {
             this.container.removeChild(this.slides[this.slides.length - 1]);
-            this.updateContainer();
           } while (size < this.slides.length);
         });
       }
@@ -128,7 +122,6 @@ export default abstract class implements Slider {
         do {
           for (let i = 0; i < size; i++) {
             this.container.appendChild(this.slides[i].cloneNode(true));
-            this.updateContainer();
           }
         } while (Math.abs(dist) > this.slides.length - this.slideDisplay);
         this.container.style.left = (this.slides.length - size) * -1 * this.slideWidth + "px";
@@ -136,13 +129,12 @@ export default abstract class implements Slider {
         EVENTPIPE.push(() => {
           do {
             this.container.removeChild(this.slides[this.slides.length - 1]);
-            this.updateContainer();
           } while (size < this.slides.length);
           this.container.style.left = "0px";
           for (let i = 0; i < Math.abs(dist) + 1; i++) {
             this.moveback();
           }
-        this.transform(-1);
+          this.transform(-1);
         });
       } else {
         /** go right */
@@ -153,7 +145,7 @@ export default abstract class implements Slider {
         });
       }
       this.container.style.transition = "transform " + this.settings.transitionSpeed + "ms";
-      this.transform(dist * -1 );
+      this.transform(dist * -1);
       this.container.addEventListener(
         "transitionend",
         () => {

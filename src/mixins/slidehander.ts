@@ -17,7 +17,6 @@ export default abstract class implements Slider {
   abstract slideTo(to?: number): Promise<void>;
   abstract getTransX(): number;
   abstract calcslideWidth(): number;
-  abstract updateContainer(): void;
   abstract transform(dist: number): void;
   abstract transformAbsolute(Absolutedist: number): void;
 

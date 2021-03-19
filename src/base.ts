@@ -54,7 +54,7 @@ export default abstract class Base implements Slider {
 
   constructor(settings: Defaults) {
     this.settings = extend(settings);
-    this.container = document.querySelector(settings.container) as HTMLElement;
+    this.container = document.getElementById(settings.container) as HTMLElement;
     this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
     this.slideWidth = this.calcslideWidth();
     this.slideDisplay = this.settings.slidesPerView;
@@ -83,10 +83,6 @@ export default abstract class Base implements Slider {
   }
   getProperty(el: HTMLElement, elProp: string): number {
     return parseInt(window.getComputedStyle(el).getPropertyValue(elProp));
-  }
-  updateContainer(): void {
-    this.container = document.querySelector(this.settings.container) as HTMLElement;
-    this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
   }
   /**
    * a utility for transforming the container by the length of one slide mulitplied by @param dist
@@ -120,7 +116,6 @@ export interface Slider {
   slideTo(to?: number): Promise<void>;
   getTransX(): number;
   calcslideWidth(): number;
-  updateContainer(): void;
   transform(dist: number): void;
   transformAbsolute(Absolutedist: number): void;
 }

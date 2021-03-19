@@ -3,7 +3,7 @@ import { setup, Slidehandler, Carousel, buttons, pagination, lazyloading, autopl
 const Slider = setup(Carousel, Slidehandler);
 console.dir(Slider);
 const slider = new Slider({
-  container: "#first-slider",
+  container: "first-slider",
   transitionSpeed: 400,
   slidesPerView: 2,
   plugins: [
@@ -20,7 +20,7 @@ const slider = new Slider({
 console.log(slider.plugins.buttons);
 
 const imageSlider = new Slider({
-  container: "#image-slider",
+  container: "image-slider",
   transitionSpeed: 400,
   slidesPerView: 2,
   plugins: [lazyloading()]

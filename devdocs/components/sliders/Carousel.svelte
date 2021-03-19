@@ -17,7 +17,7 @@ export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
 onMount(async () => {
   new Slider({
-    container: "#carousel-slider",
+    container: "carousel-slider",
     transitionSpeed: 400,
     slidesPerView: 2,
   });

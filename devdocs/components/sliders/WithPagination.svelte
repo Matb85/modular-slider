@@ -27,7 +27,7 @@ export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
 onMount(async () => {
   new Slider({
-    container: "#slider-with-pagination",
+    container: "slider-with-pagination",
     slidesPerView: 2,
     plugins: [
       pagination({

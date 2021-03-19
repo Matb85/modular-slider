@@ -18,7 +18,7 @@ export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 onMount(async () => {
   const Slider = setup(Noloop, Slidehandler);
   new Slider({
-    container: "#basic-slider",
+    container: "basic-slider",
     transitionSpeed: 400,
     slidesPerView: 2,
   });

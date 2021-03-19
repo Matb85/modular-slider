@@ -34,7 +34,7 @@ export function resume() {
 
 onMount(async () => {
   slider = new Slider({
-    container: "#slider-with-autoplay",
+    container: "slider-with-autoplay",
     slidesPerView: 2,
     plugins: [autoplay(1000)],
   });
