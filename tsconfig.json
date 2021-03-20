@@ -13,12 +13,12 @@
     "importHelpers": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "outDir": "dist"
   },
   "include": ["src", "devdocs"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "devdocs"]
 }

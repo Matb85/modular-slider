@@ -5,10 +5,17 @@
   "scripts": {
     "dev": "snowpack dev",
     "dev:docs": "snowpack dev --config ./devdocs/snowpack.docs.config.js",
+    "build": "rimraf ./dist/* -Recurse -Force && rollup -c",
     "release": "standard-version",
     "imgs": "node ./assets/imageresizer.js",
-    "lint": "eslint src/**"
+    "lint": "eslint src/**",
+    "style": "rimraf ./dist/* -Recurse -Force && rollup -c style/rollup.config.js"
   },
+  "main": "dist/modular-slider.js",
+  "files": [
+    "dist/*"
+  ],
+  "types": "dist/index.d.ts",
   "keywords": [
     "slider",
     "vanilla",
@@ -20,6 +27,9 @@
   "license": "ISC",
   "devDependencies": {
     "@mdi/js": "^5.9.55",
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.0",
+    "@rollup/plugin-strip": "^2.0.0",
     "@snowpack/plugin-postcss": "^1.2.0",
     "@snowpack/plugin-sass": "^1.3.1",
     "@snowpack/plugin-svelte": "^3.5.2",
@@ -30,10 +40,15 @@
     "autoprefixer": "^10.2.5",
     "cssnano": "^4.1.10",
     "eslint": "^7.22.0",
+    "node-sass": "^5.0.0",
     "postcss": "^8.2.8",
     "postcss-cli": "^8.3.1",
     "prettier": "^2.2.1",
     "prismjs": "^1.23.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.42.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.30.0",
     "sharp": "^0.27.2",
     "snowpack": "^3.0.13",
     "standard-version": "^9.1.1",
