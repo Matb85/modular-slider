@@ -1,6 +1,9 @@
 .ms-outer-con {
+  /* hide the slides that should be out of view*/
   overflow: hidden;
   .ms-inner-con {
+    /* the position MUST be set to relative because some carousel transitions use the left css property */
+    position: relative;
     display: flex;
     flex-wrap: nowrap;
     height: auto;
@@ -10,7 +13,7 @@
     }
     > *,
     > * img {
-      -webkit-user-drag: none;
+      -webkit-user-drag: none; // prevent imgs from being dragged
       user-select: none;
     }
   }
