@@ -28,6 +28,7 @@ export default abstract class implements Slider {
 }
 
 function pointerDown(this: Slider, pEvent: PointerEvent) {
+  console.log("pointerDown");
   this.pos.start = this.getTransX();
   this.pos.x2 = pEvent.clientX;
   switch (pEvent.pointerType) {
@@ -59,6 +60,7 @@ function touchMove(this: Slider, tEvent: TouchEvent) {
 }
 
 async function dragstop(this: Slider) {
+  console.log("dragstop");
   document.onmousemove = null;
   document.ontouchmove = null;
   document.ontouchend = null;

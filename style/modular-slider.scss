@@ -1,5 +1,4 @@
 .ms-outer-con {
-  height: auto;
   overflow: hidden;
   .ms-inner-con {
     display: flex;
@@ -11,7 +10,7 @@
     }
     > *,
     > * img {
-      user-drag: none;
+      -webkit-user-drag: none;
       user-select: none;
     }
   }

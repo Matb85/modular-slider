@@ -1,7 +1,7 @@
 import type { Slider } from "@/base";
 
 export default (addClass = "loaded", options: IntersectionObserverInit = { rootMargin: "0px", threshold: 0.5 }) =>
-  function autoplay(this: Slider) {
+  function lazyloading(this: Slider) {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.intersectionRatio <= 0) return;

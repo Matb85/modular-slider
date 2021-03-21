@@ -11,8 +11,8 @@ export default abstract class implements Slider {
   slideWidth: number;
   counter: number;
   plugins: Record<string, any>;
+  /** set carousel to true in the init function  */
   carousel: boolean;
-  static carousel = true;
   abstract getTransX(): number;
   abstract calcSlideWidth(): number;
   abstract transform(dist: number): void;
@@ -28,6 +28,8 @@ export default abstract class implements Slider {
   }
 
   init() {
+    /** set carousel to true */
+    this.carousel = true;
     if (this.slideDisplay + 2 > this.slides.length) {
       do {
         for (let i = 0, counter = this.slides.length; i < counter; i++) {
@@ -79,10 +81,10 @@ export default abstract class implements Slider {
     this.container.style.transition = "transform " + dur + "ms";
     return this.base(this.moveback, dur);
   }
-
   slideTo(to = 0): Promise<void> {
     return this.slideBy(to - Math.abs(this.counter));
   }
+
   slideBy(dist = 0): Promise<void> {
     return new Promise<void>(resolve => {
       if (dist == 0) return;
@@ -100,14 +102,12 @@ export default abstract class implements Slider {
 
       this.transformAbsolute(0);
       this.transformAbsolute(this.getTransX());
-      /** check if DISTance is longer than the number of slides - slides per view
-       * if so, clone slides so the transition look natural
+      /** check if the DISTance is longer than the number of slides - slides per view
+       * if so, clone slides so the transition looks natural
        */
       if (dist > this.slides.length - this.slideDisplay) {
         do {
-          for (let i = 0; i < size; i++) {
-            this.container.appendChild(this.slides[i].cloneNode(true));
-          }
+          for (let i = 0; i < size; i++) this.container.appendChild(this.slides[i].cloneNode(true));
         } while (dist > this.slides.length - this.slideDisplay);
         /** remove cloned slides after transition */
         EVENTPIPE.push(() => {
@@ -120,9 +120,7 @@ export default abstract class implements Slider {
       if (dist < 0) {
         /** go left */
         do {
-          for (let i = 0; i < size; i++) {
-            this.container.appendChild(this.slides[i].cloneNode(true));
-          }
+          for (let i = 0; i < size; i++) this.container.appendChild(this.slides[i].cloneNode(true));
         } while (Math.abs(dist) > this.slides.length - this.slideDisplay);
         this.container.style.left = (this.slides.length - size) * -1 * this.slideWidth + "px";
         this.transformAbsolute(this.getTransX());
@@ -131,17 +129,13 @@ export default abstract class implements Slider {
             this.container.removeChild(this.slides[this.slides.length - 1]);
           } while (size < this.slides.length);
           this.container.style.left = "0px";
-          for (let i = 0; i < Math.abs(dist) + 1; i++) {
-            this.moveback();
-          }
+          for (let i = 0; i < Math.abs(dist) + 1; i++) this.moveback();
           this.transform(-1);
         });
       } else {
         /** go right */
         EVENTPIPE.push(() => {
-          for (let i = 0; i < dist - 1; i++) {
-            this.movefor();
-          }
+          for (let i = 0; i < dist - 1; i++) this.movefor();
         });
       }
       this.container.style.transition = "transform " + this.settings.transitionSpeed + "ms";

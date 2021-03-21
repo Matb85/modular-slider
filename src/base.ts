@@ -8,21 +8,19 @@ type SliderConstructor = new (settings: Defaults) => Slider;
  */
 export function setup(...constructors: any[]): SliderConstructor {
   console.time("time");
-  const base: any = class extends (Base as any) {
-    static id = Symbol(Date.now());
-  };
+  const base: any = getBase();
   base.prototype.inits = [];
   constructors.forEach(baseCtor => {
     /** copy the init functions to the inits array */
     if (Object.hasOwnProperty.call(baseCtor.prototype, "init")) base.prototype.inits.push(baseCtor.prototype.init);
-    /** copy static properties */
-    Object.keys(baseCtor).forEach(name => {
-      Object.defineProperty(
-        base.prototype,
-        name,
-        Object.getOwnPropertyDescriptor(baseCtor, name) || Object.create(null)
-      );
-    });
+    /** copy static properties -- redundant?? */
+    // Object.keys(baseCtor).forEach(name => {
+    //   Object.defineProperty(
+    //     base.prototype,
+    //     name,
+    //     Object.getOwnPropertyDescriptor(baseCtor, name) || Object.create(null)
+    //   );
+    // });
     /** copy methods */
     Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
       Object.defineProperty(
@@ -36,76 +34,74 @@ export function setup(...constructors: any[]): SliderConstructor {
   return base;
 }
 
-export default abstract class Base implements Slider {
-  carousel: boolean;
-  settings: Required<Defaults>;
-  container: HTMLElement;
-  slides: HTMLCollectionOf<HTMLElement>;
-  pos: PositionStore = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
-  slideWidth: number;
-  slideDisplay: number;
-  plugins: Record<string, any> = {};
-  inits: Array<() => void>;
-  counter = 0;
-  abstract slideNext(dist?: number, dur?: number): Promise<void>;
-  abstract slidePrev(dist?: number, dur?: number): Promise<void>;
-  abstract slideBy(dist?: number): Promise<void>;
-  abstract slideTo(to?: number): Promise<void>;
+export default function getBase() {
+  return class implements BaseI {
+    carousel: boolean;
+    settings: Required<Defaults>;
+    container: HTMLElement;
+    slides: HTMLCollectionOf<HTMLElement>;
+    pos: PositionStore = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
+    slideWidth: number;
+    slideDisplay: number;
+    plugins: Record<string, any> = {};
+    inits: Array<() => void>;
+    counter = 0;
 
-  constructor(settings: Defaults) {
-    this.settings = extend(settings);
-    this.container = document.getElementById(settings.container) as HTMLElement;
-    this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
-    this.slideWidth = this.calcSlideWidth();
-    this.slideDisplay = this.getSlidesPerView();
-    window.addEventListener("resize", () => {
+    constructor(settings: Defaults) {
+      this.settings = extend(settings);
+      this.container = document.getElementById(settings.container) as HTMLElement;
+      this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
       this.slideWidth = this.calcSlideWidth();
       this.slideDisplay = this.getSlidesPerView();
-    });
-    /** initiate mixins */
-    for (const init of this.inits) init.call(this);
-    /** reset counter after initialization */
-    this.counter = 0;
-    /** initiate plugins */
-    for (const plugin of this.settings.plugins) this.plugins[plugin.name] = plugin.call(this);
-  }
+      window.addEventListener("resize", () => {
+        this.slideWidth = this.calcSlideWidth();
+        this.slideDisplay = this.getSlidesPerView();
+      });
+      /** initiate mixins */
+      for (const init of this.inits) init.call(this);
+      /** reset counter after initialization */
+      this.counter = 0;
+      /** initiate plugins */
+      for (const plugin of this.settings.plugins) this.plugins[plugin.name] = plugin.call(this);
+    }
 
-  /** updating utilities */
-  getTransX(): number {
-    return parseFloat(window.getComputedStyle(this.container).transform.split(", ")[4]);
-  }
-  getProperty(el: HTMLElement, elProp: string): number {
-    return parseInt(window.getComputedStyle(el).getPropertyValue(elProp));
-  }
+    /** updating utilities */
+    getTransX(): number {
+      return parseFloat(window.getComputedStyle(this.container).transform.split(", ")[4]);
+    }
+    getProperty(el: HTMLElement, elProp: string): number {
+      return parseInt(window.getComputedStyle(el).getPropertyValue(elProp));
+    }
 
-  calcSlideWidth(): number {
-    return (
-      this.slides[0].offsetWidth +
-      this.getProperty(this.slides[0], "margin-left") +
-      this.getProperty(this.slides[0], "margin-right")
-    );
-  }
-  getSlidesPerView(): number {
-    const slidesPerView = this.getProperty(this.container.parentElement as HTMLElement, "--slides-per-view");
-    return !isNaN(slidesPerView) ? slidesPerView : this.getProperty(document.documentElement, "--slides-per-view");
-  }
-  /**
-   * a utility for transforming the container by the length of one slide mulitplied by @param dist
-   * mainly used for transforming to another slide
-   */
-  transform(dist: number): void {
-    this.container.style.transform = "translate3d(" + this.slideWidth * dist + "px,0,0)";
-  }
-  /**
-   * a utility for transforming the container by an absolute number of px specified by @param Absolutedist
-   * mainly used for handling touch/mouse events
-   */
-  transformAbsolute(Absolutedist: number): void {
-    this.container.style.transform = "translate3d(" + Absolutedist + "px,0,0)";
-  }
+    calcSlideWidth(): number {
+      return (
+        this.slides[0].offsetWidth +
+        this.getProperty(this.slides[0], "margin-left") +
+        this.getProperty(this.slides[0], "margin-right")
+      );
+    }
+    getSlidesPerView(): number {
+      const slidesPerView = this.getProperty(this.container.parentElement as HTMLElement, "--slides-per-view");
+      return !isNaN(slidesPerView) ? slidesPerView : this.getProperty(document.documentElement, "--slides-per-view");
+    }
+    /**
+     * a utility for transforming the container by the length of one slide mulitplied by @param dist
+     * mainly used for transforming to another slide
+     */
+    transform(dist: number): void {
+      this.container.style.transform = "translate3d(" + this.slideWidth * dist + "px,0,0)";
+    }
+    /**
+     * a utility for transforming the container by an absolute number of px specified by @param Absolutedist
+     * mainly used for handling touch/mouse events
+     */
+    transformAbsolute(Absolutedist: number): void {
+      this.container.style.transform = "translate3d(" + Absolutedist + "px,0,0)";
+    }
+  };
 }
 
-export interface Slider {
+interface BaseI {
   carousel: boolean;
   settings: Required<Defaults>;
   container: HTMLElement;
@@ -115,14 +111,17 @@ export interface Slider {
   slideDisplay: number;
   counter: number;
   plugins: Record<string, any>;
-  slideNext(dist?: number, dur?: number): Promise<void>;
-  slidePrev(dist?: number, dur?: number): Promise<void>;
-  slideBy(dist?: number): Promise<void>;
-  slideTo(to?: number): Promise<void>;
   getTransX(): number;
   calcSlideWidth(): number;
   transform(dist: number): void;
   transformAbsolute(Absolutedist: number): void;
+}
+
+export interface Slider extends BaseI {
+  slideNext(dist?: number, dur?: number): Promise<void>;
+  slidePrev(dist?: number, dur?: number): Promise<void>;
+  slideBy(dist?: number): Promise<void>;
+  slideTo(to?: number): Promise<void>;
 }
 
 export interface PositionStore {

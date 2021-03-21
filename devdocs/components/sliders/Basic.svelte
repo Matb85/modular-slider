@@ -11,12 +11,11 @@
 <script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount } from "svelte";
-import { setup, Slidehandler, Noloop } from "@/index";
+import Slider from "../factories/noloopFactory";
 
 export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
 onMount(async () => {
-  const Slider = setup(Noloop, Slidehandler);
   new Slider({
     container: "basic-slider",
     transitionSpeed: 400,

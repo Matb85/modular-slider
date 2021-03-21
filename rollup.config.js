@@ -8,7 +8,7 @@ import postcss from "rollup-plugin-postcss";
 export default {
   input: "src/index.ts",
   output: {
-    format: "umd",
+    format: "esm",
     file: "dist/modular-slider.js",
     name: "modular-slider",
   },

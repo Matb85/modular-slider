@@ -16,8 +16,10 @@ export default (options: Options) =>
     prevBtn.addEventListener("click", btnAct.bind(this, { btn: prevBtn, dist: -1 }), { once: true });
 
     async function btnAct(this: Slider, params: Params): Promise<void> {
+      this.container.dispatchEvent(new PointerEvent("pointerdown", {pointerType: "mouse"}));
       await this.slideBy(params.dist);
-      this.container.dispatchEvent(new PointerEvent("pointerdown", {}));
+      document.dispatchEvent(new TouchEvent ("touchend", {}));
+      document.dispatchEvent(new MouseEvent ("mouseup", {}));
       this.container.dispatchEvent(new CustomEvent("dragstop", {}));
       params.btn.addEventListener("click", btnAct.bind(this, params), { once: true });
     }

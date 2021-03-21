@@ -71,6 +71,7 @@ body {
 
 .ms-outer-con.width-in-percentage {
   width: 80%;
+  max-width: 56rem;
   .ms-inner-con > .nested-item {
     padding: 0 25px;
     height: 10rem;
