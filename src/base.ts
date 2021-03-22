@@ -16,14 +16,6 @@ export function setup(...constructors: any[]): SliderConstructor {
     if (Object.hasOwnProperty.call(baseCtor.prototype, "init")) {
       base.prototype.inits.push(baseCtor.prototype.init);
     }
-    /** copy static properties -- redundant?? */
-    // Object.keys(baseCtor).forEach(name => {
-    //   Object.defineProperty(
-    //     base.prototype,
-    //     name,
-    //     Object.getOwnPropertyDescriptor(baseCtor, name) || Object.create(null)
-    //   );
-    // });
     /** copy methods */
     Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
       Object.defineProperty(

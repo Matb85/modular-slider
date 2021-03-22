@@ -11,8 +11,8 @@ import autoplay from "./plugins/addons/autoplay";
 import lazyloading from "./plugins/addons/lazyloading";
 export { pagination, autoplay, buttons, lazyloading };
 
-/** export the setup function */
-import Base, { setup } from "./base";
-export { setup, Base };
+/** export the setup and getbase function */
+import getBase, { setup } from "./base";
+export { setup, getBase };
 
 import "../style/modular-slider.scss";
