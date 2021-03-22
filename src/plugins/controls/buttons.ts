@@ -1,4 +1,4 @@
-import type { Slider } from "@/base";
+import type { SliderI } from "@/base";
 
 interface Params {
   dist: number;
@@ -9,18 +9,29 @@ interface Options {
   prevBtn: string;
 }
 export default (options: Options) =>
-  function buttons(this: Slider) {
+  function buttons(this: SliderI) {
     const nextBtn = document.querySelector(options.nextBtn) as HTMLElement;
     const prevBtn = document.querySelector(options.prevBtn) as HTMLElement;
-    nextBtn.addEventListener("click", btnAct.bind(this, { btn: nextBtn, dist: 1 }), { once: true });
-    prevBtn.addEventListener("click", btnAct.bind(this, { btn: prevBtn, dist: -1 }), { once: true });
+    nextBtn.onclick = btnAct.bind(this, { btn: nextBtn, dist: 1 });
+    prevBtn.onclick = btnAct.bind(this, { btn: prevBtn, dist: -1 });
+    /** clear event listeners when destroying */
+    this.container.addEventListener(
+      "destroy",
+      () => {
+        nextBtn.onclick = null;
+        prevBtn.onclick = null;
+      },
+      { once: true }
+    );
 
-    async function btnAct(this: Slider, params: Params): Promise<void> {
-      this.container.dispatchEvent(new PointerEvent("pointerdown", {pointerType: "mouse"}));
-      document.dispatchEvent(new TouchEvent ("touchend", {}));
-      document.dispatchEvent(new MouseEvent ("mouseup", {}));
-      await this.slideBy(params.dist);
-      params.btn.addEventListener("click", btnAct.bind(this, params), { once: true });
-    }
     return { prevBtn, nextBtn };
   };
+
+async function btnAct(this: SliderI, params: Params): Promise<void> {
+  params.btn.onclick = null;
+  this.container.dispatchEvent(new PointerEvent("pointerdown", { pointerType: "mouse" }));
+  document.dispatchEvent(new TouchEvent("touchend", {}));
+  document.dispatchEvent(new MouseEvent("mouseup", {}));
+  await this.slideBy(params.dist);
+  params.btn.onclick = btnAct.bind(this, params);
+}

@@ -1,7 +1,7 @@
 import type { Defaults } from "@/defaults";
-import type { Slider, PositionStore } from "@/base";
+import type { SliderI, PositionStore } from "@/base";
 
-export default abstract class implements Slider {
+export default abstract class implements SliderI {
   movedSlide: HTMLElement;
   container: HTMLElement;
   slides: HTMLCollectionOf<HTMLElement>;
@@ -17,6 +17,7 @@ export default abstract class implements Slider {
   abstract calcSlideWidth(): number;
   abstract transform(dist: number): void;
   abstract transformAbsolute(Absolutedist: number): void;
+  abstract destroy(): void;
 
   movefor() {
     this.movedSlide = this.slides[0];
@@ -51,8 +52,10 @@ export default abstract class implements Slider {
       }
     });
     this.slidePrev(0);
-  }
 
+    /**  */
+    this.container.addEventListener("destroy",()=> this.movefor());
+  }
   countercheck() {
     if (this.counter < 0) this.counter = this.slides.length - 1;
     if (this.counter > this.slides.length - 1) this.counter = 0;
@@ -87,7 +90,7 @@ export default abstract class implements Slider {
 
   slideBy(dist = 0): Promise<void> {
     return new Promise<void>(resolve => {
-      if (dist == 0) return;
+      if (dist == 0) resolve();
       /** create an array of void function to run after the transition */
       const EVENTPIPE: Array<() => void> = [];
       for (let i = 0; i < Math.abs(dist); i++) {

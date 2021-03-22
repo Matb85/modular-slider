@@ -1,7 +1,7 @@
 /** import default settings + types */
 import extend, { Defaults } from "./defaults";
 
-type SliderConstructor = new (settings: Defaults) => Slider;
+type SliderConstructor = new (settings: Defaults) => SliderI;
 
 /** copies methods and properties from mixin classes to the derived class
  * it is a modified version of the function here: {@link https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern}
@@ -10,9 +10,12 @@ export function setup(...constructors: any[]): SliderConstructor {
   console.time("time");
   const base: any = getBase();
   base.prototype.inits = [];
+  base.prototype.destroys = [];
   constructors.forEach(baseCtor => {
     /** copy the init functions to the inits array */
-    if (Object.hasOwnProperty.call(baseCtor.prototype, "init")) base.prototype.inits.push(baseCtor.prototype.init);
+    if (Object.hasOwnProperty.call(baseCtor.prototype, "init")) {
+      base.prototype.inits.push(baseCtor.prototype.init);
+    }
     /** copy static properties -- redundant?? */
     // Object.keys(baseCtor).forEach(name => {
     //   Object.defineProperty(
@@ -31,6 +34,7 @@ export function setup(...constructors: any[]): SliderConstructor {
     });
   });
   console.timeEnd("time");
+  console.dir(base);
   return base;
 }
 
@@ -45,6 +49,7 @@ export default function getBase() {
     slideDisplay: number;
     plugins: Record<string, any> = {};
     inits: Array<() => void>;
+    destroys: Array<() => void>;
     counter = 0;
 
     constructor(settings: Defaults) {
@@ -72,7 +77,6 @@ export default function getBase() {
     getProperty(el: HTMLElement, elProp: string): number {
       return parseInt(window.getComputedStyle(el).getPropertyValue(elProp));
     }
-
     calcSlideWidth(): number {
       return (
         this.slides[0].offsetWidth +
@@ -98,6 +102,10 @@ export default function getBase() {
     transformAbsolute(Absolutedist: number): void {
       this.container.style.transform = "translate3d(" + Absolutedist + "px,0,0)";
     }
+    destroy() {
+      this.container.dispatchEvent(new CustomEvent("destroy"));
+      this.transform(0);
+    }
   };
 }
 
@@ -115,9 +123,10 @@ interface BaseI {
   calcSlideWidth(): number;
   transform(dist: number): void;
   transformAbsolute(Absolutedist: number): void;
+  destroy(): void;
 }
 
-export interface Slider extends BaseI {
+export interface SliderI extends BaseI {
   slideNext(dist?: number, dur?: number): Promise<void>;
   slidePrev(dist?: number, dur?: number): Promise<void>;
   slideBy(dist?: number): Promise<void>;

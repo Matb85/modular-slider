@@ -1,7 +1,7 @@
 import type { Defaults } from "@/defaults";
-import type { Slider, PositionStore } from "@/base";
+import type { SliderI, PositionStore } from "@/base";
 
-export default abstract class implements Slider {
+export default abstract class implements SliderI {
   carousel: boolean;
   settings: Required<Defaults>;
   container: HTMLElement;
@@ -19,16 +19,19 @@ export default abstract class implements Slider {
   abstract calcSlideWidth(): number;
   abstract transform(dist: number): void;
   abstract transformAbsolute(Absolutedist: number): void;
-
+  abstract destroy(): void;
   init() {
     this.container.addEventListener("pointerdown", (pEvent) => pointerDown.call(this, pEvent), {
       once: true,
     });
+    /** remove the pointer down event listener when destroying */
+    this.container.addEventListener("destroy", () => {
+      this.container.removeEventListener("pointerdown", (pEvent) => pointerDown.call(this, pEvent));
+    });
   }
 }
 
-function pointerDown(this: Slider, pEvent: PointerEvent) {
-  console.log("pointerDown");
+function pointerDown(this: SliderI, pEvent: PointerEvent) {
   this.pos.start = this.getTransX();
   this.pos.x2 = pEvent.clientX;
   switch (pEvent.pointerType) {
@@ -43,13 +46,13 @@ function pointerDown(this: Slider, pEvent: PointerEvent) {
   }
 }
 
-function mouseMove(this: Slider, mEvent: MouseEvent) {
+function mouseMove(this: SliderI, mEvent: MouseEvent) {
   this.pos.x1 = this.pos.x2 - mEvent.clientX;
   this.pos.x2 = mEvent.clientX;
   this.transformAbsolute(this.getTransX() - this.pos.x1);
   this.container.dispatchEvent(new CustomEvent("moving"));
 }
-function touchMove(this: Slider, tEvent: TouchEvent) {
+function touchMove(this: SliderI, tEvent: TouchEvent) {
   this.pos.x1 = this.pos.x2 - tEvent.touches[0].clientX;
   this.pos.x2 = tEvent.touches[0].clientX;
   this.pos.y1 = this.pos.y2 - tEvent.touches[0].clientY;
@@ -59,8 +62,7 @@ function touchMove(this: Slider, tEvent: TouchEvent) {
   this.container.dispatchEvent(new CustomEvent("moving"));
 }
 
-async function dragstop(this: Slider) {
-  console.log("dragstop");
+async function dragstop(this: SliderI) {
   document.onmousemove = null;
   document.ontouchmove = null;
   document.ontouchend = null;

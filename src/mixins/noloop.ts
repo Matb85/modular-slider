@@ -1,7 +1,7 @@
 import type { Defaults } from "@/defaults";
-import type { Slider, PositionStore } from "@/base";
+import type { SliderI, PositionStore } from "@/base";
 
-export default abstract class implements Slider {
+export default abstract class implements SliderI {
   movedSlide: HTMLElement;
   container: HTMLElement;
   slides: HTMLCollectionOf<HTMLElement>;
@@ -17,6 +17,7 @@ export default abstract class implements Slider {
   abstract calcSlideWidth(): number;
   abstract transform(dist: number): void;
   abstract transformAbsolute(Absolutedist: number): void;
+  abstract destroy(): void;
 
   init() {
     this.slideNext(this.settings.initialSlide, 0);

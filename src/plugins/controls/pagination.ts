@@ -1,4 +1,4 @@
-import type { Slider } from "@/base";
+import type { SliderI } from "@/base";
 
 interface Options {
   container: string;
@@ -7,7 +7,7 @@ interface Options {
 }
 
 export default (options: Options) =>
-  function pagination(this: Slider) {
+  function pagination(this: SliderI) {
     const pagcontainer = document.querySelector(options.container) as HTMLElement;
     const dots = [document.querySelector(options.dots) as HTMLElement];
     dots[0].dataset.id = "0";
@@ -24,7 +24,7 @@ export default (options: Options) =>
       updatePagination.call(this);
     });
 
-    function updatePagination(this: Slider) {
+    function updatePagination(this: SliderI) {
       const curdot = dots[Math.abs(this.counter)];
       const curdotID = parseInt(curdot.dataset.id as string);
       dots.forEach(d => d.classList.remove(...options.addClass));
@@ -36,7 +36,7 @@ export default (options: Options) =>
           if (dots[curdotID - i]) dots[curdotID - i].classList.add(options.addClass[i]);
         }
     }
-    function addDotClickHandler(this: Slider) {
+    function addDotClickHandler(this: SliderI) {
       dots.forEach(d => {
         d.onclick = async () => {
           this.slideTo(parseInt(d.dataset.id as string)).then(() => addDotClickHandler.call(this));
@@ -44,4 +44,9 @@ export default (options: Options) =>
         };
       });
     }
+    /** remove excessive dots when destroying */
+    this.container.addEventListener("destroy",()=>{
+      pagcontainer.innerHTML = "";
+      pagcontainer.appendChild(dots[0]);
+    }, {once: true});
   };
