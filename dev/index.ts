@@ -1,4 +1,4 @@
-import { setup, Slidehandler, Carousel, buttons, pagination, lazyloading, autoplay } from "../src/index.js";
+import { setup, Slidehandler, Carousel, buttons, pagination, lazyloading } from "../src/index.js";
 
 const Slider = setup(Carousel, Slidehandler);
 console.dir(Slider);

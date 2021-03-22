@@ -8,8 +8,7 @@
 </section>
 <section class="flex justify-center gap-4 mt-4">
   <button on:click="{pause}" disabled="{ispaused}" class="button">pause</button>
-  <button on:click="{resume}" disabled="{!ispaused}" class="button"
-    >resume</button>
+  <button on:click="{resume}" disabled="{!ispaused}" class="button">resume</button>
 </section>
 <SliderCode>{code}</SliderCode>
 
@@ -19,15 +18,15 @@ import { onMount } from "svelte";
 import Slider from "../factories/carouselFactory";
 import { autoplay } from "@/index";
 
-export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
+const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
-export let ispaused = false;
+let ispaused = false;
 let slider: any;
-export function pause() {
+function pause() {
   slider.plugins.autoplay.pause();
   ispaused = true;
 }
-export function resume() {
+function resume() {
   slider.plugins.autoplay.resume();
   ispaused = false;
 }
@@ -35,7 +34,7 @@ export function resume() {
 onMount(async () => {
   slider = new Slider({
     container: "slider-with-autoplay",
-    plugins: [autoplay(1000)],
+    plugins: [autoplay(3000)],
   });
 });
 

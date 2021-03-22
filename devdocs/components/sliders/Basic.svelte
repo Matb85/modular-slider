@@ -13,7 +13,7 @@ import SliderCode from "~/components/SliderCode.svelte";
 import { onMount } from "svelte";
 import Slider from "../factories/noloopFactory";
 
-export const sliderItems = [0, 1, 2, 3, 4, 5, 6];
+const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
 onMount(async () => {
   new Slider({

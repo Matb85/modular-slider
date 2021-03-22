@@ -1,32 +1,20 @@
 <Navbar />
 <HeroHeader />
-<main class="py-12">
+<main class="pb-12">
   <Basic />
   <Carousel />
   <WithButtons />
   <WithPagination />
   <WithAutoplay />
 </main>
+<InfoFooter />
 
 <svg xmlns="http://www.w3.org/2000/svg" class="fixed top-full w-0 h-0">
   <filter id="aurora">
-    <feTurbulence
-      baseFrequency="0.0007"
-      seed="14"
-      type="fractalNoise"
-      numOctaves="2"></feTurbulence>
-    <feColorMatrix type="saturate" values="10" in="blur" result="colormatrix"
-    ></feColorMatrix>
-    <feColorMatrix
-      type="hueRotate"
-      values="90"
-      in="colormatrix"
-      result="colormatrix1"></feColorMatrix>
-    <feGaussianBlur
-      stdDeviation="30"
-      in="turbulence"
-      edgeMode="none"
-      result="blur"></feGaussianBlur>
+    <feTurbulence baseFrequency="0.0007" seed="14" type="fractalNoise" numOctaves="2"></feTurbulence>
+    <feColorMatrix type="saturate" values="10" in="blur" result="colormatrix"></feColorMatrix>
+    <feColorMatrix type="hueRotate" values="90" in="colormatrix" result="colormatrix1"></feColorMatrix>
+    <feGaussianBlur stdDeviation="30" in="turbulence" edgeMode="none" result="blur"></feGaussianBlur>
     <feComponentTransfer>
       <feFuncA type="linear" slope="0.6"></feFuncA>
     </feComponentTransfer>
@@ -70,7 +58,7 @@ a {
   @apply w-full h-full;
 }
 .header-3 {
-  @apply text-5xl text-center mb-6 mt-16;
+  @apply text-4xl sm:text-5xl text-center mb-6 mt-16;
 }
 .ms-inner-con.blue-items .ms-item {
   @apply h-48 bg-blue-500 text-white text-7xl flex items-center justify-center cursor-pointer;
@@ -91,6 +79,7 @@ import Carousel from "~/components/sliders/Carousel.svelte";
 import WithButtons from "~/components/sliders/WithButtons.svelte";
 import WithPagination from "~/components/sliders/WithPagination.svelte";
 import WithAutoplay from "~/components/sliders/WithAutoplay.svelte";
+import InfoFooter from "~/components/InfoFooter.svelte";
 import "@style/modular-slider.css";
 import "~/prismjs/prism.js";
 import "~/prismjs/prism.css";

@@ -31,6 +31,7 @@ export default abstract class implements SliderI {
   init() {
     /** set carousel to true */
     this.carousel = true;
+    /** duplicate slides if there are less than this.slideDisplay + 2 */
     if (this.slideDisplay + 2 > this.slides.length) {
       do {
         for (let i = 0, counter = this.slides.length; i < counter; i++) {
@@ -38,6 +39,7 @@ export default abstract class implements SliderI {
         }
       } while (this.slideDisplay + 2 > this.slides.length);
     }
+    /** append or insertBefore a slide when swiping so the transition does not have any gaps */
     this.container.addEventListener("moving", () => {
       if (Math.abs(this.pos.start - this.getTransX()) / this.slideWidth >= 1 && this.pos.x1 != 0) {
         if (this.pos.x1 > 0) {
@@ -53,7 +55,7 @@ export default abstract class implements SliderI {
     });
     this.slidePrev(0);
 
-    /**  */
+    /** return to the initial state when destroying */
     this.container.addEventListener("destroy",()=> this.movefor());
   }
   countercheck() {

@@ -26,7 +26,6 @@ export function setup(...constructors: any[]): SliderConstructor {
     });
   });
   console.timeEnd("time");
-  console.dir(base);
   return base;
 }
 
