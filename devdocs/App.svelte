@@ -21,56 +21,6 @@
   </filter>
 </svg>
 
-<style global>
-html,
-body {
-  width: 100%;
-  height: 100%;
-}
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-:root {
-  --slides-per-view: 2;
-  --slide-width: 300px;
-  --slide-margin: 25px;
-}
-@media (max-width: 720px) {
-  :root {
-    --slides-per-view: 1;
-    --slide-width: 250px;
-    --slide-margin: 25px;
-  }
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a {
-  @apply text-gray-800;
-}
-.wh-full {
-  @apply w-full h-full;
-}
-.header-3 {
-  @apply text-4xl sm:text-5xl text-center mb-6 mt-16;
-}
-.ms-inner-con.blue-items .ms-item {
-  @apply h-48 bg-blue-500 text-white text-7xl flex items-center justify-center cursor-pointer;
-}
-.button {
-  @apply inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover\:bg-indigo-700;
-}
-.button[disabled] {
-  @apply opacity-50 cursor-not-allowed;
-}
-</style>
-
 <script>
 import Navbar from "~/components/Navbar.svelte";
 import HeroHeader from "~/components/HeroHeader.svelte";
@@ -80,7 +30,7 @@ import WithButtons from "~/components/sliders/WithButtons.svelte";
 import WithPagination from "~/components/sliders/WithPagination.svelte";
 import WithAutoplay from "~/components/sliders/WithAutoplay.svelte";
 import InfoFooter from "~/components/InfoFooter.svelte";
-import "@style/modular-slider.css";
+import "@style/modular-slider.scss";
 import "~/prismjs/prism.js";
 import "~/prismjs/prism.css";
 </script>

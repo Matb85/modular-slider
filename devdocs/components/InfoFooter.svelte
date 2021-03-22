@@ -3,7 +3,7 @@
     <h2 class="header-3">Check out the repo on Github!</h2>
     <a href="https://github.com/">
       <button class="button gap-2">
-        <svg class="flex-none h-6 w-6 fill-white" viewBox="0 0 24 24">
+        <svg class="flex-none h-6 w-6 fill-current" viewBox="0 0 24 24">
           <path d="{path}"></path>
         </svg>
         <span class="flex-none">Click here</span>

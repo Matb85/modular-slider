@@ -7,7 +7,6 @@ type SliderConstructor = new (settings: Defaults) => SliderI;
  * it is a modified version of the function here: {@link https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern}
  */
 export function setup(...constructors: any[]): SliderConstructor {
-  console.time("time");
   const base: any = getBase();
   base.prototype.inits = [];
   base.prototype.destroys = [];
@@ -25,7 +24,6 @@ export function setup(...constructors: any[]): SliderConstructor {
       );
     });
   });
-  console.timeEnd("time");
   return base;
 }
 

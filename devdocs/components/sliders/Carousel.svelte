@@ -16,11 +16,10 @@ import Slider from "../factories/carouselFactory";
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
 onMount(async () => {
-  const slider = new Slider({
+  new Slider({
     container: "carousel-slider",
     transitionSpeed: 400,
   });
-  console.log(slider);
 });
 
 export const code = `import { setup, Slidehandler, Carousel } from "modular-slider";
