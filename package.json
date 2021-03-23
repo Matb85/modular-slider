@@ -1,6 +1,6 @@
 {
   "name": "modular-slider",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "A dependency free Typescript slider with a modular approach",
   "scripts": {
     "dev": "snowpack dev",
