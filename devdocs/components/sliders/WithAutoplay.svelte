@@ -42,8 +42,7 @@ export const code = `import { setup, Slidehandler, Carousel, autoplay } from "mo
 
 const Slider = setup(Carousel, Slidehandler);
 new Slider({
-    container: "#slider",
-    slidesPerView: 2,
+    container: "slider",
     plugins: [
         autoplay(3000),
     ]

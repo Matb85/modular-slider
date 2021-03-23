@@ -26,7 +26,6 @@ export const code = `import { setup, Slidehandler, Carousel } from "modular-slid
 
 const Slider = setup(Carousel, Slidehandler);
 new Slider({
-    container: "#slider",
-    slidesPerView: 2,
+    container: "slider",
 });`;
 </script>

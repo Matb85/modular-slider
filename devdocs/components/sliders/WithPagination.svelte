@@ -36,8 +36,7 @@ export const code = `import { setup, Slidehandler, Carousel, pagination } from "
 
 const Slider = setup(Carousel, Slidehandler);
 new Slider({
-    container: "#slider",
-    slidesPerView: 2,
+    container: "slider",
     plugins: [
         pagination({
             container: "#slider-pagination",

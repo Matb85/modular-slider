@@ -26,7 +26,6 @@ export const code = `import { setup, Slidehandler, Noloop } from "modular-slider
 
 const Slider = setup(Noloop, Slidehandler);
 new Slider({
-    container: "#slider",
-    slidesPerView: 2,
+    container: "slider",
 });`;
 </script>
