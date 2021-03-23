@@ -1,6 +1,6 @@
 # Modular Slider
 
-## A dependency free slider with a modular approach, written in Typescript
+## A zero dependency slider with a modular approach, written in Typescript
 
 ### [Check out the demos here](https://matb85.github.io/modular-slider/)
 
