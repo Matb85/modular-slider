@@ -5,7 +5,7 @@
   "description": "A zero dependency slider with a modular approach, written in Typescript",
   "scripts": {
     "dev": "snowpack dev",
-    "dev:docs": "snowpack dev --config ./devdocs/snowpack.docs.config.js",
+    "dev:docs": "snowpack dev --config ./devdocs/snowpack.config.js",
     "build": "rimraf ./dist/* -Recurse -Force && rollup -c",
     "build:docs": "rimraf ./docs/*.js ./docs/*.css -Recurse -Force && rollup -c ./devdocs/rollup.config.js --environment NODE_ENV:production",
     "release": "standard-version",
@@ -49,7 +49,6 @@
     "autoprefixer": "^10.2.5",
     "cssnano": "^4.1.10",
     "eslint": "^7.22.0",
-    "node-sass": "^5.0.0",
     "postcss": "^8.2.8",
     "postcss-cli": "^8.3.1",
     "prettier": "^2.2.1",
