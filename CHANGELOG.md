@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.4](https://github.com/Matb85/modular-slider/compare/v0.5.3...v0.5.4) (2021-03-24)
+
+
+### Features
+
+* :sparkles: add slide margin support for the width in % strategy ([b2f3921](https://github.com/Matb85/modular-slider/commit/b2f392153c0b41fb08fb19ec99ba16f5d3548fbd))
+
+
+### Bug Fixes
+
+* :lipstick: add a default value for --slide-margin ([9d26c5b](https://github.com/Matb85/modular-slider/commit/9d26c5ba744b3f7d0f4f4b69e0903d2308d00627))
+
 ### [0.5.3](///compare/v0.5.2...v0.5.3) (2021-03-23)
 
 
