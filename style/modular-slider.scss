@@ -10,6 +10,8 @@
     width: auto;
     > * {
       flex: 0 0 auto;
+      margin-left: var(--slide-margin);
+      margin-right: var(--slide-margin);
     }
     > *,
     > * img {
@@ -31,8 +33,6 @@
   width: calc((var(--slide-width) + 2 * var(--slide-margin)) * var(--slides-per-view));
   .ms-inner-con > * {
     width: var(--slide-width);
-    margin-left: var(--slide-margin);
-    margin-right: var(--slide-margin);
   }
 }
 
@@ -41,14 +41,15 @@
   /*
   required variables with examples:
   --number-of-slides: 6; // the number of the slides, total
-  --slides-per-view: 2; // the number of how many slides are displayed at once
+  you don't have to set --number-of-slides - it's just a fallback value just in case something goes wrong 
+  --slides-per-view: 2; // the number of how many slides are displayed at once - this one is compulsory!
+  --slide-margin: 25px; // the left and right margin of each element
   */
+  --slide-margin: 25px;
   .ms-inner-con {
     width: calc(100% * var(--number-of-slides) / var(--slides-per-view));
     > * {
-      margin-left: 0;
-      margin-right: 0;
-      width: calc(100% / var(--number-of-slides));
+      width: calc((100%) / var(--number-of-slides) - 2 * var(--slide-margin));
     }
   }
 }

@@ -8,7 +8,9 @@ body {
   margin: 0;
   box-sizing: border-box;
 }
-
+h3 {
+  text-align: center;
+}
 .ms-outer-con {
   --slide-width: 15rem;
   --slide-margin: 25px;
@@ -73,7 +75,6 @@ body {
   width: 80%;
   max-width: 56rem;
   .ms-inner-con > .nested-item {
-    padding: 0 25px;
     height: 10rem;
     div {
       width: 100%;

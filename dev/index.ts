@@ -32,7 +32,7 @@ setTimeout(() => {
       })
     ]
   });
-}, 1000);
+}, 500);
 
 new Slider({
   container: "image-slider",

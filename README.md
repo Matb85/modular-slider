@@ -42,7 +42,13 @@ the setup function is used to combine mixins - basically this is the function th
 
 ### Usage
 
-Here is an exaple setup:
+First of all download the package via npm:
+
+```
+npm i modular-slider
+```
+
+Once you've done that, take a look at an example setup:
 
 1. add some markup
 

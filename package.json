@@ -1,6 +1,7 @@
 {
   "name": "modular-slider",
   "version": "0.5.3",
+  "license": "ISC",
   "description": "A zero dependency slider with a modular approach, written in Typescript",
   "scripts": {
     "dev": "snowpack dev",
@@ -19,13 +20,21 @@
   "types": "dist/index.d.ts",
   "keywords": [
     "slider",
+    "swiper",
     "vanilla",
     "js",
     "ts",
     "typescript"
   ],
   "author": "matb85",
-  "license": "ISC",
+  "homepage": "https://github.com/Matb85/modular-slider",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Matb85/modular-slider"
+  },
+  "bugs": {
+    "url": "https://github.com/Matb85/modular-slider/issues"
+  },
   "devDependencies": {
     "@mdi/js": "^5.9.55",
     "@rollup/plugin-alias": "^3.1.2",
