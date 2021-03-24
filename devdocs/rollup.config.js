@@ -20,7 +20,7 @@ export default {
       extract: "bundle.css",
       minimize: true,
     }),
-    typescript({ rootDir: "." }),
+    typescript({ rootDir: ".", sourceMap: false }),
     commonjs(),
     resolve(),
     terser(),
