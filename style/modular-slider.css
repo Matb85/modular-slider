@@ -1,0 +1,49 @@
+:root {
+  --slide-margin: 0px;
+}
+
+.ms-outer-con {
+  overflow: hidden; /* hide the slides that should be out of view*/
+}
+.ms-outer-con .ms-inner-con {
+  /* the position MUST be set to relative because some carousel transitions use the left css property */
+  @apply relative flex flex-nowrap h-auto w-auto;
+}
+.ms-outer-con .ms-inner-con > * {
+  flex: 0 0 auto;
+  margin-left: var(--slide-margin);
+  margin-right: var(--slide-margin);
+}
+.ms-outer-con .ms-inner-con > *,
+.ms-outer-con .ms-inner-con > * img {
+  -webkit-user-drag: none; /* prevent imgs from being dragged*/
+  user-select: none;
+}
+
+/* variant with a specified width of the slides - the container subordinates to them
+  required variables with examples:
+    --slide-width: 15rem; // the width of each slide
+    --slide-margin: 25px; // the left and right margin of each element
+    --slides-per-view: 2; // the number of how many slides are displayed at once
+    they can be put in this element or in the :root 
+  */
+.ms-outer-con:not(.width-in-percentage) {
+  width: calc((var(--slide-width) + 2 * var(--slide-margin)) * var(--slides-per-view));
+}
+.ms-outer-con:not(.width-in-percentage) .ms-inner-con > * {
+  width: var(--slide-width);
+}
+
+/* variant with a specified width of the container - the slides subordinate to it
+  required variables with examples:
+  --number-of-slides: 6; // the number of the slides, total
+  you don't have to set --number-of-slides - it's just a fallback value just in case something goes wrong 
+  --slides-per-view: 2; // the number of how many slides are displayed at once - this one is compulsory!
+  --slide-margin: 25px; // the left and right margin of each element
+*/
+.ms-outer-con.width-in-percentage .ms-inner-con {
+  width: calc(100% * var(--number-of-slides) / var(--slides-per-view));
+}
+.ms-outer-con.width-in-percentage .ms-inner-con > * {
+  width: calc((100%) / var(--number-of-slides) - 2 * var(--slide-margin));
+}

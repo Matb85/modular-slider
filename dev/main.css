@@ -1,0 +1,63 @@
+:root {
+  --slide-margin: 25px;
+}
+
+html,
+body {
+  @apply w-full h-full;
+}
+* {
+  @apply p-0 m-0 box-border;
+}
+h3 {
+  text-align: center;
+}
+.ms-outer-con {
+  --slide-width: 15rem;
+  --slides-per-view: 2;
+  @apply mx-auto border-red-500;
+}
+.ms-outer-con .ms-inner-con .ms-item {
+  @apply h-40 bg-blue-500 text-white text-center;
+}
+@media (max-width: 700px) {
+  .ms-outer-con.width-in-percentage {
+    --slides-per-view: 1;
+  }
+}
+/* buttons and pagination*/
+.slider-btn {
+  @apply m-4 flex justify-center gap-2;
+}
+.dot {
+  @apply border-blue-500 bg-blue-500 px-2;
+}
+.dot.current {
+  @apply border-red-500 bg-red-500;
+}
+.dot.adjacent {
+  @apply border-pink-300 bg-pink-300;
+}
+
+/* slider with images */
+.ms-outer-con #image-slider div.img-con {
+  overflow: hidden;
+}
+.ms-outer-con #image-slider div.img-con img.loaded {
+  filter: blur(0vw);
+  transform: scale(1);
+}
+.ms-outer-con #image-slider div.img-con img {
+  transition: 0.4s transform, 0.4s filter;
+  filter: blur(2vw);
+  transform: scale(1.05);
+  @apply w-full h-full object-cover inline-block;
+}
+
+.ms-outer-con.width-in-percentage {
+  --number-of-slides: 6;
+  --slides-per-view: 2;
+  width: 60%;
+  min-width: 300px;
+  max-width: 56rem;
+}

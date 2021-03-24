@@ -17,7 +17,6 @@ export default {
   plugins: [
     svelte({ preprocess: sveltePreprocess() }),
     postcss({
-      extract: true,
       extract: "bundle.css",
       minimize: true,
     }),

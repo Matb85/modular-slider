@@ -30,7 +30,6 @@ import WithButtons from "~/components/sliders/WithButtons.svelte";
 import WithPagination from "~/components/sliders/WithPagination.svelte";
 import WithAutoplay from "~/components/sliders/WithAutoplay.svelte";
 import InfoFooter from "~/components/InfoFooter.svelte";
-import "@style/modular-slider.scss";
 import "~/prismjs/prism.js";
 import "~/prismjs/prism.css";
 </script>

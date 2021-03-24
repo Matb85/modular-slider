@@ -11,10 +11,7 @@ export default {
     name: "modular-slider",
   },
   plugins: [
-    postcss({
-      extract: true,
-      extract: __dirname + "/dist/modular-slider.css",
-    }),
+    postcss({ extract: __dirname + "/dist/modular-slider.css" }),
     typescript({ clean: true }),
     commonjs(),
     resolve(),

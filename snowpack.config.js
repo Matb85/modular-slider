@@ -7,9 +7,9 @@ module.exports = {
     dev: "/",
     src: "/js",
     style: "/style",
-    assets: "/assets",
+    assets: "/assets"
   },
-  plugins: ["@snowpack/plugin-typescript", "@snowpack/plugin-sass"],
+  plugins: ["@snowpack/plugin-typescript", "@snowpack/plugin-postcss"],
   packageOptions: {
     /* ... */
   },
@@ -20,6 +20,6 @@ module.exports = {
     /* ... */
   },
   alias: {
-    "@": "./src",
-  },
+    "@": "./src"
+  }
 };

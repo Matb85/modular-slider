@@ -10,12 +10,7 @@ module.exports = {
     "../style": "/style",
     "../src": "/js"
   },
-  plugins: [
-    "@snowpack/plugin-svelte",
-    "@snowpack/plugin-typescript",
-    "@snowpack/plugin-postcss",
-    "@snowpack/plugin-sass"
-  ],
+  plugins: ["@snowpack/plugin-svelte", "@snowpack/plugin-typescript", "@snowpack/plugin-postcss"],
   packageOptions: {
     /* ... */
   },
