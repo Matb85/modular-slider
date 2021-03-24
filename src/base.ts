@@ -45,6 +45,7 @@ export default function getBase() {
       this.settings = extend(settings);
       this.container = document.getElementById(settings.container) as HTMLElement;
       this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
+      this.container.style.setProperty("--number-of-slides", this.slides.length as any);
       this.slideWidth = this.calcSlideWidth();
       this.slideDisplay = this.getSlidesPerView();
       window.addEventListener("resize", () => {

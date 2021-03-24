@@ -1,3 +1,7 @@
+:root {
+  --slide-margin: 25px;
+}
+
 html,
 body {
   width: 100%;
@@ -13,7 +17,6 @@ h3 {
 }
 .ms-outer-con {
   --slide-width: 15rem;
-  --slide-margin: 25px;
   --slides-per-view: 2;
   margin: 0 auto;
   border: 1px solid red;
@@ -48,11 +51,6 @@ h3 {
   }
 }
 
-.ms-outer-con.width-in-percentage {
-  --number-of-slides: 6;
-  --slides-per-view: 2;
-}
-
 .ms-outer-con #image-slider div.img-con {
   overflow: hidden;
   img.loaded {
@@ -72,7 +70,10 @@ h3 {
 }
 
 .ms-outer-con.width-in-percentage {
-  width: 80%;
+  --number-of-slides: 6;
+  --slides-per-view: 2;
+  width: 60%;
+  min-width: 300px;
   max-width: 56rem;
   .ms-inner-con > .nested-item {
     height: 10rem;
@@ -83,5 +84,11 @@ h3 {
       color: white;
       text-align: center;
     }
+  }
+}
+
+@media (max-width: 700px) {
+  .ms-outer-con.width-in-percentage {
+    --slides-per-view: 1;
   }
 }

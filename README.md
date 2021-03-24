@@ -23,7 +23,7 @@ Modular Slider consists of **_Mixins_**, **_Plugins_** and a **_Setup_** functio
 
 Mixins are classes (abstract in TS) that provide basic functionalities of the slider (i.e. touch/mose events handling, transtions). Their names begin with a **Capital letter** Currently, there are three mixins:
 
-- SlideHandler - provides event handling - **compulsory**
+- SlideHandler - provides event handling - **compulsory if you want to drag the slider with mouse/touch**
 - Carousel - provides methods for a carousel slider (with a loop)
 - Noloop - provides methods for a basic slider
 
@@ -110,7 +110,7 @@ new Slider({
 
 ### CSS strategies
 
-by default modular slider provides two css strategies. They both require some css variables that you may put either in the **:root** or in the **.ms-outer-con** element.
+by default modular slider provides two css strategies. They both require some css variables that you may put either in the **:root** or **.ms-outer-con** element.
 
 1. Fixed width (default)
    the slides have a specified width - the container subordinates to them
@@ -120,6 +120,7 @@ by default modular slider provides two css strategies. They both require some cs
   --slide-width: 15rem; // the width of each slide
   --slide-margin: 25px; // the left and right margin of each element
   --slides-per-view: 2; // the number of how many slides are displayed at once
+  // don't specify the width - it will be calculated based on the variables above
 }
 ```
 
@@ -128,11 +129,15 @@ by default modular slider provides two css strategies. They both require some cs
 
 ```scss
 .ms-outer-con.your-slider {
+  // you DON'T have to set --number-of-slides - it's just a fallback value just in case something goes wrong
   --number-of-slides: 6; // the number of the slides, total
   --slides-per-view: 2; // the number of how many slides are displayed at once
+  --slide-margin: 25px; // the left and right margin of each element
   width: 80%; // add some width
 }
 ```
+
+**Good to know** by default --slide-margin is set to 0px.
 
 ### Contributing
 

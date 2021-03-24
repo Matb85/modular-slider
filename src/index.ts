@@ -14,5 +14,3 @@ export { pagination, autoplay, buttons, lazyloading };
 /** export the setup and getbase function */
 import getBase, { setup } from "./base";
 export { setup, getBase };
-
-import "../style/modular-slider.scss";

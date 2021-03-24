@@ -1,3 +1,7 @@
+:root {
+  --slide-margin: 0px;
+}
+
 .ms-outer-con {
   /* hide the slides that should be out of view*/
   overflow: hidden;
@@ -45,7 +49,6 @@
   --slides-per-view: 2; // the number of how many slides are displayed at once - this one is compulsory!
   --slide-margin: 25px; // the left and right margin of each element
   */
-  --slide-margin: 25px;
   .ms-inner-con {
     width: calc(100% * var(--number-of-slides) / var(--slides-per-view));
     > * {
