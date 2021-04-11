@@ -3,7 +3,7 @@
 }
 
 .ms-outer-con {
-  overflow: hidden; /* hide the slides that should be out of view*/
+  /* overflow: hidden; /* hide the slides that should be out of view*/
 }
 .ms-outer-con .ms-inner-con {
   /* the position MUST be set to relative because some carousel transitions use the left css property */
@@ -46,4 +46,13 @@
 }
 .ms-outer-con.width-in-percentage .ms-inner-con > * {
   width: calc((100%) / var(--number-of-slides) - 2 * var(--slide-margin));
+}
+
+.ms-outer-con .ms-inner-con > * {
+  --translate-factor: 0;
+  transform: translate3d(
+    calc((100% + 2 * var(--slide-margin)) * var(--number-of-slides) * var(--translate-factor)),
+    0,
+    0
+  );
 }

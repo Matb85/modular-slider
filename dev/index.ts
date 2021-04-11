@@ -13,30 +13,32 @@ let slider = new Slider({
     pagination({
       container: ".slider-pagination",
       dots: ".dot",
-      addClass: ["current", "adjacent"]
-    })
-  ]
+      addClass: ["current", "adjacent"],
+    }),
+  ],
 });
 
-setTimeout(() => {
-  slider.destroy();
-  slider = new Slider({
-    container: "first-slider",
-    transitionSpeed: 400,
-    plugins: [
-      // autoplay(),
-      buttons({ nextBtn: "#next", prevBtn: "#prev" }),
-      pagination({
-        container: ".slider-pagination",
-        dots: ".dot",
-        addClass: ["current", "adjacent"]
-      })
-    ]
-  });
-}, 500);
+const DESTROY = false;
+if (DESTROY)
+  setTimeout(() => {
+    slider.destroy();
+    slider = new Slider({
+      container: "first-slider",
+      transitionSpeed: 400,
+      plugins: [
+        // autoplay(),
+        buttons({ nextBtn: "#next", prevBtn: "#prev" }),
+        pagination({
+          container: ".slider-pagination",
+          dots: ".dot",
+          addClass: ["current", "adjacent"],
+        }),
+      ],
+    });
+  }, 500);
 
 new Slider({
   container: "image-slider",
   transitionSpeed: 400,
-  plugins: [lazyloading()]
+  plugins: [lazyloading()],
 });

@@ -29,7 +29,7 @@ export default (options: Options) =>
       const curdotID = parseInt(curdot.dataset.id as string);
       dots.forEach(d => d.classList.remove(...options.addClass));
       curdot.classList.add(options.addClass[0]);
-      /** if the user provided more class, apply them to the neighboring dots */
+      /** if the user provided more classes, apply them to neighboring dots */
       if (options.addClass[1])
         for (let i = 0; i < options.addClass.length; i++) {
           if (dots[curdotID + i]) dots[curdotID + i].classList.add(options.addClass[i]);
@@ -39,14 +39,19 @@ export default (options: Options) =>
     function addDotClickHandler(this: SliderI) {
       dots.forEach(d => {
         d.onclick = async () => {
-          this.slideTo(parseInt(d.dataset.id as string)).then(() => addDotClickHandler.call(this));
+          await this.slideTo(parseInt(d.dataset.id as string));
+          addDotClickHandler.call(this);
           updatePagination.call(this);
         };
       });
     }
     /** remove excessive dots when destroying */
-    this.container.addEventListener("destroy",()=>{
-      pagcontainer.innerHTML = "";
-      pagcontainer.appendChild(dots[0]);
-    }, {once: true});
+    this.container.addEventListener(
+      "destroy",
+      () => {
+        pagcontainer.innerHTML = "";
+        pagcontainer.appendChild(dots[0]);
+      },
+      { once: true }
+    );
   };

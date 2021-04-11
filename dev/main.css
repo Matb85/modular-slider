@@ -15,10 +15,11 @@ h3 {
 .ms-outer-con {
   --slide-width: 15rem;
   --slides-per-view: 2;
-  @apply mx-auto border-red-500;
+  border: red solid 1px;
+  @apply mx-auto;
 }
 .ms-outer-con .ms-inner-con .ms-item {
-  @apply h-40 bg-blue-500 text-white text-center;
+  @apply h-48 bg-blue-500 text-white text-7xl flex items-center justify-center cursor-pointer;
 }
 @media (max-width: 700px) {
   .ms-outer-con.width-in-percentage {
@@ -57,7 +58,7 @@ h3 {
 .ms-outer-con.width-in-percentage {
   --number-of-slides: 6;
   --slides-per-view: 2;
-  width: 60%;
+  width: 600px;
   min-width: 300px;
   max-width: 56rem;
 }

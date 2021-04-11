@@ -33,5 +33,6 @@ async function btnAct(this: SliderI, params: Params): Promise<void> {
   document.dispatchEvent(new TouchEvent("touchend", {}));
   document.dispatchEvent(new MouseEvent("mouseup", {}));
   await this.slideBy(params.dist);
+  this.container.dispatchEvent(new CustomEvent("transitionend", {}));
   params.btn.onclick = btnAct.bind(this, params);
 }
