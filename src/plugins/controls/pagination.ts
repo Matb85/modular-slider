@@ -8,6 +8,7 @@ interface Options {
 
 export default (options: Options) =>
   function pagination(this: SliderI) {
+    /** get reference for the pagination container & duplicate dots */
     const pagcontainer = document.querySelector(options.container) as HTMLElement;
     const dots = [document.querySelector(options.dots) as HTMLElement];
     dots[0].dataset.id = "0";
@@ -18,13 +19,8 @@ export default (options: Options) =>
       pagcontainer.appendChild(node);
       dots.push(node);
     }
-    addDotClickHandler.call(this);
-    updatePagination.call(this);
-    this.container.addEventListener("transitionend", () => {
-      updatePagination.call(this);
-    });
-
-    function updatePagination(this: SliderI) {
+    /** declare handy functions */
+    const updatePagination = () => {
       const curdot = dots[Math.abs(this.counter)];
       const curdotID = parseInt(curdot.dataset.id as string);
       dots.forEach(d => d.classList.remove(...options.addClass));
@@ -35,16 +31,23 @@ export default (options: Options) =>
           if (dots[curdotID + i]) dots[curdotID + i].classList.add(options.addClass[i]);
           if (dots[curdotID - i]) dots[curdotID - i].classList.add(options.addClass[i]);
         }
-    }
-    function addDotClickHandler(this: SliderI) {
+    };
+    const addDotClickHandler = () => {
       dots.forEach(d => {
         d.onclick = async () => {
           await this.slideTo(parseInt(d.dataset.id as string));
-          addDotClickHandler.call(this);
-          updatePagination.call(this);
+          addDotClickHandler();
+          updatePagination();
         };
       });
-    }
+    };
+    /** finally start the logic */
+    addDotClickHandler();
+    updatePagination();
+    this.container.addEventListener("transitionend", () => {
+      updatePagination();
+    });
+
     /** remove excessive dots when destroying */
     this.container.addEventListener(
       "destroy",
