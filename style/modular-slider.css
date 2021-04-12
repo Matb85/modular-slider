@@ -3,7 +3,7 @@
 }
 
 .ms-outer-con {
-  /* overflow: hidden; /* hide the slides that should be out of view*/
+  overflow: hidden; /* hide the slides that should be out of view*/
 }
 .ms-outer-con .ms-inner-con {
   /* the position MUST be set to relative because some carousel transitions use the left css property */

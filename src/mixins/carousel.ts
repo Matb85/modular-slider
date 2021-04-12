@@ -13,39 +13,52 @@ export default abstract class implements SliderI {
   /** set carousel to a truthy value in the init function - might be useful for plugins
    * in this mixin it is used as a helper
    */
-  carousel: boolean;
+  carousel: number;
   abstract getTransX(): number;
   abstract calcSlideWidth(): number;
   abstract transform(dist: number): void;
   abstract transformAbsolute(Absolutedist: number): void;
   abstract destroy(): void;
   abstract getProperty(el: HTMLElement, elProp: string): number;
+
   /** utilities specific to this mixin */
   movefor() {
-    const index = this.counter <= 0 ? Math.abs(this.counter) : this.slides.length - Math.abs(this.counter);
-    const slide = this.slides[index];
+    /** important!
+     * counter is mutated at the end of movefor
+     */
+    const slide = this.slides[this.counter];
     slide.style.setProperty("--translate-factor", (this.getProperty(slide, "--translate-factor") + 1) as any);
-    this.counter--;
+    this.carousel--;
   }
   moveback() {
-    this.counter++;
-    const index = this.counter <= 0 ? Math.abs(this.counter) : this.slides.length - Math.abs(this.counter);
-    const slide = this.slides[index];
+    /** important!
+     * counter is mutated right at the start of moveback
+     */
+    this.carousel++;
+    const slide = this.slides[this.counter];
     slide.style.setProperty("--translate-factor", (this.getProperty(slide, "--translate-factor") - 1) as any);
   }
   reset() {
     for (const slide of this.slides) slide.style.setProperty("--translate-factor", "0");
-    this.counter = 0;
+    this.carousel = 0;
     this.transform(-1);
   }
   /** essential logic & methods */
   init() {
-    /** set carousel to true */
-    this.carousel = true;
+    this.carousel = 0;
+    /** important!
+     * this mixin uses this.carousel for maintaining reference of the current slide
+     * therefore this.counter has just a getter that interprets this.carousel and returns the real value
+     */
+    Object.defineProperty(this, "counter", {
+      get(): number {
+        return this.carousel <= 0 ? Math.abs(this.carousel) : this.slides.length - Math.abs(this.carousel);
+      },
+    });
     /** duplicate slides if there are less than this.slideDisplay + 2 */
     if (this.slideDisplay + 2 > this.slides.length) {
       do {
-        for (let i = 0, counter = this.slides.length; i < counter; i++) {
+        for (let i = 0, slength = this.slides.length; i < slength; i++) {
           this.container.appendChild(this.slides[i].cloneNode(true));
         }
       } while (this.slideDisplay + 2 > this.slides.length);
@@ -62,27 +75,34 @@ export default abstract class implements SliderI {
         this.moveback();
       }
       /** return to the initial state if the counter has a too big value */
-      if (Math.abs(this.counter) > this.slides.length - 1) this.reset();
-
+      if (Math.abs(this.carousel) > this.slides.length - 1) this.reset();
+      /** reset the "relative translation" so the condition at the beginning works correctly */
       this.pos.start = this.getTransX();
     });
 
     /** append or insertBefore a slide when swiping so the transition does not have any gaps */
     this.container.insertBefore(this.slides[this.slides.length - 1], this.slides[0]);
-    this.transform(this.counter - 1);
+    this.transform(this.carousel - 1);
 
     /** return to the initial state when destroying */
-    this.container.addEventListener("destroy", () => this.movefor(), { once: true });
+    this.container.addEventListener(
+      "destroy",
+      () => {
+        this.movefor();
+        this.container.append(this.slides[0]);
+      },
+      { once: true }
+    );
   }
   base(dist, dur, direction): Promise<void> {
     return new Promise(resolve => {
       this.container.style.transition = "transform " + dur + "ms";
-      this.transform(this.counter - dist - 1);
+      this.transform(this.carousel - dist - 1);
       setTimeout(() => {
         this.container.style.transition = "initial";
-        direction(this);
+        direction();
         /** return to the initial state if the counter has a too big value */
-        if (Math.abs(this.counter) > this.slides.length - 1) this.reset();
+        if (Math.abs(this.carousel) > this.slides.length - 1) this.reset();
         resolve();
       }, dur);
     });
@@ -94,13 +114,12 @@ export default abstract class implements SliderI {
     return this.base(-1, dur, () => this.moveback());
   }
   slideTo(to = 0): Promise<void> {
-    const index = this.counter <= 0 ? Math.abs(this.counter) : this.slides.length - Math.abs(this.counter);
-    return this.slideBy(to - index);
+    return this.slideBy(to - this.counter);
   }
   slideBy(dist = 0): Promise<void> {
-    /** an "early" return to avoid unnecessary burden if dist's values is low  */
+    /** an "early" return to avoid unnecessary burden if dist == 0 */
     if (dist === 0) return new Promise<void>(resolve => resolve());
-    /** return much simpler solution if */
+    /** if dist == 1 || dist == -1 return a much simpler method*/
     if (Math.abs(dist) == 1) {
       if (dist > 0) return this.slideNext();
       else return this.slidePrev();
@@ -110,7 +129,7 @@ export default abstract class implements SliderI {
     this.pos.x1 = dist;
     this.pos.start = this.getTransX();
     /** mock an event usually fired by the touchmove/mousemove handler */
-    const autoplay = setInterval(() => this.container.dispatchEvent(new CustomEvent("moving")), 20);
+    const autoplay = setInterval(() => this.container.dispatchEvent(new CustomEvent("moving")), 10);
     setTimeout(() => clearInterval(autoplay), dur);
     /** finally return the right promise
      * note: its callback depends on the direction */

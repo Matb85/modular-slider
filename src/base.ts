@@ -54,8 +54,6 @@ export default function getBase() {
       });
       /** initiate mixins */
       for (const init of this.inits) init.call(this);
-      /** reset counter after initialization */
-      this.counter = 0;
       /** initiate plugins */
       for (const plugin of this.settings.plugins) this.plugins[plugin.name] = plugin.call(this);
     }
@@ -100,7 +98,7 @@ export default function getBase() {
 }
 
 interface BaseI {
-  carousel: boolean;
+  carousel?: any;
   settings: Required<Defaults>;
   container: HTMLElement;
   slides: HTMLCollectionOf<HTMLElement>;
@@ -117,8 +115,8 @@ interface BaseI {
 }
 
 export interface SliderI extends BaseI {
-  slideNext(dist?: number, dur?: number): Promise<void>;
-  slidePrev(dist?: number, dur?: number): Promise<void>;
+  slideNext(dur?: number): Promise<void>;
+  slidePrev(dur?: number): Promise<void>;
   slideBy(dist?: number): Promise<void>;
   slideTo(to?: number): Promise<void>;
 }
