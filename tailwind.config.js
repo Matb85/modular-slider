@@ -1,8 +1,5 @@
 module.exports = {
-  future: {
-    purgeLayersByDefault: true,
-    removeDeprecatedGapUtilities: true,
-  },
+  mode: "jit",
   purge: ["./**/*.svelte", "./main.css"],
   darkMode: false, // or 'media' or 'class'
   theme: {
