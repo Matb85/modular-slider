@@ -5,6 +5,7 @@
 const sveltePreprocess = require("svelte-preprocess");
 
 module.exports = {
+  exclude: ["**/*.js"],
   mount: {
     "./": "/",
     "../style": "/style",
@@ -15,6 +16,7 @@ module.exports = {
     /* ... */
   },
   devOptions: {
+    tailwindConfig: "./tailwind.config.js",
     open: "none",
   },
   buildOptions: {
