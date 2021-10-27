@@ -8,14 +8,14 @@ module.exports = {
   mount: {
     "./": "/",
     "../style": "/style",
-    "../src": "/js"
+    "../src": "/js",
   },
   plugins: ["@snowpack/plugin-svelte", "@snowpack/plugin-typescript", "@snowpack/plugin-postcss"],
   packageOptions: {
     /* ... */
   },
   devOptions: {
-    /* ... */
+    open: "none",
   },
   buildOptions: {
     /* ... */
@@ -23,6 +23,6 @@ module.exports = {
   alias: {
     "@": "../src",
     "~": "./",
-    "@style": "../style"
-  }
+    "@style": "../style",
+  },
 };
