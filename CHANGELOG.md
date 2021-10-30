@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/Matb85/modular-slider/compare/v0.5.5...v0.6.0) (2021-10-30)
+
+
+### Features
+
+* :sparkles: add custom easings ([c71b842](https://github.com/Matb85/modular-slider/commit/c71b842946150c1793921f00581ab2b1dfb15140))
+
+
+### Bug Fixes
+
+* :art: letter casing of imports ([94c5371](https://github.com/Matb85/modular-slider/commit/94c53718ea2996821d21bdbb6235811a0ba28622))
+
 ### [0.5.5](https://github.com/Matb85/modular-slider/compare/v0.5.4...v0.5.5) (2021-04-12)
 
 
