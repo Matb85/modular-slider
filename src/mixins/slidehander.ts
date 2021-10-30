@@ -19,6 +19,8 @@ export default abstract class implements SliderI {
   abstract calcSlideWidth(): number;
   abstract transform(dist: number): void;
   abstract transformAbsolute(Absolutedist: number): void;
+  abstract setTransition(dur: number): void;
+  abstract clearTransition(): void;
   abstract destroy(): void;
   init() {
     const handler = pEvent => pointerDown.call(this, pEvent);

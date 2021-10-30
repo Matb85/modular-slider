@@ -93,6 +93,17 @@ export default function getBase() {
     transformAbsolute(Absolutedist: number): void {
       this.container.style.transform = "translate3d(" + Absolutedist + "px,0,0)";
     }
+    /**
+     * utilities for managing the container's tration easing @param dur
+     * mainly used for handling touch/mouse events
+     */
+    setTransition(dur: number) {
+      this.container.style.transition = "transform " + dur + "ms";
+    }
+    clearTransition() {
+      this.container.style.transition = "initial";
+    }
+
     destroy() {
       this.container.dispatchEvent(new CustomEvent("destroy"));
       this.transform(0);
@@ -114,6 +125,8 @@ interface BaseI {
   calcSlideWidth(): number;
   transform(dist: number): void;
   transformAbsolute(Absolutedist: number): void;
+  setTransition(dur: number): void;
+  clearTransition(): void;
   destroy(): void;
 }
 

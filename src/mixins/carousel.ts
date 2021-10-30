@@ -18,6 +18,8 @@ export default abstract class implements SliderI {
   abstract calcSlideWidth(): number;
   abstract transform(dist: number): void;
   abstract transformAbsolute(Absolutedist: number): void;
+  abstract setTransition(dur: number): void;
+  abstract clearTransition(): void;
   abstract destroy(): void;
   abstract getProperty(el: HTMLElement, elProp: string): number;
 
@@ -96,10 +98,10 @@ export default abstract class implements SliderI {
   }
   base(dist, dur, direction): Promise<void> {
     return new Promise(resolve => {
-      this.container.style.transition = "transform " + dur + "ms";
+      this.setTransition(dur);
       this.transform(this.carousel - dist - 1);
       setTimeout(() => {
-        this.container.style.transition = "initial";
+        this.clearTransition();
         direction();
         /** return to the initial state if the counter has a too big value */
         if (Math.abs(this.carousel) > this.slides.length - 1) this.reset();
