@@ -106,7 +106,7 @@ new Slider({
 });
 ```
 
-**You can find more examples here**
+**[You can find more examples here](https://matb85.github.io/modular-slider/)**
 
 ### CSS strategies
 
