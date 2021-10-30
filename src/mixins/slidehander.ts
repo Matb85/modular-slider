@@ -21,13 +21,10 @@ export default abstract class implements SliderI {
   abstract transformAbsolute(Absolutedist: number): void;
   abstract destroy(): void;
   init() {
-    this.container.addEventListener("pointerdown", (pEvent) => pointerDown.call(this, pEvent), {
-      once: true,
-    });
+    const handler = pEvent => pointerDown.call(this, pEvent);
+    this.container.addEventListener("pointerdown", handler, { once: true });
     /** remove the pointer down event listener when destroying */
-    this.container.addEventListener("destroy", () => {
-      this.container.removeEventListener("pointerdown", (pEvent) => pointerDown.call(this, pEvent));
-    });
+    this.container.addEventListener("destroy", () => this.container.removeEventListener("pointerdown", handler));
   }
 }
 
@@ -36,11 +33,11 @@ function pointerDown(this: SliderI, pEvent: PointerEvent) {
   this.pos.x2 = pEvent.clientX;
   switch (pEvent.pointerType) {
     case "mouse":
-      document.onmousemove = (mEvent) => mouseMove.call(this, mEvent);
+      document.onmousemove = mEvent => mouseMove.call(this, mEvent);
       document.onmouseup = () => dragstop.call(this);
       break;
     case "touch":
-      document.ontouchmove = (tEvent) => touchMove.call(this, tEvent);
+      document.ontouchmove = tEvent => touchMove.call(this, tEvent);
       document.ontouchend = () => dragstop.call(this);
       break;
   }
@@ -73,6 +70,6 @@ async function dragstop(this: SliderI) {
     if (this.pos.start > this.getTransX()) await this.slideNext();
     else await this.slidePrev();
   }
-  this.container.onpointerdown = (pEvent) => pointerDown.call(this, pEvent);
+  this.container.onpointerdown = pEvent => pointerDown.call(this, pEvent);
   this.container.dispatchEvent(new CustomEvent("transitionend", {}));
 }

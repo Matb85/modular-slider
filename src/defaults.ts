@@ -2,7 +2,7 @@ const defaults = {
   transitionSpeed: 300,
   initialSlide: 0,
   container: "",
-  plugins: []
+  plugins: [],
 };
 
 export interface Defaults {

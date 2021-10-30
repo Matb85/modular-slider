@@ -15,13 +15,13 @@ export default (interval = 5000) =>
     this.container.addEventListener("pointerdown", () => clearInterval(autoplay));
     this.container.addEventListener("dragstop", () => setAutoplay());
     /** pause autoplay when the page is hidden */
-    document.addEventListener("visibilitychange", function() {
-      if(ispaused == true) return;
+    document.addEventListener("visibilitychange", function () {
+      if (ispaused == true) return;
       if (document.hidden) clearInterval(autoplay);
       else setAutoplay();
     });
     /** clear interval when destroying */
-    this.container.addEventListener("destroy",() => clearInterval(autoplay));
+    this.container.addEventListener("destroy", () => clearInterval(autoplay));
     return {
       pause: () => {
         clearInterval(autoplay);

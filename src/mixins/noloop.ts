@@ -23,7 +23,7 @@ export default abstract class implements SliderI {
     this.slideNext(this.settings.initialSlide, 0);
   }
   base(dist, dur): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       this.counter -= dist;
       if (this.counter > 0) this.counter = 0;
       if (this.counter < -1 * (this.slides.length - this.slideDisplay))
@@ -53,7 +53,7 @@ export default abstract class implements SliderI {
     return this.slideBy(to - Math.abs(this.counter));
   }
   slideBy(dist = 0): Promise<void> {
-    if (dist === 0) return new Promise<void>((resolve) => resolve());
+    if (dist === 0) return new Promise<void>(resolve => resolve());
     if (dist > 0) return this.slideNext(dist);
     else return this.slidePrev(dist);
   }

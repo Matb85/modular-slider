@@ -45,13 +45,16 @@ export default function getBase() {
       this.settings = extend(settings);
       this.container = document.getElementById(settings.container) as HTMLElement;
       this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
-      this.container.style.setProperty("--number-of-slides", this.slides.length as any);
+      this.container.style.setProperty("--number-of-slides", this.slides.length.toString());
       this.slideWidth = this.calcSlideWidth();
       this.slideDisplay = this.getSlidesPerView();
-      window.addEventListener("resize", () => {
+      const handler = () => {
         this.slideWidth = this.calcSlideWidth();
         this.slideDisplay = this.getSlidesPerView();
-      });
+      };
+      window.addEventListener("resize", handler);
+      this.container.addEventListener("destroy", () => this.container.removeEventListener("resize", handler));
+
       /** initiate mixins */
       for (const init of this.inits) init.call(this);
       /** initiate plugins */
