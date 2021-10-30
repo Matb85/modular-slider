@@ -130,18 +130,17 @@ export default abstract class implements SliderI {
     /** mock some touchEvent/mouseEvent data */
     this.pos.x1 = dist;
     this.pos.start = this.getTransX();
-    /** mock an event usually fired by the touchmove/mousemove handler */
-    const autoplay = setInterval(() => this.container.dispatchEvent(new CustomEvent("moving")), 10);
-    setTimeout(() => clearInterval(autoplay), dur);
+    /** mock the "moving" event usually fired by the touchmove/mousemove handler */
+    let status = false;
+    const animate = () => {
+      this.container.dispatchEvent(new CustomEvent("moving"));
+      if (!status) window.requestAnimationFrame(animate);
+    };
+    window.requestAnimationFrame(animate);
+    setTimeout(() => (status = true), dur);
     /** finally return the right promise
      * note: its callback depends on the direction */
-    if (dist > 0)
-      return this.base(dist, dur, () => {
-        this.movefor();
-      });
-    else
-      return this.base(dist, dur, () => {
-        this.moveback();
-      });
+    if (dist > 0) return this.base(dist, dur, () => this.movefor());
+    else return this.base(dist, dur, () => this.moveback());
   }
 }
