@@ -1,4 +1,5 @@
 const defaults = {
+  easing: "ease",
   transitionSpeed: 300,
   initialSlide: 0,
   container: "",
@@ -6,6 +7,7 @@ const defaults = {
 };
 
 export interface Defaults {
+  easing?: string;
   container: string;
   plugins?: Array<() => void>;
   transitionSpeed?: number;

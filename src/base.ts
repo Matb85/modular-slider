@@ -98,7 +98,7 @@ export default function getBase() {
      * mainly used for handling touch/mouse events
      */
     setTransition(dur: number) {
-      this.container.style.transition = "transform " + dur + "ms";
+      this.container.style.transition = "transform " + dur + "ms " + this.settings.easing;
     }
     clearTransition() {
       this.container.style.transition = "initial";
