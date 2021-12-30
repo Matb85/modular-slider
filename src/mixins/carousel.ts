@@ -1,57 +1,47 @@
-import type { Defaults } from "@/defaults";
-import type { SliderI, PositionStore } from "@/base";
+import type { SliderI } from "@/base";
 
-export default abstract class implements SliderI {
-  container: HTMLElement;
-  slides: HTMLCollectionOf<HTMLElement>;
-  slideDisplay: number;
-  settings: Required<Defaults>;
-  pos: PositionStore;
-  slideWidth: number;
-  counter: number;
-  plugins: Record<string, any>;
+interface Carousel extends SliderI {
   /** set carousel to a truthy value in the init function - might be useful for plugins
    * in this mixin it is used as a helper
    */
   carousel: number;
-  abstract getTransX(): number;
-  abstract calcSlideWidth(): number;
-  abstract transform(dist: number): void;
-  abstract transformAbsolute(Absolutedist: number): void;
-  abstract setTransition(dur: number): void;
-  abstract clearTransition(): void;
-  abstract destroy(): void;
-  abstract getProperty(el: HTMLElement, elProp: string): number;
+  movefor(this: SliderI): void;
+  moveback(this: SliderI): void;
+  base(this: Carousel, dist: number, dur: number, direction: () => void): Promise<void>;
+  reset(this: Carousel): void;
+}
 
-  /** utilities specific to this mixin */
-  movefor() {
+/** utilities specific to this mixin */
+const Carousel = {
+  movefor(this: Carousel) {
     /** important!
      * counter is mutated at the end of movefor
      */
     const slide = this.slides[this.counter];
     slide.style.setProperty("--translate-factor", (this.getProperty(slide, "--translate-factor") + 1) as any);
     this.carousel--;
-  }
-  moveback() {
+  },
+  moveback(this: Carousel) {
     /** important!
      * counter is mutated right at the start of moveback
      */
     this.carousel++;
     const slide = this.slides[this.counter];
     slide.style.setProperty("--translate-factor", (this.getProperty(slide, "--translate-factor") - 1) as any);
-  }
-  reset() {
+  },
+  reset(this: Carousel) {
     for (const slide of this.slides) slide.style.setProperty("--translate-factor", "0");
     this.carousel = 0;
     this.transform(-1);
-  }
+  },
   /** essential logic & methods */
-  init() {
+  init(this: Carousel) {
     this.carousel = 0;
     /** important!
      * this mixin uses this.carousel for maintaining reference of the current slide
      * therefore this.counter has just a getter that interprets this.carousel and returns the real value
      */
+    console.log(this.slides);
     Object.defineProperty(this, "counter", {
       get(): number {
         return this.carousel <= 0 ? Math.abs(this.carousel) : this.slides.length - Math.abs(this.carousel);
@@ -95,8 +85,8 @@ export default abstract class implements SliderI {
       },
       { once: true }
     );
-  }
-  base(dist, dur, direction): Promise<void> {
+  },
+  base(this: Carousel, dist: number, dur: number, direction: () => void): Promise<void> {
     return new Promise(resolve => {
       this.setTransition(dur);
       this.transform(this.carousel - dist - 1);
@@ -108,17 +98,17 @@ export default abstract class implements SliderI {
         resolve();
       }, dur);
     });
-  }
-  slideNext(dur = this.settings.transitionSpeed): Promise<void> {
+  },
+  slideNext(this: Carousel, dur = this.settings.transitionSpeed): Promise<void> {
     return this.base(1, dur, () => this.movefor());
-  }
-  slidePrev(dur = this.settings.transitionSpeed): Promise<void> {
+  },
+  slidePrev(this: Carousel, dur = this.settings.transitionSpeed): Promise<void> {
     return this.base(-1, dur, () => this.moveback());
-  }
-  slideTo(to = 0): Promise<void> {
+  },
+  slideTo(this: Carousel, to = 0): Promise<void> {
     return this.slideBy(to - this.counter);
-  }
-  slideBy(dist = 0): Promise<void> {
+  },
+  slideBy(this: Carousel, dist = 0): Promise<void> {
     /** an "early" return to avoid unnecessary burden if dist == 0 */
     if (dist === 0) return new Promise<void>(resolve => resolve());
     /** if dist == 1 || dist == -1 return a much simpler method*/
@@ -142,5 +132,7 @@ export default abstract class implements SliderI {
      * note: its callback depends on the direction */
     if (dist > 0) return this.base(dist, dur, () => this.movefor());
     else return this.base(dist, dur, () => this.moveback());
-  }
-}
+  },
+} as Carousel;
+
+export default Carousel;

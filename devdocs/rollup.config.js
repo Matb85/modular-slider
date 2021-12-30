@@ -6,6 +6,8 @@ import resolve from "@rollup/plugin-node-resolve";
 import postcss from "rollup-plugin-postcss";
 import alias from "@rollup/plugin-alias";
 import { terser } from "rollup-plugin-terser";
+import babel from "rollup-plugin-babel";
+
 export default {
   input: "devdocs/index.ts",
   output: {
@@ -23,7 +25,6 @@ export default {
     typescript({ rootDir: ".", sourceMap: false }),
     commonjs(),
     resolve(),
-    terser(),
     alias({
       entries: [
         { find: "@", replacement: "src" },
@@ -31,5 +32,7 @@ export default {
         { find: "@style", replacement: "style" },
       ],
     }),
+    babel({ exclude: "./node_modules/**" }),
+    terser(),
   ],
 };

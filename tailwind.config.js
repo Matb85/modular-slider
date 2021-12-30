@@ -1,7 +1,5 @@
 module.exports = {
-  //mode: "jit",
-  purge: ["./**/*.svelte", "./main.css"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./**/*.svelte", "./main.css"],
   theme: {
     extend: {},
   },

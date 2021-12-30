@@ -1,35 +1,17 @@
-import type { Defaults } from "@/defaults";
-import type { SliderI, PositionStore } from "@/base";
+import type { SliderI } from "@/base";
 
-export default abstract class implements SliderI {
-  carousel: boolean;
-  settings: Required<Defaults>;
-  container: HTMLElement;
-  slides: HTMLCollectionOf<HTMLElement>;
-  pos: PositionStore;
-  slideWidth: number;
-  slideDisplay: number;
-  counter: number;
-  plugins: Record<string, any>;
-  abstract slideNext(dist?: number, dur?: number): Promise<void>;
-  abstract slidePrev(dist?: number, dur?: number): Promise<void>;
-  abstract slideBy(dist?: number): Promise<void>;
-  abstract slideTo(to?: number): Promise<void>;
-  abstract getTransX(): number;
-  abstract calcSlideWidth(): number;
-  abstract transform(dist: number): void;
-  abstract transformAbsolute(Absolutedist: number): void;
-  abstract setTransition(dur: number): void;
-  abstract clearTransition(): void;
-  abstract destroy(): void;
-  init() {
-    const handler = pEvent => pointerDown.call(this, pEvent);
+interface SlideHandler extends SliderI {
+  init(this: SliderI): void;
+}
+const SlideHandler = {
+  init(this: SliderI) {
+    const handler = (pEvent: PointerEvent) => pointerDown.call(this, pEvent);
     this.container.addEventListener("pointerdown", handler, { once: true });
     /** remove the pointer down event listener when destroying */
     this.container.addEventListener("destroy", () => this.container.removeEventListener("pointerdown", handler));
-  }
-}
-
+  },
+};
+export default SlideHandler;
 function pointerDown(this: SliderI, pEvent: PointerEvent) {
   this.pos.start = this.getTransX();
   this.pos.x2 = pEvent.clientX;
