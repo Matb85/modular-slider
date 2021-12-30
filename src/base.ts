@@ -1,34 +1,33 @@
 /** import default settings + types */
 import extend, { Defaults } from "./defaults";
 
-type SliderConstructor = new (settings: Defaults) => SliderI;
-
 /** copies methods and properties from mixin classes to the derived class
  * it is a modified version of the function here: {@link https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern}
  */
-export function setup(...constructors: any[]): SliderConstructor {
-  const base: any = getBase();
+//interface setup {
+//(c1:K,c2:T)=>SliderI & K&T
+//}
+export function setup<K, L, M, N>(
+  ...constructors: [K, L, M, N] | [K, L, M] | [K, L, M] | [K, L] | [K]
+): new (settings: Defaults) => SliderI & K & L & M & N {
+  const base = getBase();
   base.prototype.inits = [];
   base.prototype.destroys = [];
   constructors.forEach(baseCtor => {
     /** copy the init functions to the inits array */
-    if (Object.hasOwnProperty.call(baseCtor.prototype, "init")) {
-      base.prototype.inits.push(baseCtor.prototype.init);
+    if (Object.hasOwnProperty.call(baseCtor, "init")) {
+      base.prototype.inits.push(baseCtor["init" as keyof typeof baseCtor]);
     }
     /** copy methods */
-    Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
-      Object.defineProperty(
-        base.prototype,
-        name,
-        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) || Object.create(null)
-      );
+    Object.getOwnPropertyNames(baseCtor).forEach(name => {
+      base.prototype[name] = baseCtor[name as keyof typeof baseCtor];
     });
   });
-  return base;
+  return base as new (settings: Defaults) => SliderI & K & L & M & N;
 }
 
-export default function getBase() {
-  return class implements BaseI {
+export default function getBase(): new (settings: Defaults) => SliderI {
+  return class implements SliderI {
     carousel: boolean;
     settings: Required<Defaults>;
     container: HTMLElement;
@@ -40,7 +39,11 @@ export default function getBase() {
     inits: Array<() => void>;
     destroys: Array<() => void>;
     counter = 0;
-
+    slideNext: (dur?: number) => Promise<void>;
+    slidePrev: (dur?: number) => Promise<void>;
+    slideBy: (dist?: number) => Promise<void>;
+    slideTo: (to?: number) => Promise<void>;
+    init: () => void;
     constructor(settings: Defaults) {
       this.settings = extend(settings);
       this.container = document.getElementById(settings.container) as HTMLElement;
@@ -111,7 +114,7 @@ export default function getBase() {
   };
 }
 
-interface BaseI {
+export interface SliderI {
   carousel?: any;
   settings: Required<Defaults>;
   container: HTMLElement;
@@ -128,13 +131,12 @@ interface BaseI {
   setTransition(dur: number): void;
   clearTransition(): void;
   destroy(): void;
-}
-
-export interface SliderI extends BaseI {
+  getProperty(el: HTMLElement, elProp: string): number;
   slideNext(dur?: number): Promise<void>;
   slidePrev(dur?: number): Promise<void>;
   slideBy(dist?: number): Promise<void>;
   slideTo(to?: number): Promise<void>;
+  init(): void;
 }
 
 export interface PositionStore {
