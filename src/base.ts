@@ -1,12 +1,6 @@
-/** import default settings + types */
-import extend, { Defaults } from "./defaults";
-
 /** copies methods and properties from mixin classes to the derived class
  * it is a modified version of the function here: {@link https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern}
  */
-//interface setup {
-//(c1:K,c2:T)=>SliderI & K&T
-//}
 export function setup<K, L, M, N>(
   ...constructors: [K, L, M, N] | [K, L, M] | [K, L, M] | [K, L] | [K]
 ): new (settings: Defaults) => SliderI & K & L & M & N {
@@ -25,14 +19,59 @@ export function setup<K, L, M, N>(
   });
   return base as new (settings: Defaults) => SliderI & K & L & M & N;
 }
+/**
+ * Defaults
+ */
 
+const defaults = {
+  easing: "ease",
+  container: "",
+  transitionSpeed: 300,
+  initialSlide: 0,
+  plugins: [],
+};
+type RequiredBy<K, T extends keyof K> = Omit<Partial<K>, "plugins"> & Pick<K, T> & { plugins: Array<() => void> };
+type Defaults = RequiredBy<typeof defaults, "container">;
+
+/**
+ * the interface for the base
+ */
+
+export interface SliderI {
+  carousel?: any;
+  settings: Required<Defaults>;
+  container: HTMLElement;
+  slides: HTMLCollectionOf<HTMLElement>;
+  pos: { start: number; x1: number; x2: number; y1: number; y2: number };
+  slideWidth: number;
+  slideDisplay: number;
+  counter: number;
+  plugins: Record<string, any>;
+  getTransX(): number;
+  calcSlideWidth(): number;
+  transform(dist: number): void;
+  transformAbsolute(Absolutedist: number): void;
+  setTransition(dur: number): void;
+  clearTransition(): void;
+  destroy(): void;
+  getProperty(el: HTMLElement, elProp: string): number;
+  slideNext(dur?: number): Promise<void>;
+  slidePrev(dur?: number): Promise<void>;
+  slideBy(dist?: number): Promise<void>;
+  slideTo(to?: number): Promise<void>;
+  init(): void;
+}
+
+/**
+ * the base class
+ */
 export default function getBase(): new (settings: Defaults) => SliderI {
   return class implements SliderI {
     carousel: boolean;
     settings: Required<Defaults>;
     container: HTMLElement;
     slides: HTMLCollectionOf<HTMLElement>;
-    pos: PositionStore = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
+    pos = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
     slideWidth: number;
     slideDisplay: number;
     plugins: Record<string, any> = {};
@@ -45,7 +84,8 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     slideTo: (to?: number) => Promise<void>;
     init: () => void;
     constructor(settings: Defaults) {
-      this.settings = extend(settings);
+      this.settings = { ...defaults, ...settings } as Required<Defaults>;
+      console.log(this.settings);
       this.container = document.getElementById(settings.container) as HTMLElement;
       this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
       this.container.style.setProperty("--number-of-slides", this.slides.length.toString());
@@ -112,37 +152,4 @@ export default function getBase(): new (settings: Defaults) => SliderI {
       this.transform(0);
     }
   };
-}
-
-export interface SliderI {
-  carousel?: any;
-  settings: Required<Defaults>;
-  container: HTMLElement;
-  slides: HTMLCollectionOf<HTMLElement>;
-  pos: PositionStore;
-  slideWidth: number;
-  slideDisplay: number;
-  counter: number;
-  plugins: Record<string, any>;
-  getTransX(): number;
-  calcSlideWidth(): number;
-  transform(dist: number): void;
-  transformAbsolute(Absolutedist: number): void;
-  setTransition(dur: number): void;
-  clearTransition(): void;
-  destroy(): void;
-  getProperty(el: HTMLElement, elProp: string): number;
-  slideNext(dur?: number): Promise<void>;
-  slidePrev(dur?: number): Promise<void>;
-  slideBy(dist?: number): Promise<void>;
-  slideTo(to?: number): Promise<void>;
-  init(): void;
-}
-
-export interface PositionStore {
-  start: number;
-  x1: number;
-  x2: number;
-  y1: number;
-  y2: number;
 }
