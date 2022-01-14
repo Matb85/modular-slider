@@ -25,26 +25,18 @@ const Noloop = {
       }, dur);
     });
   },
-  slideNext(
-    this: Noloop,
-    //  dist = Math.ceil((this.pos.start - this.getTransX()) / this.slideWidth),
-    dur = this.settings.transitionSpeed
-  ): Promise<void> {
-    return this.base(Math.ceil((this.pos.start - this.getTransX()) / this.slideWidth), dur);
+  slideNext(this: Noloop, dur = this.settings.transitionSpeed): Promise<void> {
+    return this.base(Math.ceil((this.pos.start - this.getTransX()) / this.slideWidth) || 1, dur);
   },
-  slidePrev(
-    this: Noloop,
-    //  dist = Math.floor((this.pos.start - this.getTransX()) / this.slideWidth),
-    dur = this.settings.transitionSpeed
-  ): Promise<void> {
-    return this.base(Math.floor((this.pos.start - this.getTransX()) / this.slideWidth), dur);
+  slidePrev(this: Noloop, dur = this.settings.transitionSpeed): Promise<void> {
+    return this.base(Math.floor((this.pos.start - this.getTransX()) / this.slideWidth) || 1, dur);
   },
-  slideTo(this: Noloop, to = 0): Promise<void> {
-    return this.slideBy(to - Math.abs(this.counter));
+  slideTo(this: Noloop, to = 0, dur?: number): Promise<void> {
+    return this.slideBy(to - Math.abs(this.counter), dur);
   },
-  slideBy(this: Noloop, dist = 0): Promise<void> {
+  slideBy(this: Noloop, dist = 0, dur?: number): Promise<void> {
     if (dist === 0) return new Promise<void>(resolve => resolve());
-    return this.base(dist);
+    return this.base(dist, dur);
   },
 } as Noloop;
 

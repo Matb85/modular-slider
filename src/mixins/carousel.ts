@@ -105,10 +105,14 @@ const Carousel = {
   slidePrev(this: Carousel, dur = this.settings.transitionSpeed): Promise<void> {
     return this.base(-1, dur, () => this.moveback());
   },
-  slideTo(this: Carousel, to = 0): Promise<void> {
-    return this.slideBy(to - this.counter);
+  slideTo(this: Carousel, to = 0, dur?: number): Promise<void> {
+    return this.slideBy(to - this.counter, dur);
   },
-  slideBy(this: Carousel, dist = 0): Promise<void> {
+  slideBy(
+    this: Carousel,
+    dist = 0,
+    dur = this.settings.transitionSpeed * (Math.abs(dist) / this.slides.length + 1)
+  ): Promise<void> {
     /** an "early" return to avoid unnecessary burden if dist == 0 */
     if (dist === 0) return new Promise<void>(resolve => resolve());
     /** if dist == 1 || dist == -1 return a much simpler method*/
@@ -116,7 +120,6 @@ const Carousel = {
       if (dist > 0) return this.slideNext();
       else return this.slidePrev();
     }
-    const dur = this.settings.transitionSpeed * (Math.abs(dist) / this.slides.length + 1);
     /** mock some touchEvent/mouseEvent data */
     this.pos.x1 = dist;
     this.pos.start = this.getTransX();

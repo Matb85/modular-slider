@@ -57,8 +57,8 @@ export interface SliderI {
   getProperty(el: HTMLElement, elProp: string): number;
   slideNext(dur?: number): Promise<void>;
   slidePrev(dur?: number): Promise<void>;
-  slideBy(dist?: number): Promise<void>;
-  slideTo(to?: number): Promise<void>;
+  slideBy(dist: number, dur?: number): Promise<void>;
+  slideTo(to: number, dur?: number): Promise<void>;
   init(): void;
 }
 
