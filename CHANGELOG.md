@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/Matb85/modular-slider/compare/v0.6.0...v0.6.1) (2022-01-14)
+
+
+### Bug Fixes
+
+* :bug: properly destroy the handler function in constructor ([78a7d3e](https://github.com/Matb85/modular-slider/commit/78a7d3e66ca7892a41e836bb946e1ebc088ad1d3))
+
 ## [0.6.0](https://github.com/Matb85/modular-slider/compare/v0.5.5...v0.6.0) (2021-10-30)
 
 
