@@ -96,7 +96,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
         this.slideDisplay = this.getSlidesPerView();
       };
       window.addEventListener("resize", handler);
-      this.container.addEventListener("destroy", () => this.container.removeEventListener("resize", handler));
+      this.container.addEventListener("destroy", () => window.removeEventListener("resize", handler));
 
       /** initiate mixins */
       for (const init of this.inits) init.call(this);
