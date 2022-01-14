@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/Matb85/modular-slider/compare/v0.6.1...v0.6.2) (2022-01-14)
+
+
+### Features
+
+* :sparkles: add optional duration for every slide method ([ae01b53](https://github.com/Matb85/modular-slider/commit/ae01b534cfb507ce11d8b44b31f31aa3189e18bd))
+
 ### [0.6.1](https://github.com/Matb85/modular-slider/compare/v0.6.0...v0.6.1) (2022-01-14)
 
 
