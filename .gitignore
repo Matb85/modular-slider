@@ -3,3 +3,7 @@ node_modules
 /assets/imgs
 
 dist
+
+docs/bundle.css
+
+docs/bundle.js
