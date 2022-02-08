@@ -7,7 +7,7 @@ export default {
   input: "src/index.ts",
   output: {
     format: "esm",
-    file: "dist/modular-slider.js",
+    file: "dist/modular-slider.mjs",
     name: "modular-slider",
   },
   plugins: [
