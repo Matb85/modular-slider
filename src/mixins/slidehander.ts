@@ -8,7 +8,13 @@ const SlideHandler = {
     const handler = (pEvent: PointerEvent) => pointerDown.call(this, pEvent);
     this.container.addEventListener("pointerdown", handler, { once: true });
     /** remove the pointer down event listener when destroying */
-    this.container.addEventListener("destroy", () => this.container.removeEventListener("pointerdown", handler));
+    this.container.addEventListener(
+      "destroy",
+      () => {
+        this.container.removeEventListener("pointerdown", handler);
+      },
+      { once: true }
+    );
   },
 };
 export default SlideHandler;

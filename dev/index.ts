@@ -1,4 +1,4 @@
-import { setup, Slidehandler, Carousel, buttons, pagination, lazyloading } from "../src/index.js";
+import { setup, Slidehandler, Carousel, autoplay, buttons, pagination, lazyloading } from "../src/index.js";
 import "./main.css";
 
 const Slider = setup(Carousel, Slidehandler);
@@ -8,7 +8,7 @@ let slider = new Slider({
   container: "first-slider",
   transitionSpeed: 400,
   plugins: [
-    // autoplay(),
+    autoplay(1000),
     buttons({ nextBtn: "#next", prevBtn: "#prev" }),
     pagination({
       container: ".slider-pagination",
