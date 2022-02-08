@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/Matb85/modular-slider/compare/v0.6.4...v0.7.0) (2022-02-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **plugins:** :art: make plugins use the new custom events
+* **mixins:** :boom: sliderhandler.ts - introduce new custom events
+
+### Enhancements
+
+* **mixins:** :art: carousel.ts - improve readability ([ea7043e](https://github.com/Matb85/modular-slider/commit/ea7043e3d31204f96f3d51d54f0f7de115a9ac4b))
+* **mixins:** :boom: sliderhandler.ts - introduce new custom events ([8d54ebf](https://github.com/Matb85/modular-slider/commit/8d54ebf628d98c606ba723db8be222ad4ae082a9))
+* **plugins:** :art: make plugins use the new custom events ([fa1c1a3](https://github.com/Matb85/modular-slider/commit/fa1c1a379ed03b33f7f2fa090cb8aa38ae14c40b))
+
 ### [0.6.4](https://github.com/Matb85/modular-slider/compare/v0.6.3...v0.6.4) (2022-02-08)
 
 ### [0.6.3](https://github.com/Matb85/modular-slider/compare/v0.6.2...v0.6.3) (2022-02-08)
