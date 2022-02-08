@@ -146,3 +146,5 @@ Modular Slider by design encourages users to enhance it. Don't like the event ha
 ## Keep in mind
 
 These are the early days of this project, it hasn't reached v1 (stable version) yet, therefore there might be some breaking changes before releasing 1.0.0. :monocle_face::adhesive_bandage::boom:
+
+## [See the changelog here](https://github.com/Matb85/modular-slider/blob/master/CHANGELOG.md)
