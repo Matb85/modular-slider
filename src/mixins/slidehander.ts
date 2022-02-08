@@ -23,10 +23,12 @@ function pointerDown(this: SliderI, pEvent: PointerEvent) {
   this.pos.x2 = pEvent.clientX;
   switch (pEvent.pointerType) {
     case "mouse":
+      this.container.dispatchEvent(new CustomEvent("pointerdragstart", {}));
       document.onmousemove = mEvent => mouseMove.call(this, mEvent);
       document.onmouseup = () => dragstop.call(this);
       break;
     case "touch":
+      this.container.dispatchEvent(new CustomEvent("pointerdragstart", {}));
       document.ontouchmove = tEvent => touchMove.call(this, tEvent);
       document.ontouchend = () => dragstop.call(this);
       break;
@@ -54,7 +56,7 @@ async function dragstop(this: SliderI) {
   document.ontouchmove = null;
   document.ontouchend = null;
   document.onmouseup = null;
-  this.container.dispatchEvent(new CustomEvent("dragstop", {}));
+  this.container.dispatchEvent(new CustomEvent("pointerdragend", {}));
   this.container.onpointerdown = null;
   if (this.pos.start != this.getTransX()) {
     if (this.pos.start > this.getTransX()) await this.slideNext();
