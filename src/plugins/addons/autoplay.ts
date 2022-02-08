@@ -2,34 +2,47 @@ import type { SliderI } from "@/base";
 
 export default (interval = 5000) =>
   function autoplay(this: SliderI) {
-    let ispaused = false;
+    /** setup */
+    let isrunning = false;
     let autoplay: ReturnType<typeof setInterval>;
-    const setAutoplay = () => {
-      if (!ispaused)
+    /** the api */
+    const controls = {
+      pause: () => {
+        clearInterval(autoplay);
+        isrunning = false;
+      },
+      resume: () => {
+        if (isrunning) return;
         autoplay = setInterval(async () => {
           await this.slideNext();
           this.container.dispatchEvent(new CustomEvent("transitionend", {}));
         }, interval);
+        isrunning = true;
+      },
     };
-    setAutoplay();
-    this.container.addEventListener("pointerdown", () => clearInterval(autoplay));
-    this.container.addEventListener("dragstop", () => setAutoplay());
+    /** start */
+    controls.resume();
+    /** setup the necessary listeners to prevent UX issues when dragging */
+    this.container.addEventListener("pointerdown", () => controls.pause());
+    this.container.addEventListener("dragstop", () => controls.resume());
     /** pause autoplay when the page is hidden */
     document.addEventListener("visibilitychange", function () {
-      if (ispaused == true) return;
-      if (document.hidden) clearInterval(autoplay);
-      else setAutoplay();
+      if (document.hidden) {
+        controls.pause();
+      } else {
+        controls.resume();
+      }
     });
     /** clear interval when destroying */
-    this.container.addEventListener("destroy", () => clearInterval(autoplay));
-    return {
-      pause: () => {
+    this.container.addEventListener(
+      "destroy",
+      () => {
         clearInterval(autoplay);
-        ispaused = true;
+        this.container.removeEventListener("pointerdown", () => controls.pause());
+        this.container.removeEventListener("dragstop", () => controls.resume());
       },
-      resume: () => {
-        ispaused = false;
-        setAutoplay();
-      },
-    };
+      { once: true }
+    );
+
+    return controls;
   };
