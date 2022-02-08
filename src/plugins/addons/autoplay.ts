@@ -8,12 +8,15 @@ export default (interval = 5000) =>
     /** the api */
     const controls = {
       pause: () => {
+        console.log("pause");
         clearInterval(autoplay);
         isrunning = false;
       },
       resume: () => {
+        console.log("resume");
         if (isrunning) return;
         autoplay = setInterval(async () => {
+          this.container.dispatchEvent(new CustomEvent("pointerdragstart", {}));
           await this.slideNext();
           this.container.dispatchEvent(new CustomEvent("transitionend", {}));
         }, interval);
@@ -23,8 +26,10 @@ export default (interval = 5000) =>
     /** start */
     controls.resume();
     /** setup the necessary listeners to prevent UX issues when dragging */
-    this.container.addEventListener("pointerdown", () => controls.pause());
-    this.container.addEventListener("dragstop", () => controls.resume());
+    this.container.addEventListener("pointerdragstart", () => controls.pause());
+    this.container.addEventListener("transitionend", () => {
+      controls.resume();
+    });
     /** pause autoplay when the page is hidden */
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) {
@@ -38,8 +43,8 @@ export default (interval = 5000) =>
       "destroy",
       () => {
         clearInterval(autoplay);
-        this.container.removeEventListener("pointerdown", () => controls.pause());
-        this.container.removeEventListener("dragstop", () => controls.resume());
+        this.container.removeEventListener("pointerdragstart", () => controls.pause());
+        this.container.removeEventListener("transitionend", () => controls.resume());
       },
       { once: true }
     );
