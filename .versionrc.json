@@ -1,0 +1,12 @@
+{
+  "types": [
+    { "type": "feat", "section": "Enhancements" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "chore", "hidden": true },
+    { "type": "docs", "hidden": true },
+    { "type": "style", "hidden": true },
+    { "type": "refactor", "section": "Enhancements" },
+    { "type": "perf", "section": "Enhancements" },
+    { "type": "test", "hidden": true }
+  ]
+}
