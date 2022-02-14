@@ -13,7 +13,7 @@ Modular Slider aims to deliver just what you want, while using the best of EcmaS
 - :boom: supports SSR - tested in Nuxt.js
 
 **Prease Note:**
-**this package ships in the es2017 format, therefore you may need to use a transpiler for production**
+**this package uses the @babel/env preset for transpiling, see the current target in the browserlist field in [package.json](https://github.com/Matb85/modular-slider/blob/master/package.json)**
 
 ### Architecture
 
