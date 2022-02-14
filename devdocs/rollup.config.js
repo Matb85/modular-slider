@@ -7,6 +7,7 @@ import postcss from "rollup-plugin-postcss";
 import alias from "@rollup/plugin-alias";
 import { terser } from "rollup-plugin-terser";
 import babel from "rollup-plugin-babel";
+import strip from "@rollup/plugin-strip";
 
 export default {
   input: "devdocs/index.ts",
@@ -34,5 +35,6 @@ export default {
     }),
     babel({ exclude: "./node_modules/**" }),
     terser(),
+    strip({ include: ["**/*.js", "**/*.ts", "**/*.svelte"] }),
   ],
 };
