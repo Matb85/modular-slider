@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/Matb85/modular-slider/compare/v0.7.0...v0.7.1) (2022-02-14)
+
+
+### Enhancements
+
+* :mute: remove logs in production ([b83fe62](https://github.com/Matb85/modular-slider/commit/b83fe627928742b62ee9753aa301f05fb5f84e0a))
+
 ## [0.7.0](https://github.com/Matb85/modular-slider/compare/v0.6.4...v0.7.0) (2022-02-08)
 
 
