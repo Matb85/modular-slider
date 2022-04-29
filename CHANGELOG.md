@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/Matb85/modular-slider/compare/v0.7.1...v0.8.0) (2022-04-29)
+
+
+### Bug Fixes
+
+* :memo: docs - fix file paths ([80b5fbe](https://github.com/Matb85/modular-slider/commit/80b5fbe07442ea1f47ba649f9bebaa579ba1f4e7))
+
+
+### Enhancements
+
+* :construction_worker: use vite for bundling ([6280ef0](https://github.com/Matb85/modular-slider/commit/6280ef0cadcb80482446830559e2d3cb5fa7eaca))
+* :memo: use vite for docs ([16c57aa](https://github.com/Matb85/modular-slider/commit/16c57aab2a5f6485d94543bb0e89541e5496f0e7))
+* :zap: start using the ismoving property ([c9f8fe7](https://github.com/Matb85/modular-slider/commit/c9f8fe7ee5a6430ed19704424508318c22c5fa28))
+* **plugins:** :recycle: refactor autoplay.ts ([cd8f3a8](https://github.com/Matb85/modular-slider/commit/cd8f3a8dbbfcd2be415533cb00190731fabcec00))
+
 ### [0.7.1](https://github.com/Matb85/modular-slider/compare/v0.7.0...v0.7.1) (2022-02-14)
 
 
