@@ -1,7 +1,3 @@
-:root {
-  --slide-margin: 0px;
-}
-
 .ms-outer-con {
   overflow: hidden; /* hide the slides that should be out of view*/
 }
@@ -11,8 +7,8 @@
 }
 .ms-outer-con .ms-inner-con > * {
   flex: 0 0 auto;
-  margin-left: var(--slide-margin);
-  margin-right: var(--slide-margin);
+  margin-left: var(--slide-margin, 0px);
+  margin-right: var(--slide-margin, 0px);
 }
 .ms-outer-con .ms-inner-con > *,
 .ms-outer-con .ms-inner-con > * img {
@@ -28,7 +24,7 @@
     they can be put in this element or in the :root 
   */
 .ms-outer-con:not(.width-in-percentage) {
-  width: calc((var(--slide-width) + 2 * var(--slide-margin)) * var(--slides-per-view));
+  width: calc((var(--slide-width) + 2 * var(--slide-margin, 0px)) * var(--slides-per-view));
 }
 .ms-outer-con:not(.width-in-percentage) .ms-inner-con > * {
   width: var(--slide-width);
@@ -45,13 +41,13 @@
   width: calc(100% * var(--number-of-slides) / var(--slides-per-view));
 }
 .ms-outer-con.width-in-percentage .ms-inner-con > * {
-  width: calc((100%) / var(--number-of-slides) - 2 * var(--slide-margin));
+  width: calc((100%) / var(--number-of-slides) - 2 * var(--slide-margin, 0px));
 }
 
 .ms-outer-con .ms-inner-con > * {
   --translate-factor: 0;
   transform: translate3d(
-    calc((100% + 2 * var(--slide-margin)) * var(--number-of-slides) * var(--translate-factor)),
+    calc((100% + 2 * var(--slide-margin, 0px)) * var(--number-of-slides) * var(--translate-factor)),
     0,
     0
   );
