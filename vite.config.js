@@ -9,9 +9,10 @@ const alias = {
   "~": process.cwd() + "/devdocs",
 };
 
-export default defineConfig(() => {
+export default defineConfig(({ command }) => {
   if (process.env.TARGET == "DOCS")
     return {
+      base: command == "build" ? "/modular-slider/" : "/",
       plugins: [svelte()],
       resolve: { dedupe, alias },
       root: "./devdocs",

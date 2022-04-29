@@ -4,7 +4,7 @@
   "license": "ISC",
   "description": "A zero dependency slider with a modular approach, written in Typescript",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "TARGET=DOCS vite dev",
     "build": "vite build",
     "build:docs": "TARGET=DOCS vite build",
     "release": "standard-version",
@@ -13,11 +13,6 @@
     "prepare": "husky install",
     "prepublishOnly": "npm run build"
   },
-  "browserslist": [
-    ">0.25%",
-    "not ie 11",
-    "not op_mini all"
-  ],
   "main": "dist/modular-slider.es.mjs",
   "files": [
     "dist/*"
