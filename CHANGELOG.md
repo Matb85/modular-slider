@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.1](https://github.com/Matb85/modular-slider/compare/v0.8.0...v0.8.1) (2022-04-29)
+
+
+### Bug Fixes
+
+* :lipstick: css env bugs ([e8cfef9](https://github.com/Matb85/modular-slider/commit/e8cfef94d72da88d356741730de6dca1420a1b1a))
+* **plugins:** :bug: fix slidePrev in noLoop.ts ([ffcaccf](https://github.com/Matb85/modular-slider/commit/ffcaccfd879e0ea6609169d01d13f9c52dc049a3))
+
 ## [0.8.0](https://github.com/Matb85/modular-slider/compare/v0.7.1...v0.8.0) (2022-04-29)
 
 
