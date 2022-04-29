@@ -1,7 +1,5 @@
 node_modules
 
-/assets/imgs
-
-dist
+assets
 
 docs

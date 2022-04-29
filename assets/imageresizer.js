@@ -24,7 +24,7 @@ for (const img of images) {
   for (const spec of specification) {
     sharp(__dirname + img.path)
       .resize(Object.assign(defaults, spec))
-      .toFile(__dirname + "/imgs/" + spec.prefix + img.name)
+      .toFile(process.cwd() + "/devdocs/public/assets/" + spec.prefix + img.name)
       .catch(err => console.error(err));
   }
 }
