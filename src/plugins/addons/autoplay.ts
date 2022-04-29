@@ -15,21 +15,23 @@ export default (interval = 5000) =>
       resume: () => {
         console.log("resume");
         if (isrunning) return;
-        autoplay = setInterval(async () => {
-          this.container.dispatchEvent(new CustomEvent("pointerdragstart", {}));
-          await this.slideNext();
-          this.container.dispatchEvent(new CustomEvent("transitionend", {}));
-        }, interval);
+        autoplay = setInterval(async () => await this.slideNext(), interval);
         isrunning = true;
       },
     };
-    /** start */
-    controls.resume();
-    /** setup the necessary listeners to prevent UX issues when dragging */
-    this.container.addEventListener("pointerdragstart", () => controls.pause());
-    this.container.addEventListener("transitionend", () => {
-      controls.resume();
-    });
+    /** start when the slider is visible */
+    const observer = new IntersectionObserver(
+      entries => {
+        const entry = entries[0];
+        if (!entry.isIntersecting) return;
+        controls.resume();
+        observer.unobserve(this.container);
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(this.container);
+
     /** pause autoplay when the page is hidden */
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) {
@@ -38,16 +40,9 @@ export default (interval = 5000) =>
         controls.resume();
       }
     });
+
     /** clear interval when destroying */
-    this.container.addEventListener(
-      "destroy",
-      () => {
-        clearInterval(autoplay);
-        this.container.removeEventListener("pointerdragstart", () => controls.pause());
-        this.container.removeEventListener("transitionend", () => controls.resume());
-      },
-      { once: true }
-    );
+    this.container.addEventListener("destroy", () => clearInterval(autoplay), { once: true });
 
     return controls;
   };
