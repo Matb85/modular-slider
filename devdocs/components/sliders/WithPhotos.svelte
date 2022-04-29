@@ -1,4 +1,4 @@
-<h3 class="header-3">A slider with photo laz-loading</h3>
+<h3 class="header-3">A slider with photo lazy-loading</h3>
 <section class="ms-outer-con mx-auto">
   <div id="slider-with-photos" class="ms-inner-con blue-items">
     <div class="img-con">
