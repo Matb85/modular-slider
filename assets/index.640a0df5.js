@@ -40,7 +40,7 @@ new Slider({
     plugins: [
         autoplay(3000),
     ]
-});`,i,s,a,c]}class fn extends G{constructor(e){super(),V(this,e,dn,un,Z,{code:0})}get code(){return this.$$.ctx[0]}}function hn(t){let e;return{c(){e=W(t[0])},m(n,s){_(n,e,s)},p:L,d(n){n&&w(e)}}}function pn(t){let e,n,s,i,l,a;return l=new ne({props:{$$slots:{default:[hn]},$$scope:{ctx:t}}}),{c(){e=C("h3"),e.textContent="A slider with photo laz-loading",n=A(),s=C("section"),s.innerHTML=`<div id="slider-with-photos" class="ms-inner-con blue-items"><div class="img-con svelte-1xh8jyq"><img class="ms-lazy svelte-1xh8jyq" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="birds"/></div> 
+});`,i,s,a,c]}class fn extends G{constructor(e){super(),V(this,e,dn,un,Z,{code:0})}get code(){return this.$$.ctx[0]}}function hn(t){let e;return{c(){e=W(t[0])},m(n,s){_(n,e,s)},p:L,d(n){n&&w(e)}}}function pn(t){let e,n,s,i,l,a;return l=new ne({props:{$$slots:{default:[hn]},$$scope:{ctx:t}}}),{c(){e=C("h3"),e.textContent="A slider with photo lazy-loading",n=A(),s=C("section"),s.innerHTML=`<div id="slider-with-photos" class="ms-inner-con blue-items"><div class="img-con svelte-1xh8jyq"><img class="ms-lazy svelte-1xh8jyq" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="birds"/></div> 
     <div class="img-con svelte-1xh8jyq"><img class="ms-lazy svelte-1xh8jyq" src="./assets/thumbnail_gorge.jpg" data-src="./assets/gorge.jpg" alt="gorge"/></div> 
     <div class="img-con svelte-1xh8jyq"><img class="ms-lazy svelte-1xh8jyq" src="./assets/thumbnail_mountains.jpg" data-src="./assets/mountains.jpg" alt="mountains"/></div> 
     <div class="img-con svelte-1xh8jyq"><img class="ms-lazy svelte-1xh8jyq" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="bird"/></div> 
