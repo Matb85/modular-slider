@@ -21,7 +21,7 @@
   </filter>
 </svg>
 
-<script>
+<script lang="ts">
 import Navbar from "~/components/Navbar.svelte";
 import HeroHeader from "~/components/HeroHeader.svelte";
 import Basic from "~/components/sliders/Basic.svelte";

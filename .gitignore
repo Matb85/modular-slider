@@ -4,6 +4,4 @@ node_modules
 
 dist
 
-docs/bundle.css
-
-docs/bundle.js
+docs

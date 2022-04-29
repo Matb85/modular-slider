@@ -12,7 +12,7 @@
 </section>
 <SliderCode>{code}</SliderCode>
 
-<script lang="ts">
+<script>
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount } from "svelte";
 import Slider from "../factories/carouselFactory";
@@ -21,7 +21,7 @@ import { autoplay } from "@/index";
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
 let ispaused = false;
-let slider: any;
+let slider;
 function pause() {
   slider.plugins.autoplay.pause();
   ispaused = true;
