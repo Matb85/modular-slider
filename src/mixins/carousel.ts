@@ -41,7 +41,6 @@ const Carousel = {
      * this mixin uses this.carousel for maintaining reference of the current slide
      * therefore this.counter has just a getter that interprets this.carousel and returns the real value
      */
-    console.log(this.slides);
     Object.defineProperty(this, "counter", {
       get(): number {
         return this.carousel <= 0 ? Math.abs(this.carousel) : this.slides.length - Math.abs(this.carousel);

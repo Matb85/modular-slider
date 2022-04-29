@@ -85,7 +85,6 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     init: () => void;
     constructor(settings: Defaults) {
       this.settings = { ...defaults, ...settings } as Required<Defaults>;
-      console.log(this.settings);
       this.container = document.getElementById(settings.container) as HTMLElement;
       this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
       this.container.style.setProperty("--number-of-slides", this.slides.length.toString());

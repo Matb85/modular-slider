@@ -8,12 +8,10 @@ export default (interval = 5000) =>
     /** the api */
     const controls = {
       pause: () => {
-        console.log("pause");
         clearInterval(autoplay);
         isrunning = false;
       },
       resume: () => {
-        console.log("resume");
         if (isrunning) return;
         autoplay = setInterval(async () => await this.slideNext(), interval);
         isrunning = true;
