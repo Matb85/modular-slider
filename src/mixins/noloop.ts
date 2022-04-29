@@ -27,6 +27,7 @@ const Noloop = {
       setTimeout(() => {
         this.clearTransition();
         this.ismoving = false;
+        this.pos.start = this.getTransX();
         resolve();
       }, dur);
     });
@@ -35,7 +36,7 @@ const Noloop = {
     return this.base(Math.ceil((this.pos.start - this.getTransX()) / this.slideWidth) || 1, dur);
   },
   slidePrev(this: Noloop, dur = this.settings.transitionSpeed): Promise<void> {
-    return this.base(Math.floor((this.pos.start - this.getTransX()) / this.slideWidth) || 1, dur);
+    return this.base(Math.floor((this.pos.start - this.getTransX()) / this.slideWidth) || -1, dur);
   },
   slideTo(this: Noloop, to = 0, dur?: number): Promise<void> {
     return this.slideBy(to - Math.abs(this.counter), dur);
