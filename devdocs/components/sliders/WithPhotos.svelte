@@ -2,19 +2,19 @@
 <section class="ms-outer-con mx-auto">
   <div id="slider-with-photos" class="ms-inner-con blue-items">
     <div class="img-con">
-      <img class="ms-lazy" src="/assets/thumbnail_bird.jpg" data-src="/assets/bird.jpg" alt="birds" />
+      <img class="ms-lazy" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="birds" />
     </div>
     <div class="img-con">
-      <img class="ms-lazy" src="/assets/thumbnail_gorge.jpg" data-src="/assets/gorge.jpg" alt="gorge" />
+      <img class="ms-lazy" src="./assets/thumbnail_gorge.jpg" data-src="./assets/gorge.jpg" alt="gorge" />
     </div>
     <div class="img-con">
-      <img class="ms-lazy" src="/assets/thumbnail_mountains.jpg" data-src="/assets/mountains.jpg" alt="mountains" />
+      <img class="ms-lazy" src="./assets/thumbnail_mountains.jpg" data-src="./assets/mountains.jpg" alt="mountains" />
     </div>
     <div class="img-con">
-      <img class="ms-lazy" src="/assets/thumbnail_bird.jpg" data-src="/assets/bird.jpg" alt="bird" />
+      <img class="ms-lazy" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="bird" />
     </div>
     <div class="img-con">
-      <img class="ms-lazy" src="/assets/thumbnail_gorge.jpg" data-src="/assets/gorge.jpg" alt="gorge" />
+      <img class="ms-lazy" src="./assets/thumbnail_gorge.jpg" data-src="./assets/gorge.jpg" alt="gorge" />
     </div>
   </div>
 </section>
