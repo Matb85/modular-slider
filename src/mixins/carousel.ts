@@ -131,13 +131,10 @@ const Carousel = {
     this.pos.x1 = dist;
     this.pos.start = this.getTransX();
     /** mock the "moving" event usually fired by the touchmove/mousemove handler */
-    let iscompleted = false;
-    const animate = () => {
+    const animate = setInterval(() => {
       this.container.dispatchEvent(new CustomEvent("moving"));
-      if (!iscompleted) window.requestAnimationFrame(animate);
-    };
-    window.requestAnimationFrame(animate);
-    setTimeout(() => (iscompleted = true), dur);
+    }, 10);
+    setTimeout(() => clearInterval(animate), dur);
     /** finally return the right promise
      * note: its callback depends on the direction */
     if (dist > 0) return this.base(dist, dur, () => this.movefor());
