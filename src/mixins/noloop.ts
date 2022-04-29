@@ -12,6 +12,11 @@ const Noloop = {
   },
   base(this: Noloop, dist: number, dur = this.settings.transitionSpeed): Promise<void> {
     return new Promise(resolve => {
+      if (this.ismoving === true) {
+        resolve();
+        return;
+      }
+      this.ismoving = true;
       this.counter -= dist;
       if (this.counter > 0) this.counter = 0;
       if (this.counter < -1 * (this.slides.length - this.slideDisplay))
@@ -21,6 +26,7 @@ const Noloop = {
       this.transform(this.counter);
       setTimeout(() => {
         this.clearTransition();
+        this.ismoving = false;
         resolve();
       }, dur);
     });

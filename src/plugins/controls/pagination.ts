@@ -24,7 +24,6 @@ export default (options: Options) =>
     }
     /** a function for updating the dot that represents the current slide */
     const updatePagination = () => {
-      addDotClickHandler();
       const curdot = dots[Math.abs(this.counter)];
       const curdotID = parseInt(curdot.dataset.id as string);
       dots.forEach(d => d.classList.remove(...options.addClass));
@@ -36,39 +35,21 @@ export default (options: Options) =>
           if (dots[curdotID - i]) dots[curdotID - i].classList.add(options.addClass[i]);
         }
     };
-    /** utilities for adding/removing the onclick listeners for all the dots */
-    const removeDotClickHandler = () => {
-      console.log("removedots");
-      dots.forEach(d => {
-        d.onclick = null;
-      });
-    };
-    const addDotClickHandler = () => {
-      dots.forEach(d => {
-        d.onclick = async () => {
-          console.log("button clicked" + d);
-          this.container.dispatchEvent(new CustomEvent("pointerdragstart", {}));
-
-          /** update the slider & the pagination */
-          await this.slideTo(parseInt(d.dataset.id as string));
-          updatePagination();
-          this.container.dispatchEvent(new CustomEvent("transitionend", {}));
-        };
-      });
-    };
+    dots.forEach(d => {
+      d.onclick = async () => {
+        /** update the slider & the pagination */
+        await this.slideTo(parseInt(d.dataset.id as string));
+        updatePagination();
+      };
+    });
 
     /** finally start the logic */
     updatePagination();
-    this.container.addEventListener("pointerdragstart", removeDotClickHandler);
-    this.container.addEventListener("transitionend", updatePagination);
 
     /** remove excessive dots when destroying */
     this.container.addEventListener(
       "destroy",
       () => {
-        this.container.addEventListener("pointerdragstart", removeDotClickHandler);
-        this.container.addEventListener("transitionend", updatePagination);
-
         pagcontainer.innerHTML = "";
         pagcontainer.appendChild(dots[0]);
       },

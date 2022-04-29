@@ -88,6 +88,11 @@ const Carousel = {
   },
   base(this: Carousel, dist: number, dur: number, direction: () => void): Promise<void> {
     return new Promise(resolve => {
+      if (this.ismoving === true) {
+        resolve();
+        return;
+      }
+      this.ismoving = true;
       this.setTransition(dur);
       this.transform(this.carousel - dist - 1);
       setTimeout(() => {
@@ -95,6 +100,8 @@ const Carousel = {
         direction();
         /** return to the initial state if the counter has a too big value */
         if (Math.abs(this.carousel) > this.slides.length - 1) this.reset();
+
+        this.ismoving = false;
         resolve();
       }, dur);
     });

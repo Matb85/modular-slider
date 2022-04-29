@@ -21,6 +21,7 @@ export default SlideHandler;
 function pointerDown(this: SliderI, pEvent: PointerEvent) {
   this.pos.start = this.getTransX();
   this.pos.x2 = pEvent.clientX;
+  this.ismoving = true;
   switch (pEvent.pointerType) {
     case "mouse":
       this.container.dispatchEvent(new CustomEvent("pointerdragstart", {}));
@@ -56,6 +57,7 @@ async function dragstop(this: SliderI) {
   document.ontouchmove = null;
   document.ontouchend = null;
   document.onmouseup = null;
+  this.ismoving = false;
   this.container.dispatchEvent(new CustomEvent("pointerdragend", {}));
   this.container.onpointerdown = null;
   if (this.pos.start != this.getTransX()) {

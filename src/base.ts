@@ -22,7 +22,6 @@ export function setup<K, L, M, N>(
 /**
  * Defaults
  */
-
 const defaults = {
   easing: "ease",
   container: "",
@@ -36,7 +35,6 @@ type Defaults = RequiredBy<typeof defaults, "container">;
 /**
  * the interface for the base
  */
-
 export interface SliderI {
   carousel?: any;
   settings: Required<Defaults>;
@@ -46,6 +44,7 @@ export interface SliderI {
   slideWidth: number;
   slideDisplay: number;
   counter: number;
+  ismoving: boolean;
   plugins: Record<string, any>;
   getTransX(): number;
   calcSlideWidth(): number;
@@ -78,6 +77,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     inits: Array<() => void>;
     destroys: Array<() => void>;
     counter = 0;
+    ismoving = false;
     slideNext: (dur?: number) => Promise<void>;
     slidePrev: (dur?: number) => Promise<void>;
     slideBy: (dist?: number) => Promise<void>;
