@@ -120,7 +120,7 @@ const Carousel = {
     dur = this.settings.transitionSpeed * (Math.abs(dist) / this.slides.length + 1)
   ): Promise<void> {
     /** an "early" return to avoid unnecessary burden if dist == 0 */
-    if (dist === 0) return new Promise<void>(resolve => resolve());
+    if (dist === 0 || this.ismoving === true) return new Promise<void>(resolve => resolve());
     /** if dist == 1 || dist == -1 return a much simpler method*/
     if (Math.abs(dist) == 1) {
       if (dist > 0) return this.slideNext();
