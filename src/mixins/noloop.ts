@@ -12,10 +12,8 @@ const Noloop = {
   },
   base(this: Noloop, dist: number, dur = this.settings.transitionSpeed): Promise<void> {
     return new Promise(resolve => {
-      if (this.ismoving === true) {
-        resolve();
-        return;
-      }
+      if (this.ismoving === true) return resolve();
+
       this.ismoving = true;
       this.counter -= dist;
       if (this.counter > 0) this.counter = 0;

@@ -6,7 +6,7 @@
     {/each}
   </div>
 </section>
-<section class="flex justify-center gap-4 mt-4">
+<section class="button-container">
   <button id="prev" class="button">prev</button>
   <button id="next" class="button">next</button>
 </section>
