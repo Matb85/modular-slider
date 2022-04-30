@@ -26,6 +26,14 @@ export default defineConfig(({ command }) => {
     return {
       resolve: { dedupe, alias },
       build: {
+        rollupOptions: {
+          output: {
+            assetFileNames: assetInfo => {
+              if (assetInfo.name == "style.css") return "modular-slider.css";
+              return assetInfo.name;
+            },
+          },
+        },
         lib: { entry, name, formats: ["es"], fileName: format => name + "." + format + ".mjs" },
         outDir: "dist",
       },
