@@ -33,13 +33,21 @@ const Carousel = {
    * to keep the css properties low, reset the if the counter is larger than the amount of slides!
    */
   reset(this: Carousel) {
-    if (this.counter < this.slides.length) return;
+    if (Math.abs(this.carousel) < this.slides.length) return;
+
     for (const slide of this.slides) {
       const factor = this.getProperty(slide, "--translate-factor");
-      slide.style.setProperty("--translate-factor", (factor < 0 ? "-" : "") + (Math.abs(factor) - 1));
+      slide.style.setProperty("--translate-factor", "" + (factor < 0 ? factor + 1 : factor - 1));
     }
-    this.carousel = this.slides.length - (this.counter % this.slides.length);
-    this.transform(-1 * this.counter - 1);
+    if (this.carousel < 0) {
+      this.carousel = this.slides.length + this.carousel;
+
+      this.transformAbsolute(this.getTransX() + this.slides.length * this.slideWidth);
+    } else {
+      this.carousel = Math.abs(this.slides.length - this.carousel);
+
+      this.transformAbsolute(this.getTransX() - this.slides.length * this.slideWidth);
+    }
   },
   /** essential logic & methods */
   init(this: Carousel) {
@@ -50,7 +58,9 @@ const Carousel = {
      */
     Object.defineProperty(this, "counter", {
       get(): number {
-        return this.carousel <= 0 ? Math.abs(this.carousel) : this.slides.length - Math.abs(this.carousel);
+        return this.carousel <= 0
+          ? Math.abs(this.carousel)
+          : this.slides.length - Math.abs(this.carousel % this.slides.length);
       },
     });
     /** duplicate slides if there are less than this.slideDisplay + 2 */
@@ -94,13 +104,11 @@ const Carousel = {
   },
   base(this: Carousel, dist: number, dur: number, direction: () => void): Promise<void> {
     return new Promise(resolve => {
-      if (this.ismoving === true) {
-        resolve();
-        return;
-      }
+      if (this.ismoving === true) return resolve();
       this.ismoving = true;
+
       this.setTransition(dur);
-      this.transformAbsolute(this.pos.start - this.slideWidth * dist);
+      this.transform(this.carousel - dist - 1);
       setTimeout(() => {
         this.clearTransition();
         direction();
@@ -133,20 +141,32 @@ const Carousel = {
       if (dist > 0) return this.slideNext();
       else return this.slidePrev();
     }
+    this.ismoving = true;
     /** mock some touchEvent/mouseEvent data */
     this.pos.x1 = dist;
     this.pos.start = this.getTransX();
     /** mock the "moving" event usually fired by the touchmove/mousemove handler */
     const animate = setInterval(() => {
-      if (Math.abs(this.carousel) > this.slides.length - 1) this.clearTransition();
       this.container.dispatchEvent(new CustomEvent("moving"));
-      this.setTransition(dur);
     }, 10);
     setTimeout(() => clearInterval(animate), dur);
+
     /** finally return the right promise
      * note: its callback depends on the direction */
-    if (dist > 0) return this.base(dist, dur, () => this.movefor());
-    else return this.base(dist, dur, () => this.moveback());
+    return new Promise(resolve => {
+      this.setTransition(dur);
+      this.transformAbsolute(this.pos.start - this.slideWidth * dist);
+      setTimeout(() => {
+        this.clearTransition();
+        if (dist > 0) this.movefor();
+        else this.moveback();
+
+        /** return to the initial state if the counter has a too big value */
+        this.reset();
+        this.ismoving = false;
+        resolve();
+      }, dur);
+    });
   },
 } as Carousel;
 
