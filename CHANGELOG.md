@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.2](https://github.com/Matb85/modular-slider/compare/v0.8.1...v0.8.2) (2022-04-30)
+
+
+### Bug Fixes
+
+* :bento: rename style.css to modular-slider.css ([fd5a23a](https://github.com/Matb85/modular-slider/commit/fd5a23a761a648c27e1cd8cd1d38747b9db54a17))
+
 ### [0.8.1](https://github.com/Matb85/modular-slider/compare/v0.8.0...v0.8.1) (2022-04-29)
 
 
