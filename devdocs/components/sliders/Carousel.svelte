@@ -10,7 +10,7 @@
   <button id="prev" on:click="{() => sl.slidePrev()}" class="button">slider.slidePrev()</button>
   <button id="next" on:click="{() => sl.slideNext()}" class="button">slider.slideNext()</button>
   <button id="next" on:click="{() => sl.slideTo(1)}" class="button">slider.slideTo(1)</button>
-  <button id="next" on:click="{() => sl.slideBy(2)}" class="button">slider.slideBy(2)</button>
+  <button id="next" on:click="{() => sl.slideBy(3)}" class="button">slider.slideBy(3)</button>
   <button id="next" on:click="{() => sl.slideBy(-2)}" class="button">slider.slideBy(-2)</button>
 </section>
 <SliderCode>{code}</SliderCode>
