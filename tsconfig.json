@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "declaration": true,
+    "emitDeclarationOnly": true,
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "importHelpers": true,

@@ -5,11 +5,12 @@
   "description": "A zero dependency slider with a modular approach, written in Typescript",
   "scripts": {
     "dev": "TARGET=DOCS vite dev",
-    "build": "vite build",
+    "build": "vite build && pnpm build:types",
+    "build:types": "tsc",
     "build:docs": "TARGET=DOCS vite build",
     "release": "standard-version",
     "imgs": "node ./assets/imageresizer.js",
-    "lint": "eslint src/** && tsc --noEmit",
+    "lint": "eslint src/** && tsc",
     "prepare": "husky install",
     "prepublishOnly": "npm run build"
   },
