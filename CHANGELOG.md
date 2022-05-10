@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/Matb85/modular-slider/compare/v0.8.6...v0.9.0) (2022-05-10)
+
+
+### Bug Fixes
+
+* :label: fix types ([4369963](https://github.com/Matb85/modular-slider/commit/43699635014a3f4a9b8d140fa10cb874027b9481))
+* **plugins:** :bug: fix pagination ([084d196](https://github.com/Matb85/modular-slider/commit/084d19614810c35df68cf5969f8546b629106073))
+
+
+### Enhancements
+
+* :recycle: apply the event helpers ([f0aa5a9](https://github.com/Matb85/modular-slider/commit/f0aa5a9f198fd6c6898b83ccff13c9f1d6e61a7d))
+* :sparkles: add event helpers ([9405312](https://github.com/Matb85/modular-slider/commit/9405312d1875d2faa399f426f1917f185a283819))
+* :zap: improve the setup function ([77805ec](https://github.com/Matb85/modular-slider/commit/77805eccfc8f8b5f89d8c2ecbd0bd6c8d09720c2))
+
 ### [0.8.6](https://github.com/Matb85/modular-slider/compare/v0.8.5...v0.8.6) (2022-05-05)
 
 
