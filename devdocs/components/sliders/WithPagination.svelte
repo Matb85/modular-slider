@@ -11,16 +11,17 @@
 </section>
 <SliderCode>{code}</SliderCode>
 
-<script lang="ts">
+<script>
 import SliderCode from "~/components/SliderCode.svelte";
-import { onMount } from "svelte";
+import { onMount, onDestroy } from "svelte";
 import Slider from "../factories/carouselFactory";
 import { pagination } from "@/index";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
+let slider;
 onMount(async () => {
-  new Slider({
+  slider = new Slider({
     container: "slider-with-pagination",
     plugins: [
       pagination({
@@ -31,6 +32,7 @@ onMount(async () => {
     ],
   });
 });
+onDestroy(() => slider.destroy());
 
 export const code = `import { setup, Slidehandler, Carousel, pagination } from "modular-slider";
 

@@ -23,7 +23,7 @@
 
 <script>
 import SliderCode from "~/components/SliderCode.svelte";
-import { onMount } from "svelte";
+import { onMount, onDestroy } from "svelte";
 import Slider from "../factories/carouselFactory";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
@@ -35,6 +35,7 @@ onMount(async () => {
     transitionSpeed: 400,
   });
 });
+onDestroy(() => sl.destroy());
 
 export const code = `import { setup, Slidehandler, Carousel } from "modular-slider";
 

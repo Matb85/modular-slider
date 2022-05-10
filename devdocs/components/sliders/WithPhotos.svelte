@@ -37,19 +37,21 @@
 }
 </style>
 
-<script lang="ts">
+<script>
 import SliderCode from "~/components/SliderCode.svelte";
-import { onMount } from "svelte";
+import { onMount, onDestroy } from "svelte";
 import Slider from "../factories/carouselFactory";
 import { lazyloading } from "@/index";
 
+let slider;
 onMount(async () => {
-  new Slider({
+  slider = new Slider({
     container: "slider-with-photos",
     transitionSpeed: 400,
     plugins: [lazyloading()],
   });
 });
+onDestroy(() => slider.destroy());
 
 export const code = `import { setup, Slidehandler, Carousel, lazyloading } from "modular-slider";
 
