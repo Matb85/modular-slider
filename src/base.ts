@@ -9,13 +9,11 @@ export function setup<K, L, M, N>(
   base.prototype.destroys = [];
   constructors.forEach(baseCtor => {
     /** copy the init functions to the inits array */
-    if (Object.hasOwnProperty.call(baseCtor, "init")) {
+    if (Object.hasOwnProperty.call(baseCtor, "init"))
       base.prototype.inits.push(baseCtor["init" as keyof typeof baseCtor]);
-    }
+
     /** copy methods */
-    Object.getOwnPropertyNames(baseCtor).forEach(name => {
-      base.prototype[name] = baseCtor[name as keyof typeof baseCtor];
-    });
+    Object.assign(base.prototype, baseCtor);
   });
   return base as new (settings: Defaults) => SliderI & K & L & M & N;
 }
@@ -29,8 +27,7 @@ const defaults = {
   initialSlide: 0,
   plugins: [],
 };
-type RequiredBy<K, T extends keyof K> = Omit<Partial<K>, "plugins"> & Pick<K, T> & { plugins: Array<() => void> };
-type Defaults = RequiredBy<typeof defaults, "container">;
+type Defaults = Omit<typeof defaults, "plugins"> & { plugins: Array<() => void> };
 
 /**
  * the interface for the base
