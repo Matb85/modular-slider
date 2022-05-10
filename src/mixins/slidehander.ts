@@ -1,23 +1,11 @@
-import type { SliderI } from "@/base";
+import { type SliderI, ONCE } from "@/base";
 
-interface SlideHandler extends SliderI {
-  init(this: SliderI): void;
-}
-const SlideHandler = {
+export default {
   init(this: SliderI) {
-    const handler = (pEvent: PointerEvent) => pointerDown.call(this, pEvent);
-    this.container.addEventListener("pointerdown", handler, { once: true });
-    /** remove the pointer down event listener when destroying */
-    this.container.addEventListener(
-      "destroy",
-      () => {
-        this.container.removeEventListener("pointerdown", handler);
-      },
-      { once: true }
-    );
+    this.registerListener("pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent), ONCE);
   },
 };
-export default SlideHandler;
+
 function pointerDown(this: SliderI, pEvent: PointerEvent) {
   this.pos.start = this.getTransX();
   this.pos.x2 = pEvent.clientX;
@@ -25,13 +13,13 @@ function pointerDown(this: SliderI, pEvent: PointerEvent) {
   switch (pEvent.pointerType) {
     case "mouse":
       this.container.dispatchEvent(new CustomEvent("pointerdragstart", {}));
-      document.onmousemove = mEvent => mouseMove.call(this, mEvent);
-      document.onmouseup = () => dragstop.call(this);
+      document.onmousemove = mouseMove.bind(this);
+      document.onmouseup = dragstop.bind(this);
       break;
     case "touch":
       this.container.dispatchEvent(new CustomEvent("pointerdragstart", {}));
-      document.ontouchmove = tEvent => touchMove.call(this, tEvent);
-      document.ontouchend = () => dragstop.call(this);
+      document.ontouchmove = touchMove.bind(this);
+      document.ontouchend = dragstop.bind(this);
       break;
   }
 }
@@ -64,6 +52,7 @@ async function dragstop(this: SliderI) {
     if (this.pos.start > this.getTransX()) await this.slideNext();
     else await this.slidePrev();
   }
-  this.container.onpointerdown = pEvent => pointerDown.call(this, pEvent);
+
+  this.registerListener("pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent), ONCE);
   this.container.dispatchEvent(new CustomEvent("transitionend", {}));
 }

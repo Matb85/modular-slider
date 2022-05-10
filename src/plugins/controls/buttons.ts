@@ -16,14 +16,10 @@ export default (options: Options) =>
     prevBtn.onclick = btnAct.bind(this, { btn: prevBtn, dist: -1 });
 
     /** clear event listeners when destroying */
-    this.container.addEventListener(
-      "destroy",
-      () => {
-        nextBtn.onclick = null;
-        prevBtn.onclick = null;
-      },
-      { once: true }
-    );
+    this.onDestroy(() => {
+      nextBtn.onclick = null;
+      prevBtn.onclick = null;
+    });
 
     return { prevBtn, nextBtn };
   };

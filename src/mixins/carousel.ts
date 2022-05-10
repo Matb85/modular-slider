@@ -85,22 +85,17 @@ const Carousel = {
       /** reset the "relative translation" so the condition at the beginning works correctly */
       this.pos.start = this.getTransX();
     };
-    this.container.addEventListener("moving", moving);
+    this.registerListener("moving", moving);
 
     /** append or insertBefore a slide when swiping so the transition does not have any gaps */
     this.container.insertBefore(this.slides[this.slides.length - 1], this.slides[0]);
     this.transform(this.carousel - 1);
 
     /** return to the initial state when destroying */
-    this.container.addEventListener(
-      "destroy",
-      () => {
-        this.container.removeEventListener("moving", moving);
-        this.movefor();
-        this.container.append(this.slides[0]);
-      },
-      { once: true }
-    );
+    this.onDestroy(() => {
+      this.movefor();
+      this.container.append(this.slides[0]);
+    });
   },
   base(this: Carousel, dist: number, dur: number, direction: () => void): Promise<void> {
     return new Promise(resolve => {

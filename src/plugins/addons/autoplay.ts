@@ -31,16 +31,13 @@ export default (interval = 5000) =>
     observer.observe(this.container);
 
     /** pause autoplay when the page is hidden */
-    document.addEventListener("visibilitychange", function () {
+    this.registerDocumentListener("visibilitychange", function () {
       if (document.hidden) {
         controls.pause();
       } else {
         controls.resume();
       }
     });
-
-    /** clear interval when destroying */
-    this.container.addEventListener("destroy", () => clearInterval(autoplay), { once: true });
 
     return controls;
   };
