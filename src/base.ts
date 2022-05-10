@@ -49,15 +49,19 @@ export interface SliderI {
   transformAbsolute(Absolutedist: number): void;
   setTransition(dur: number): void;
   clearTransition(): void;
-  destroy(): void;
   getProperty(el: HTMLElement, elProp: string): number;
   slideNext(dur?: number): Promise<void>;
   slidePrev(dur?: number): Promise<void>;
   slideBy(dist: number, dur?: number): Promise<void>;
   slideTo(to: number, dur?: number): Promise<void>;
   init(): void;
+  registerDocumentListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void;
+  registerListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void;
+  onDestroy(handler: EventListener): void;
+  destroy(): void;
 }
 
+export const ONCE = { once: true };
 /**
  * the base class
  */
@@ -143,6 +147,18 @@ export default function getBase(): new (settings: Defaults) => SliderI {
       this.container.style.transition = "initial";
     }
 
+    /** lifecycle helpers */
+    registerListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
+      this.container.addEventListener(event, handler, options);
+      this.container.addEventListener("destroy", () => this.container.removeEventListener(event, handler), ONCE);
+    }
+    registerDocumentListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
+      document.addEventListener(event, handler, options);
+      document.addEventListener("destroy", () => document.removeEventListener(event, handler), ONCE);
+    }
+    onDestroy(handler: EventListener): void {
+      this.container.addEventListener("destroy", handler, ONCE);
+    }
     destroy() {
       this.container.dispatchEvent(new CustomEvent("destroy"));
       this.transform(0);
