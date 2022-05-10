@@ -45,6 +45,7 @@ export default (options: Options) =>
 
     /** finally start the logic */
     updatePagination();
+    this.container.addEventListener("transitionend", updatePagination);
 
     /** remove excessive dots when destroying */
     this.container.addEventListener(
@@ -52,6 +53,7 @@ export default (options: Options) =>
       () => {
         pagcontainer.innerHTML = "";
         pagcontainer.appendChild(dots[0]);
+        this.container.removeEventListener("transitionend", updatePagination);
       },
       { once: true }
     );
