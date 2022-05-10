@@ -16,7 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["./src/*"],
       "~/*": ["./devdocs/*"]
     },
     "outDir": "dist"

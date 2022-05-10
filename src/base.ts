@@ -27,7 +27,9 @@ const defaults = {
   initialSlide: 0,
   plugins: [],
 };
-type Defaults = Omit<typeof defaults, "plugins"> & { plugins: Array<() => void> };
+
+type RequiredBy<K, T extends keyof K> = Omit<Partial<K>, "plugins"> & Pick<K, T> & { plugins: Array<() => void> };
+type Defaults = RequiredBy<typeof defaults, "container">;
 
 /**
  * the interface for the base
