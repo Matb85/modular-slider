@@ -93,12 +93,11 @@ export default function getBase(): new (settings: Defaults) => SliderI {
       this.container.style.setProperty("--number-of-slides", this.slides.length.toString());
       this.slideWidth = this.calcSlideWidth();
       this.slideDisplay = this.getSlidesPerView();
-      const handler = () => {
+
+      this.registerDocumentListener("resize", () => {
         this.slideWidth = this.calcSlideWidth();
         this.slideDisplay = this.getSlidesPerView();
-      };
-      window.addEventListener("resize", handler);
-      this.container.addEventListener("destroy", () => window.removeEventListener("resize", handler), { once: true });
+      });
 
       /** initiate mixins */
       for (const init of this.inits) init.call(this);
@@ -156,7 +155,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     }
     registerDocumentListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
       document.addEventListener(event, handler, options);
-      document.addEventListener("destroy", () => document.removeEventListener(event, handler), ONCE);
+      this.container.addEventListener("destroy", () => document.removeEventListener(event, handler), ONCE);
     }
     onDestroy(handler: EventListener): void {
       this.container.addEventListener("destroy", handler, ONCE);
