@@ -63,14 +63,6 @@ const Carousel = {
           : this.slides.length - Math.abs(this.carousel % this.slides.length);
       },
     });
-    /** duplicate slides if there are less than this.slideDisplay + 2 */
-    if (this.slideDisplay + 2 > this.slides.length) {
-      do {
-        for (let i = 0, slength = this.slides.length; i < slength; i++) {
-          this.container.appendChild(this.slides[i].cloneNode(true));
-        }
-      } while (this.slideDisplay + 2 > this.slides.length);
-    }
     const moving = () => {
       /** run only if the translation of the container is:
        *  bigger or equal to the width of one slide (including its left and right margin)
