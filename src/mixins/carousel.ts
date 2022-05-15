@@ -5,10 +5,12 @@ interface Carousel extends SliderI {
    * in this mixin it is used as a helper
    */
   carousel: number;
+  helperCounter: number;
   movefor(this: SliderI): void;
   moveback(this: SliderI): void;
   base(this: Carousel, dist: number, dur: number, direction: () => void): Promise<void>;
   reset(this: Carousel): void;
+  init(this: Carousel): Promise<void>;
 }
 
 /** utilities specific to this mixin */
@@ -17,7 +19,7 @@ const Carousel = {
     /** important!
      * counter is mutated at the end of movefor
      */
-    const slide = this.slides[this.counter % this.slides.length];
+    const slide = this.slides[this.helperCounter % this.slides.length];
     slide.style.setProperty("--translate-factor", (this.getProperty(slide, "--translate-factor") + 1) as any);
     this.carousel--;
   },
@@ -26,7 +28,7 @@ const Carousel = {
      * counter is mutated right at the start of moveback
      */
     this.carousel++;
-    const slide = this.slides[this.counter % this.slides.length];
+    const slide = this.slides[this.helperCounter % this.slides.length];
     slide.style.setProperty("--translate-factor", (this.getProperty(slide, "--translate-factor") - 1) as any);
   },
   /** important!
@@ -50,17 +52,25 @@ const Carousel = {
     }
   },
   /** essential logic & methods */
-  init(this: Carousel) {
-    this.carousel = 0;
+  async init(this: Carousel) {
     /** important!
-     * this mixin uses this.carousel for maintaining reference of the current slide
-     * therefore this.counter has just a getter that interprets this.carousel and returns the real value
+     * this mixin uses this.carousel & this.helperCounter
+     * carousel is for maintaining reference of the current slide - can be negative
+     * helperCounter is an always positive reference to the current slide
+     * counter is the number of the actual slide which - it can be used by other parts of the slider
      */
+    this.carousel = 0;
+    Object.defineProperty(this, "helperCounter", {
+      get(): number {
+        return (this.carousel <= 0 ? -1 * this.carousel : this.slides.length - this.carousel) % this.slides.length;
+      },
+    });
     Object.defineProperty(this, "counter", {
       get(): number {
-        return this.carousel <= 0
-          ? Math.abs(this.carousel)
-          : this.slides.length - Math.abs(this.carousel % this.slides.length);
+        if (this.carousel === 1) return 0;
+        return (
+          (this.carousel <= 0 ? -1 * this.carousel + 1 : this.slides.length - (this.carousel - 1)) % this.slides.length
+        );
       },
     });
     const moving = () => {
@@ -80,13 +90,13 @@ const Carousel = {
     this.registerListener("moving", moving);
 
     /** append or insertBefore a slide when swiping so the transition does not have any gaps */
-    this.container.insertBefore(this.slides[this.slides.length - 1], this.slides[0]);
-    this.transform(this.carousel - 1);
+    this.transform(-1);
+    await this.slideTo(this.settings.initialSlide);
 
     /** return to the initial state when destroying */
     this.onDestroy(() => {
-      this.movefor();
-      this.container.append(this.slides[0]);
+      this.transform(0);
+      for (const slide of this.slides) slide.style.setProperty("--translate-factor", "0");
     });
   },
   base(this: Carousel, dist: number, dur: number, direction: () => void): Promise<void> {
@@ -101,6 +111,7 @@ const Carousel = {
         direction();
         /** return to the initial state if the counter has a too big value */
         this.reset();
+        console.log(this.counter, this.carousel);
 
         this.ismoving = false;
         resolve();
@@ -114,7 +125,7 @@ const Carousel = {
     return this.base(-1, dur, () => this.moveback());
   },
   slideTo(this: Carousel, to = 0, dur?: number): Promise<void> {
-    return this.slideBy(to - this.counter, dur);
+    return this.slideBy(to - this.helperCounter - 1, dur);
   },
   slideBy(
     this: Carousel,
