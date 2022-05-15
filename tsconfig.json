@@ -21,7 +21,6 @@
     },
     "outDir": "dist"
   },
-  "types": ["svelte"],
   "include": ["src", "devdocs"],
-  "exclude": ["node_modules", "devdocs"]
+  "exclude": ["node_modules", "dist"]
 }

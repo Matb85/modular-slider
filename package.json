@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "TARGET=DOCS vite dev",
     "build": "vite build && pnpm build:types",
-    "build:types": "tsc",
+    "build:types": "tsc --project ./tsconfig.build.json",
     "build:docs": "TARGET=DOCS vite build",
     "release": "standard-version",
     "imgs": "node ./assets/imageresizer.js",
-    "lint": "eslint src/** && tsc",
+    "lint": "eslint src/** && pnpm build:types",
     "prepare": "husky install",
     "prepublishOnly": "npm run build"
   },
