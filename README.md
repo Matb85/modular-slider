@@ -16,7 +16,7 @@ Modular Slider aims to deliver just what you want, while using the best of EcmaS
 **TODO** WebKit/Safari support still in progress!
 
 **Prease Note:**
-**this package uses the @babel/env preset for transpiling, see the current target in the browserlist field in [package.json](https://github.com/Matb85/modular-slider/blob/master/package.json)**
+**this package ships not transpiled! use a tool like babel if necessary**
 
 ### Architecture
 
