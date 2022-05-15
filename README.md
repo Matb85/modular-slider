@@ -24,11 +24,11 @@ Modular Slider consists of **_Mixins_**, **_Plugins_** and a **_Setup_** functio
 
 #### Mixins
 
-Mixins are classes (abstract in TS) that provide basic functionalities of the slider (i.e. touch/mose events handling, transtions). Their names begin with a **Capital letter** Currently, there are three mixins:
+Mixins are classes (abstract in TS) that provide basic functionalities of the slider (i.e. touch/mose events handling, transtions). Their names are **PascalCase** Currently, there are three mixins:
 
 - SlideHandler - provides event handling - **compulsory if you want to drag the slider with mouse/touch**
 - Carousel - provides methods for a carousel slider (with a loop)
-- Noloop - provides methods for a basic slider
+- NoLoop - provides methods for a basic slider
 
 #### Plugins
 
@@ -93,10 +93,10 @@ Once you've done that, take a look at an example setup:
 
 ```js
 // import all the components you need
-import { setup, Slidehandler, Carousel, buttons } from "modular-slider";
+import { setup, SlideHandler, Carousel, buttons } from "modular-slider";
 
 // merge the mixins with the setup functions
-const Slider = setup(Carousel, Slidehandler);
+const Slider = setup(Carousel, SlideHandler);
 // create a new instance
 new Slider({
   // pass the ID of the slider container

@@ -37,9 +37,9 @@ onMount(() => {
   });
 });
 onDestroy(() => sl.destroy());
-export const code = `import { setup, Slidehandler, Noloop } from "modular-slider";
+export const code = `import { setup, SlideHandler, Noloop } from "modular-slider";
 
-const Slider = setup(Noloop, Slidehandler);
+const Slider = setup(Noloop, SlideHandler);
 new Slider({
     container: "slider",
     initialSlide: 2,

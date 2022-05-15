@@ -39,9 +39,9 @@ onMount(async () => {
 });
 onDestroy(() => sl.destroy());
 
-export const code = `import { setup, Slidehandler, Carousel } from "modular-slider";
+export const code = `import { setup, SlideHandler, Carousel } from "modular-slider";
 
-const Slider = setup(Carousel, Slidehandler);
+const Slider = setup(Carousel, SlideHandler);
 new Slider({
     container: "slider",
     initialSlide: 4,

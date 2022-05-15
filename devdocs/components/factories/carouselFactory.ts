@@ -1,4 +1,4 @@
 /** a factory of no-loop sliders @returns {Carousel Slider} */
-import { setup, Slidehandler, Carousel } from "@/index";
-const Slider = setup(Carousel, Slidehandler);
+import { setup, SlideHandler, Carousel } from "@/index";
+const Slider = setup(Carousel, SlideHandler);
 export default Slider;
