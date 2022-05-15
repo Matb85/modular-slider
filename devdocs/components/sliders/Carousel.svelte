@@ -4,7 +4,6 @@
   <ul id="carousel-slider" class="ms-inner-con blue-items">
     {#each sliderItems as item}
       <li class="ms-item">{item}</li>
-      >
     {/each}
   </ul>
 </section>

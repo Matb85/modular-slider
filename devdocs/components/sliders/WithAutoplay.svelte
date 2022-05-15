@@ -3,7 +3,6 @@
   <ul id="slider-with-autoplay" class="ms-inner-con blue-items">
     {#each sliderItems as item}
       <li class="ms-item">{item}</li>
-      >
     {/each}
   </ul>
 </section>

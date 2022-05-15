@@ -5,7 +5,6 @@
       <li class="ms-item">{item}</li>
     {/each}
   </ul>
-  >
 </section>
 <section class="button-container">
   <button id="prev" class="button">prev</button>
