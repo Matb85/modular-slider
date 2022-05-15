@@ -7,10 +7,13 @@
 Modular Slider aims to deliver just what you want, while using the best of EcmaScript goodies. Here are some of its features:
 
 - :label: written in Typescript
-- :zap: relies on promises and async/await functions
-- :art: modular architecture => optimized for tree-shaking
+- :zap: relies on promises and async/await
+- :art: modular architecture -> optimized for tree-shaking
+- :fire: absolutely no DOM manipulation (only class/style attribute changes) by default
 - :rocket: weighs nothing in your final build
 - :boom: supports SSR - tested in Nuxt.js
+
+**TODO** WebKit/Safari support still in progress!
 
 **Prease Note:**
 **this package uses the @babel/env preset for transpiling, see the current target in the browserlist field in [package.json](https://github.com/Matb85/modular-slider/blob/master/package.json)**
