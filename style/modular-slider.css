@@ -1,17 +1,20 @@
+@tailwind base;
 .ms-outer-con {
   overflow: hidden; /* hide the slides that should be out of view*/
 }
 .ms-outer-con .ms-inner-con {
   /* the position MUST be set to relative because some carousel transitions use the left css property */
-  @apply relative flex flex-nowrap h-auto w-auto;
+  @apply relative h-auto w-auto
+  flex flex-nowrap
+  list-none;
 }
 .ms-outer-con .ms-inner-con > * {
   flex: 0 0 auto;
   margin-left: var(--slide-margin, 0px);
   margin-right: var(--slide-margin, 0px);
 }
-.ms-outer-con .ms-inner-con > *,
-.ms-outer-con .ms-inner-con > * img {
+.ms-outer-con .ms-inner-con *,
+.ms-outer-con .ms-inner-con img {
   -webkit-user-drag: none; /* prevent imgs from being dragged*/
   user-select: none;
 }
