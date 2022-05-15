@@ -19,6 +19,11 @@
   <button on:click="{() => sl.slideBy(value)}" class="button">slider.slideBy({value})</button>
 </section>
 
+<section class="button-container">
+  <button on:click="{destroy}" disabled="{disabled}" class="button red">slider.destroy()</button>
+  <button on:click="{initiate}" disabled="{!disabled}" class="button red">reinitiate</button>
+</section>
+
 <SliderCode>{code}</SliderCode>
 
 <script>
@@ -28,15 +33,25 @@ import Slider from "../factories/carouselFactory";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 let value = 2;
+
 let sl;
-onMount(async () => {
+let disabled = false;
+
+function initiate() {
   sl = new Slider({
     container: "carousel-slider",
     transitionSpeed: 400,
     initialSlide: 4,
   });
-});
-onDestroy(() => sl.destroy());
+  disabled = false;
+}
+function destroy() {
+  sl.destroy();
+  disabled = true;
+}
+
+onMount(initiate);
+onDestroy(destroy);
 
 export const code = `import { setup, SlideHandler, Carousel } from "modular-slider";
 

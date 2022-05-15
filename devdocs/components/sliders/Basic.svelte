@@ -12,11 +12,14 @@
   <button on:click="{() => sl.slideNext()}" class="button">slider.slideNext()</button>
   <button on:click="{() => sl.slideTo(1)}" class="button">slider.slideTo(1)</button>
 </section>
-
 <section class="button-container">
   <input class="button w-24 bg-slate-200" type="number" bind:value max="{sliderItems.length}" min="1" />
   <button on:click="{() => sl.slideBy(-1 * value)}" class="button">slider.slideBy({-1 * value})</button>
   <button on:click="{() => sl.slideBy(value)}" class="button">slider.slideBy({value})</button>
+</section>
+<section class="button-container">
+  <button on:click="{destroy}" disabled="{disabled}" class="button red">slider.destroy()</button>
+  <button on:click="{initiate}" disabled="{!disabled}" class="button red">reinitiate</button>
 </section>
 
 <SliderCode>{code}</SliderCode>
@@ -29,14 +32,23 @@ const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 let value = 2;
 
 let sl;
-onMount(() => {
+let disabled = false;
+
+function initiate() {
   sl = new Slider({
     container: "basic-slider",
     transitionSpeed: 400,
     initialSlide: 2,
   });
-});
-onDestroy(() => sl.destroy());
+  disabled = false;
+}
+function destroy() {
+  sl.destroy();
+  disabled = true;
+}
+
+onMount(initiate);
+onDestroy(destroy);
 export const code = `import { setup, SlideHandler, Noloop } from "modular-slider";
 
 const Slider = setup(Noloop, SlideHandler);
