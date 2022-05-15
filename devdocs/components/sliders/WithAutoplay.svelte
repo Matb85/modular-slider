@@ -34,6 +34,7 @@ function resume() {
 onMount(async () => {
   slider = new Slider({
     container: "slider-with-autoplay",
+    initialSlide: 3,
     plugins: [autoplay(3000)],
   });
 });
@@ -44,6 +45,7 @@ export const code = `import { setup, Slidehandler, Carousel, autoplay } from "mo
 const Slider = setup(Carousel, Slidehandler);
 new Slider({
     container: "slider",
+    initialSlide: 3,
     plugins: [
         autoplay(3000),
     ]

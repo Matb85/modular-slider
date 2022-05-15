@@ -33,6 +33,7 @@ onMount(() => {
   sl = new Slider({
     container: "basic-slider",
     transitionSpeed: 400,
+    initialSlide: 2,
   });
 });
 onDestroy(() => sl.destroy());
@@ -41,5 +42,6 @@ export const code = `import { setup, Slidehandler, Noloop } from "modular-slider
 const Slider = setup(Noloop, Slidehandler);
 new Slider({
     container: "slider",
+    initialSlide: 2,
 });`;
 </script>

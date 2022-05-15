@@ -24,6 +24,7 @@ let slider;
 onMount(async () => {
   slider = new Slider({
     container: "slider-with-btns",
+    initialSlide: 0,
     plugins: [buttons({ nextBtn: "#next", prevBtn: "#prev" })],
   });
 });
@@ -34,6 +35,7 @@ export const code = `import { setup, Slidehandler, Carousel, buttons } from "mod
 const Slider = setup(Carousel, Slidehandler);
 new Slider({
     container: "slider",
+    initialSlide: 0,
     plugins: [
         buttons({ nextBtn: "#next", prevBtn: "#prev" }),
     ]

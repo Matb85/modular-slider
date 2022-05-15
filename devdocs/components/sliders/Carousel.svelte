@@ -33,6 +33,7 @@ onMount(async () => {
   sl = new Slider({
     container: "carousel-slider",
     transitionSpeed: 400,
+    initialSlide: 4,
   });
 });
 onDestroy(() => sl.destroy());
@@ -42,5 +43,6 @@ export const code = `import { setup, Slidehandler, Carousel } from "modular-slid
 const Slider = setup(Carousel, Slidehandler);
 new Slider({
     container: "slider",
+    initialSlide: 4,
 });`;
 </script>

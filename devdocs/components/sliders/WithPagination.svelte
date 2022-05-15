@@ -23,6 +23,7 @@ let slider;
 onMount(async () => {
   slider = new Slider({
     container: "slider-with-pagination",
+    initialSlide: 4,
     plugins: [
       pagination({
         container: "#slider-pagination",
@@ -39,6 +40,7 @@ export const code = `import { setup, Slidehandler, Carousel, pagination } from "
 const Slider = setup(Carousel, Slidehandler);
 new Slider({
     container: "slider",
+    initialSlide: 4,
     plugins: [
         pagination({
             container: "#slider-pagination",

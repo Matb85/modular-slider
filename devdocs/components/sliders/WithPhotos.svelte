@@ -48,6 +48,7 @@ onMount(async () => {
   slider = new Slider({
     container: "slider-with-photos",
     transitionSpeed: 400,
+    initialSlide: 2,
     plugins: [lazyloading()],
   });
 });
@@ -58,6 +59,7 @@ export const code = `import { setup, Slidehandler, Carousel, lazyloading } from 
 const Slider = setup(Carousel, Slidehandler);
 new Slider({
     container: "slider",
+    initialSlide: 2,
     plugins: [
         plugins: [lazyloading()],
     ]
