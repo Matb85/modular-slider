@@ -80,7 +80,9 @@ Once you've done that, take a look at an example setup:
 2. import css from "modular-slider/dist/modular-slider.css" and follow [**one of the available strategies**](#css-strategies). This example uses the _width-in-percentage_ strategy
 
 ```scss
-@import "~modular-slider/dist/modular-slider.css" .your-slider {
+@import "~modular-slider/dist/modular-slider.css";
+
+.your-slider {
   --number-of-slides: 6; // the number of the slides, total
   --slides-per-view: 2; // the number of how many slides are displayed at once
   // your css...
