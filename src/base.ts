@@ -6,7 +6,6 @@ export function setup<K, L, M, N>(
 ): new (settings: Defaults) => SliderI & K & L & M & N {
   const base = getBase();
   base.prototype.inits = [];
-  base.prototype.destroys = [];
   constructors.forEach(baseCtor => {
     /** copy the init functions to the inits array */
     if (Object.hasOwnProperty.call(baseCtor, "init"))
@@ -95,11 +94,14 @@ export interface SliderI {
   /** registers an event listener to the slider's container and removes it on the destroy hook */
   registerListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void;
   /** register an event listener called on the destroy hook */
-  onDestroy(handler: EventListener): void;
+  onDestroy(handler: () => void, handerId?: string): string;
   /** destroys the slider instance and:
    * - reverts CSS DOM tweaks
    * - cleans up all event listeners */
   destroy(): void;
+  /** set to true once the destroy method has been called and completed
+   * if true the slider is no longer functional */
+  isDestroyed: boolean;
 }
 
 export const ONCE = { once: true };
@@ -117,9 +119,10 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     slideDisplay: number;
     plugins: Record<string, any> = {};
     inits: Array<() => void>;
-    destroys: Array<() => void>;
+    destroyers: Record<string, () => void> = {};
     counter = 0;
     ismoving = false;
+    isDestroyed = false;
     slideNext: (dur?: number) => Promise<void>;
     slidePrev: (dur?: number) => Promise<void>;
     slideBy: (dist?: number) => Promise<void>;
@@ -182,19 +185,36 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     /** 3.lifecycle helpers */
 
     registerListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
-      this.container.addEventListener(event, handler, options);
-      this.container.addEventListener("destroy", () => this.container.removeEventListener(event, handler), ONCE);
+      const id = this.onDestroy(() => this.container.removeEventListener(event, callback));
+      const callback = (e: Event) => {
+        handler(e);
+        if (options?.once && this.destroyers[id]) {
+          this.destroyers[id]();
+          delete this.destroyers[id];
+        }
+      };
+      this.container.addEventListener(event, callback, options);
     }
     registerDocumentListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
-      document.addEventListener(event, handler, options);
-      this.container.addEventListener("destroy", () => document.removeEventListener(event, handler), ONCE);
+      const id = this.onDestroy(() => document.removeEventListener(event, callback));
+      const callback = (e: Event) => {
+        handler(e);
+        if (options?.once && this.destroyers[id]) {
+          this.destroyers[id]();
+          delete this.destroyers[id];
+        }
+      };
+      document.addEventListener(event, callback, options);
     }
-    onDestroy(handler: EventListener): void {
-      this.container.addEventListener("destroy", handler, ONCE);
+    onDestroy(handler: () => void, handerId?: string): string {
+      const id = handerId || Date.now() + "";
+      this.destroyers[id] = handler;
+      return id;
     }
     destroy() {
-      this.container.dispatchEvent(new CustomEvent("destroy"));
+      for (const destroyer in this.destroyers) this.destroyers[destroyer]();
       this.transform(0);
+      this.isDestroyed = true;
     }
   };
 }

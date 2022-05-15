@@ -55,9 +55,10 @@ const Carousel = {
   async init(this: Carousel) {
     /** important!
      * this mixin uses this.carousel & this.helperCounter
-     * carousel is for maintaining reference of the current slide - can be negative
-     * helperCounter is an always positive reference to the current slide
-     * counter is the number of the actual slide which - it can be used by other parts of the slider
+     * this structure is used to avoid DOM cloning of slides
+     * carousel is an integer for maintaining reference of the current slide
+     * helperCounter is a whole number that references the current slide
+     * counter equals helperCounter -1 but must be smaller than the number of slides and positive
      */
     this.carousel = 0;
     Object.defineProperty(this, "helperCounter", {
@@ -95,7 +96,6 @@ const Carousel = {
 
     /** return to the initial state when destroying */
     this.onDestroy(() => {
-      this.transform(0);
       for (const slide of this.slides) slide.style.setProperty("--translate-factor", "0");
     });
   },
