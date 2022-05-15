@@ -1,10 +1,11 @@
 <h3 class="header-3">A slider with buttons</h3>
 <section class="ms-outer-con mx-auto">
-  <div id="slider-with-btns" class="ms-inner-con blue-items">
+  <ul id="slider-with-btns" class="ms-inner-con blue-items">
     {#each sliderItems as item}
-      <div class="ms-item">{item}</div>
+      <li class="ms-item">{item}</li>
     {/each}
-  </div>
+  </ul>
+  >
 </section>
 <section class="button-container">
   <button id="prev" class="button">prev</button>

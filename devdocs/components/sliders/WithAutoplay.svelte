@@ -1,10 +1,11 @@
 <h3 class="header-3">A slider with autoplay</h3>
 <section class="ms-outer-con mx-auto">
-  <div id="slider-with-autoplay" class="ms-inner-con blue-items">
+  <ul id="slider-with-autoplay" class="ms-inner-con blue-items">
     {#each sliderItems as item}
-      <div class="ms-item">{item}</div>
+      <li class="ms-item">{item}</li>
+      >
     {/each}
-  </div>
+  </ul>
 </section>
 <section class="flex justify-center gap-4 mt-4">
   <button on:click="{pause}" disabled="{ispaused}" class="button">pause</button>

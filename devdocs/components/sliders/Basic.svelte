@@ -1,11 +1,11 @@
 <h3 class="header-3">A basic slider</h3>
 
 <section class="ms-outer-con mx-auto">
-  <div id="basic-slider" class="ms-inner-con blue-items">
+  <ol id="basic-slider" class="ms-inner-con blue-items">
     {#each sliderItems as item}
-      <div class="ms-item">{item}</div>
+      <li class="ms-item">{item}</li>
     {/each}
-  </div>
+  </ol>
 </section>
 <section class="button-container">
   <button on:click="{() => sl.slidePrev()}" class="button">slider.slidePrev()</button>

@@ -58,14 +58,14 @@ Once you've done that, take a look at an example setup:
 <!-- an INNER CONTAINER with .ms-inner-con class-->
 <!-- and some slides inside - their class DOES NOT matter -->
 <section class="your-slider ms-outer-con width-in-percentage">
-  <div id="first-slider" class="ms-inner-con">
-    <div class="nested-item"><div>1</div></div>
-    <div class="nested-item"><div>2</div></div>
-    <div class="nested-item"><div>3</div></div>
-    <div class="nested-item"><div>4</div></div>
-    <div class="nested-item"><div>5</div></div>
-    <div class="nested-item"><div>6</div></div>
-  </div>
+  <ul id="first-slider" class="ms-inner-con">
+    <li class="nested-item">1</li>
+    <li class="nested-item">2</li>
+    <li class="nested-item">3</li>
+    <li class="nested-item">4</li>
+    <li class="nested-item">5</li>
+    <li class="nested-item">6</li>
+  </ul>
 </section>
 <!-- add buttons for the purpose of the example -->
 <section class="slider-btn">

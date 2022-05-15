@@ -1,31 +1,31 @@
 <h3 class="header-3">A slider with photo lazy-loading</h3>
 <section class="ms-outer-con mx-auto">
-  <div id="slider-with-photos" class="ms-inner-con blue-items">
-    <div class="img-con">
+  <ul id="slider-with-photos" class="ms-inner-con blue-items">
+    <li class="img-con">
       <img class="ms-lazy" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="birds" />
-    </div>
-    <div class="img-con">
+    </li>
+    <li class="img-con">
       <img class="ms-lazy" src="./assets/thumbnail_gorge.jpg" data-src="./assets/gorge.jpg" alt="gorge" />
-    </div>
-    <div class="img-con">
+    </li>
+    <li class="img-con">
       <img class="ms-lazy" src="./assets/thumbnail_mountains.jpg" data-src="./assets/mountains.jpg" alt="mountains" />
-    </div>
-    <div class="img-con">
+    </li>
+    <li class="img-con">
       <img class="ms-lazy" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="bird" />
-    </div>
-    <div class="img-con">
+    </li>
+    <li class="img-con">
       <img class="ms-lazy" src="./assets/thumbnail_gorge.jpg" data-src="./assets/gorge.jpg" alt="gorge" />
-    </div>
-  </div>
+    </li>
+  </ul>
 </section>
 
 <SliderCode>{code}</SliderCode>
 
 <style>
-.ms-outer-con div.img-con {
+.ms-outer-con .ms-inner-con .img-con {
   overflow: hidden;
 }
-.ms-outer-con div.img-con :global(img.loaded) {
+.ms-outer-con .ms-inner-con .img-con :global(img.loaded) {
   filter: blur(0vw);
   transform: scale(1);
 }

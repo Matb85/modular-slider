@@ -1,10 +1,10 @@
 <h3 class="header-3">A slider with pagination</h3>
 <section class="ms-outer-con mx-auto">
-  <div id="slider-with-pagination" class="ms-inner-con blue-items">
+  <ul id="slider-with-pagination" class="ms-inner-con blue-items">
     {#each sliderItems as item}
-      <div class="ms-item">{item}</div>
+      <li class="ms-item">{item}</li>
     {/each}
-  </div>
+  </ul>
 </section>
 <section id="slider-pagination" class="mt-4 flex justify-center gap-2">
   <button class="dot"></button>
