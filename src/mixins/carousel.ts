@@ -88,7 +88,7 @@ const Carousel = {
       /** reset the "relative translation" so the condition at the beginning works correctly */
       this.pos.start = this.getTransX();
     };
-    this.registerListener("moving", moving);
+    this.registerListener("ms-moving", moving);
 
     /** append or insertBefore a slide when swiping so the transition does not have any gaps */
     this.transform(-1);
@@ -145,7 +145,7 @@ const Carousel = {
     this.pos.start = this.getTransX();
     /** mock the "moving" event usually fired by the touchmove/mousemove handler */
     const animate = setInterval(() => {
-      this.container.dispatchEvent(new CustomEvent("moving"));
+      this.container.dispatchEvent(new CustomEvent("ms-moving"));
     }, 10);
     setTimeout(() => clearInterval(animate), dur);
 

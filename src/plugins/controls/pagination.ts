@@ -45,7 +45,7 @@ export default (options: Options) =>
 
     /** finally start the logic */
     updatePagination();
-    this.registerListener("transitionend", updatePagination);
+    this.registerListener("ms-transitionend", updatePagination);
 
     /** remove excessive dots when destroying */
     this.onDestroy(() => {
