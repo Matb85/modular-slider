@@ -114,7 +114,6 @@ const Carousel = {
         direction();
         /** return to the initial state if the counter has a too big value */
         this.reset();
-        console.log(this.counter, this.carousel);
 
         this.ismoving = false;
         resolve();
@@ -158,7 +157,6 @@ const Carousel = {
       if (!iscompleted) window.requestAnimationFrame(animate);
     };
     window.requestAnimationFrame(animate);
-    setTimeout(() => (iscompleted = true), dur);
 
     /** finally return the right promise
      * note: its callback depends on the direction */
@@ -173,6 +171,7 @@ const Carousel = {
         /** return to the initial state if the counter has a too big value */
         this.reset();
         this.ismoving = false;
+        iscompleted = true;
         resolve();
       }, dur);
     });

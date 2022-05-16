@@ -141,6 +141,11 @@ export default function getBase(): new (settings: Defaults) => SliderI {
         this.slideDisplay = this.getSlidesPerView();
       });
 
+      /** emit ms-transitionend event for unity */
+      const transitionend = () => this.container.dispatchEvent(new CustomEvent("ms-transitionend"));
+      this.registerListener("transitionend", transitionend);
+      this.registerListener("transitioncancel", transitionend);
+
       /** initiate mixins */
       for (const init of this.inits) init.call(this);
       /** initiate plugins */

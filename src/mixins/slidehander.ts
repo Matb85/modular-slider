@@ -54,5 +54,4 @@ async function dragstop(this: SliderI) {
   }
 
   this.registerListener("pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent), ONCE);
-  this.container.dispatchEvent(new CustomEvent("ms-transitionend", {}));
 }
