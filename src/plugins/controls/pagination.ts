@@ -1,4 +1,4 @@
-import { EVENTS, type SliderI } from "@/base";
+import { EVENTS, type SliderI } from "@/types";
 
 interface Options {
   container: string;

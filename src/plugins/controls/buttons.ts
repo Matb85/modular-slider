@@ -1,4 +1,4 @@
-import type { SliderI } from "@/base";
+import type { SliderI } from "@/types";
 
 interface Params {
   dist: number;

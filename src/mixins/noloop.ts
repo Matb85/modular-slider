@@ -1,5 +1,5 @@
-import { EVENTS, type SliderI } from "@/base";
-import { ONCE } from "@/base";
+import { EVENTS, type SliderI } from "@/types";
+import { ONCE } from "@/types";
 
 interface Noloop extends SliderI {
   /** set carousel to a truthy value in the init function - might be useful for plugins

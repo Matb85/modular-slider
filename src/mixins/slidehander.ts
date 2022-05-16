@@ -1,4 +1,4 @@
-import { type SliderI, ONCE, EVENTS } from "@/base";
+import { type SliderI, ONCE, EVENTS } from "@/types";
 
 export default {
   init(this: SliderI) {

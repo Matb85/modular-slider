@@ -1,4 +1,4 @@
-import type { SliderI } from "@/base";
+import type { SliderI } from "@/types";
 
 export default (addClass = "loaded", options: IntersectionObserverInit = { rootMargin: "0px", threshold: 0.5 }) =>
   function lazyloading(this: SliderI) {

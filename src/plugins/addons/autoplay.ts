@@ -1,4 +1,4 @@
-import type { SliderI } from "@/base";
+import type { SliderI } from "@/types";
 
 export default (interval = 5000) =>
   function autoplay(this: SliderI) {

@@ -1,4 +1,4 @@
-import type { SliderI } from "@/base";
+import type { SliderI } from "@/types";
 
 /** this addon makes sure that there are no fewer sliders than the set number of slides per view + 2 */
 export default () =>
