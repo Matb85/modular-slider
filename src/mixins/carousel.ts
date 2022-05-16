@@ -19,7 +19,7 @@ const Carousel = {
     /** important!
      * counter is mutated at the end of movefor
      */
-    const slide = this.slides[this.helperCounter % this.slides.length];
+    const slide = this.slides[this.helperCounter];
     slide.style.setProperty("--translate-factor", (this.getProperty(slide, "--translate-factor") + 1) as any);
     this.carousel--;
   },
@@ -28,7 +28,7 @@ const Carousel = {
      * counter is mutated right at the start of moveback
      */
     this.carousel++;
-    const slide = this.slides[this.helperCounter % this.slides.length];
+    const slide = this.slides[this.helperCounter];
     slide.style.setProperty("--translate-factor", (this.getProperty(slide, "--translate-factor") - 1) as any);
   },
   /** important!
@@ -50,6 +50,7 @@ const Carousel = {
 
       this.transformAbsolute(this.getTransX() - this.slides.length * this.slideWidth);
     }
+    this.pos.start = this.getTransX();
   },
   /** essential logic & methods */
   async init(this: Carousel) {
@@ -63,15 +64,17 @@ const Carousel = {
     this.carousel = 0;
     Object.defineProperty(this, "helperCounter", {
       get(): number {
-        return (this.carousel <= 0 ? -1 * this.carousel : this.slides.length - this.carousel) % this.slides.length;
+        const len = this.slides.length,
+          car = this.carousel;
+        return (car <= 0 ? -1 * car : len - (car % len)) % len;
       },
     });
     Object.defineProperty(this, "counter", {
       get(): number {
-        if (this.carousel === 1) return 0;
-        return (
-          (this.carousel <= 0 ? -1 * this.carousel + 1 : this.slides.length - (this.carousel - 1)) % this.slides.length
-        );
+        const len = this.slides.length,
+          car = this.carousel;
+        if (car === 1) return 0;
+        return (car <= 0 ? -1 * car + 1 : len - (car - 1)) % len;
       },
     });
     const moving = () => {
@@ -125,7 +128,7 @@ const Carousel = {
     return this.base(-1, dur, () => this.moveback());
   },
   slideTo(this: Carousel, to = 0, dur?: number): Promise<void> {
-    return this.slideBy(to - this.helperCounter - 1, dur);
+    return this.slideBy(to - this.counter, dur);
   },
   slideBy(
     this: Carousel,
@@ -144,10 +147,18 @@ const Carousel = {
     this.pos.x1 = dist;
     this.pos.start = this.getTransX();
     /** mock the "moving" event usually fired by the touchmove/mousemove handler */
-    const animate = setInterval(() => {
+    let iscompleted = false;
+    let start: number;
+    const animate = (timestamp: number) => {
+      if (start === undefined) {
+        start = timestamp;
+      }
       this.container.dispatchEvent(new CustomEvent("ms-moving"));
-    }, 10);
-    setTimeout(() => clearInterval(animate), dur);
+      console.log(Math.round(timestamp - start));
+      if (!iscompleted) window.requestAnimationFrame(animate);
+    };
+    window.requestAnimationFrame(animate);
+    setTimeout(() => (iscompleted = true), dur);
 
     /** finally return the right promise
      * note: its callback depends on the direction */
