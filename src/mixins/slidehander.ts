@@ -1,4 +1,4 @@
-import { type SliderI, ONCE } from "@/base";
+import { type SliderI, ONCE, EVENTS } from "@/base";
 
 export default {
   init(this: SliderI) {
@@ -12,12 +12,12 @@ function pointerDown(this: SliderI, pEvent: PointerEvent) {
   this.ismoving = true;
   switch (pEvent.pointerType) {
     case "mouse":
-      this.container.dispatchEvent(new CustomEvent("ms-pointerdragstart", {}));
+      this.container.dispatchEvent(new CustomEvent(EVENTS.DRAG_START, {}));
       document.onmousemove = mouseMove.bind(this);
       document.onmouseup = dragstop.bind(this);
       break;
     case "touch":
-      this.container.dispatchEvent(new CustomEvent("ms-pointerdragstart", {}));
+      this.container.dispatchEvent(new CustomEvent(EVENTS.DRAG_START, {}));
       document.ontouchmove = touchMove.bind(this);
       document.ontouchend = dragstop.bind(this);
       break;
@@ -28,7 +28,7 @@ function mouseMove(this: SliderI, mEvent: MouseEvent) {
   this.pos.x1 = this.pos.x2 - mEvent.clientX;
   this.pos.x2 = mEvent.clientX;
   this.transformAbsolute(this.getTransX() - this.pos.x1);
-  this.container.dispatchEvent(new CustomEvent("ms-moving"));
+  this.container.dispatchEvent(new CustomEvent(EVENTS.MV));
 }
 function touchMove(this: SliderI, tEvent: TouchEvent) {
   this.pos.x1 = this.pos.x2 - tEvent.touches[0].clientX;
@@ -37,7 +37,7 @@ function touchMove(this: SliderI, tEvent: TouchEvent) {
   this.pos.y2 = tEvent.touches[0].clientY;
   /** run only if the finger is moving roughly horizontally */
   if (Math.abs(this.pos.y1) < Math.abs(this.pos.x1)) this.transformAbsolute(this.getTransX() - this.pos.x1);
-  this.container.dispatchEvent(new CustomEvent("ms-moving"));
+  this.container.dispatchEvent(new CustomEvent(EVENTS.MV));
 }
 
 async function dragstop(this: SliderI) {
@@ -46,7 +46,7 @@ async function dragstop(this: SliderI) {
   document.ontouchend = null;
   document.onmouseup = null;
   this.ismoving = false;
-  this.container.dispatchEvent(new CustomEvent("ms-pointerdragend", {}));
+  this.container.dispatchEvent(new CustomEvent(EVENTS.DRAG_END, {}));
   this.container.onpointerdown = null;
   if (this.pos.start != this.getTransX()) {
     if (this.pos.start > this.getTransX()) await this.slideNext();

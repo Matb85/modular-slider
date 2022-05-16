@@ -1,4 +1,4 @@
-import type { SliderI } from "@/base";
+import { EVENTS, type SliderI } from "@/base";
 import { ONCE } from "@/base";
 
 interface Carousel extends SliderI {
@@ -92,7 +92,7 @@ const Carousel = {
       /** reset the "relative translation" so the condition at the beginning works correctly */
       this.pos.start = this.getTransX();
     };
-    this.addConListener("ms-moving", moving);
+    this.addConListener(EVENTS.MV, moving);
 
     /** append or insertBefore a slide when swiping so the transition does not have any gaps */
     this.transform(-1);
@@ -120,7 +120,7 @@ const Carousel = {
         this.ismoving = false;
         resolve();
       };
-      this.addConListener("ms-transitionend", callback, ONCE);
+      this.addConListener(EVENTS.TR_END, callback, ONCE);
     });
   },
   slideNext(this: Carousel, dur = this.settings.transitionSpeed): Promise<void> {
@@ -155,7 +155,7 @@ const Carousel = {
       if (start === undefined) {
         start = timestamp;
       }
-      this.container.dispatchEvent(new CustomEvent("ms-moving"));
+      this.container.dispatchEvent(new CustomEvent(EVENTS.MV));
       console.log(Math.round(timestamp - start));
       if (!iscompleted) window.requestAnimationFrame(animate);
     };
@@ -178,7 +178,7 @@ const Carousel = {
         iscompleted = true;
         resolve();
       };
-      this.addConListener("ms-transitionend", callback, ONCE);
+      this.addConListener(EVENTS.TR_END, callback, ONCE);
     });
   },
 } as Carousel;

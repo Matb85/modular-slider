@@ -1,4 +1,4 @@
-import type { SliderI } from "@/base";
+import { EVENTS, type SliderI } from "@/base";
 import { ONCE } from "@/base";
 
 interface Noloop extends SliderI {
@@ -29,7 +29,7 @@ const Noloop = {
         this.pos.start = this.getTransX();
         resolve();
       };
-      this.addConListener("ms-transitionend", callback, ONCE);
+      this.addConListener(EVENTS.TR_END, callback, ONCE);
     });
   },
   slideNext(this: Noloop, dur = this.settings.transitionSpeed): Promise<void> {

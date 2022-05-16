@@ -1,4 +1,4 @@
-import type { SliderI } from "@/base";
+import { EVENTS, type SliderI } from "@/base";
 
 interface Options {
   container: string;
@@ -45,7 +45,7 @@ export default (options: Options) =>
 
     /** finally start the logic */
     updatePagination();
-    this.addConListener("ms-transitionend", updatePagination);
+    this.addConListener(EVENTS.TR_END, updatePagination);
 
     /** remove excessive dots when destroying */
     this.onDestroy(() => {

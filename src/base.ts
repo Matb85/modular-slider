@@ -105,6 +105,14 @@ export interface SliderI {
 }
 
 export const ONCE = { once: true };
+
+export enum EVENTS {
+  TR_END = "ms-transitionend",
+  TR_START = "transitionstart",
+  MV = "ms-moving",
+  DRAG_START = "ms-pointerdragstart",
+  DRAG_END = "ms-pointerdragend",
+}
 /**
  * the base class
  */
@@ -142,7 +150,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
       });
 
       /** emit ms-transitionend event for unity */
-      const transitionend = () => this.container.dispatchEvent(new CustomEvent("ms-transitionend"));
+      const transitionend = () => this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
       this.addConListener("transitionend", transitionend);
       this.addConListener("transitioncancel", transitionend);
 
