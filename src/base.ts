@@ -90,9 +90,9 @@ export interface SliderI {
 
   init(): void;
   /** registers an event listener to the window and removes it on the destroy hook */
-  registerDocumentListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void;
+  addDocListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void;
   /** registers an event listener to the slider's container and removes it on the destroy hook */
-  registerListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void;
+  addConListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void;
   /** register an event listener called on the destroy hook */
   onDestroy(handler: () => void, handerId?: string): string;
   /** destroys the slider instance and:
@@ -136,15 +136,15 @@ export default function getBase(): new (settings: Defaults) => SliderI {
       this.slideWidth = this.calcSlideWidth();
       this.slideDisplay = this.getSlidesPerView();
 
-      this.registerDocumentListener("resize", () => {
+      this.addDocListener("resize", () => {
         this.slideWidth = this.calcSlideWidth();
         this.slideDisplay = this.getSlidesPerView();
       });
 
       /** emit ms-transitionend event for unity */
       const transitionend = () => this.container.dispatchEvent(new CustomEvent("ms-transitionend"));
-      this.registerListener("transitionend", transitionend);
-      this.registerListener("transitioncancel", transitionend);
+      this.addConListener("transitionend", transitionend);
+      this.addConListener("transitioncancel", transitionend);
 
       /** initiate mixins */
       for (const init of this.inits) init.call(this);
@@ -189,7 +189,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
 
     /** 3.lifecycle helpers */
 
-    registerListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
+    addConListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
       const id = this.onDestroy(() => this.container.removeEventListener(event, callback));
       const callback = (e: Event) => {
         handler(e);
@@ -200,7 +200,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
       };
       this.container.addEventListener(event, callback, options);
     }
-    registerDocumentListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
+    addDocListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
       const id = this.onDestroy(() => document.removeEventListener(event, callback));
       const callback = (e: Event) => {
         handler(e);

@@ -91,7 +91,7 @@ const Carousel = {
       /** reset the "relative translation" so the condition at the beginning works correctly */
       this.pos.start = this.getTransX();
     };
-    this.registerListener("ms-moving", moving);
+    this.addConListener("ms-moving", moving);
 
     /** append or insertBefore a slide when swiping so the transition does not have any gaps */
     this.transform(-1);

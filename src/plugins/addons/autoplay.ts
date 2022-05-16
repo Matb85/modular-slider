@@ -31,7 +31,7 @@ export default (interval = 5000) =>
     observer.observe(this.container);
 
     /** pause autoplay when the page is hidden */
-    this.registerDocumentListener("visibilitychange", function () {
+    this.addDocListener("visibilitychange", function () {
       if (document.hidden) {
         controls.pause();
       } else {

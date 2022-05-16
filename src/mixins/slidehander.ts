@@ -2,7 +2,7 @@ import { type SliderI, ONCE } from "@/base";
 
 export default {
   init(this: SliderI) {
-    this.registerListener("pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent), ONCE);
+    this.addConListener("pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent), ONCE);
   },
 };
 
@@ -53,5 +53,5 @@ async function dragstop(this: SliderI) {
     else await this.slidePrev();
   }
 
-  this.registerListener("pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent), ONCE);
+  this.addConListener("pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent), ONCE);
 }
