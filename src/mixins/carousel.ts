@@ -1,4 +1,5 @@
 import type { SliderI } from "@/base";
+import { ONCE } from "@/base";
 
 interface Carousel extends SliderI {
   /** set carousel to a truthy value in the init function - might be useful for plugins
@@ -109,7 +110,8 @@ const Carousel = {
 
       this.setTransition(dur);
       this.transform(this.carousel - dist - 1);
-      setTimeout(() => {
+
+      const callback = () => {
         this.clearTransition();
         direction();
         /** return to the initial state if the counter has a too big value */
@@ -117,7 +119,8 @@ const Carousel = {
 
         this.ismoving = false;
         resolve();
-      }, dur);
+      };
+      this.addConListener("ms-transitionend", callback, ONCE);
     });
   },
   slideNext(this: Carousel, dur = this.settings.transitionSpeed): Promise<void> {
@@ -163,7 +166,8 @@ const Carousel = {
     return new Promise(resolve => {
       this.setTransition(dur);
       this.transformAbsolute(this.pos.start - this.slideWidth * dist);
-      setTimeout(() => {
+
+      const callback = () => {
         this.clearTransition();
         if (dist > 0) this.movefor();
         else this.moveback();
@@ -173,7 +177,8 @@ const Carousel = {
         this.ismoving = false;
         iscompleted = true;
         resolve();
-      }, dur);
+      };
+      this.addConListener("ms-transitionend", callback, ONCE);
     });
   },
 } as Carousel;

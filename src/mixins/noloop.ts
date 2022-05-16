@@ -1,4 +1,5 @@
 import type { SliderI } from "@/base";
+import { ONCE } from "@/base";
 
 interface Noloop extends SliderI {
   /** set carousel to a truthy value in the init function - might be useful for plugins
@@ -22,12 +23,13 @@ const Noloop = {
 
       this.setTransition(dur);
       this.transform(this.counter);
-      setTimeout(() => {
+      const callback = () => {
         this.clearTransition();
         this.ismoving = false;
         this.pos.start = this.getTransX();
         resolve();
-      }, dur);
+      };
+      this.addConListener("ms-transitionend", callback, ONCE);
     });
   },
   slideNext(this: Noloop, dur = this.settings.transitionSpeed): Promise<void> {
