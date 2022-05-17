@@ -1,8 +1,8 @@
-import { type SliderI, ONCE, EVENTS } from "@/types";
+import { type SliderI, EVENTS } from "@/types";
 
 export default {
   init(this: SliderI) {
-    this.addConListener("pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent), ONCE);
+    this.addTempConListener("pointerdown", "pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent));
   },
 };
 
@@ -53,5 +53,5 @@ async function dragstop(this: SliderI) {
     else await this.slidePrev();
   }
 
-  this.addConListener("pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent), ONCE);
+  this.addTempConListener("pointerdown", "pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent));
 }

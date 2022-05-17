@@ -1,5 +1,4 @@
 import { EVENTS, type SliderI } from "@/types";
-import { ONCE } from "@/types";
 
 interface Noloop extends SliderI {
   /** set carousel to a truthy value in the init function - might be useful for plugins
@@ -29,7 +28,7 @@ const Noloop = {
         this.pos.start = this.getTransX();
         resolve();
       };
-      this.addConListener(EVENTS.TR_END, callback, ONCE);
+      this.addTempConListener(EVENTS.TR_END, "noloop-tr-end", callback);
     });
   },
   slideNext(this: Noloop, dur = this.settings.transitionSpeed): Promise<void> {

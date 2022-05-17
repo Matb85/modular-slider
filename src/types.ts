@@ -71,10 +71,12 @@ export interface SliderI {
   /** 3.lifecycle helpers */
 
   init(): void;
-  /** registers an event listener to the window and removes it on the destroy hook */
-  addDocListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void;
+  /** registers a listener that fires only ONCE, used for transitions */
+  addTempConListener(event: string, name: string, handler: EventListener): void;
   /** registers an event listener to the slider's container and removes it on the destroy hook */
-  addConListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void;
+  addConListener(event: string, handler: EventListener): void;
+  /** registers an event listener to the window and removes it on the destroy hook */
+  addDocListener(event: string, handler: EventListener): void;
   /** register an event listener called on the destroy hook */
   onDestroy(handler: () => void, handerId?: string): string;
   /** destroys the slider instance and:

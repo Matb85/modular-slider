@@ -1,5 +1,5 @@
 import type { SliderI, Defaults } from "@/types";
-import { defaults, EVENTS } from "@/types";
+import { defaults, EVENTS, ONCE } from "@/types";
 /** copies methods and properties from mixin classes to the derived class
  * it is a modified version of the function here: {@link https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern}
  */
@@ -101,28 +101,17 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     }
 
     /** 3.lifecycle helpers */
-
-    addConListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
-      const id = this.onDestroy(() => this.container.removeEventListener(event, callback));
-      const callback = (e: Event) => {
-        handler(e);
-        if (options?.once && this.destroyers[id]) {
-          this.destroyers[id]();
-          delete this.destroyers[id];
-        }
-      };
-      this.container.addEventListener(event, callback, options);
+    addTempConListener(event: string, name: string, handler: EventListener): void {
+      this.onDestroy(() => this.container.removeEventListener(event, handler), name);
+      this.container.addEventListener(event, handler, ONCE);
     }
-    addDocListener(event: string, handler: EventListener, options?: AddEventListenerOptions): void {
-      const id = this.onDestroy(() => document.removeEventListener(event, callback));
-      const callback = (e: Event) => {
-        handler(e);
-        if (options?.once && this.destroyers[id]) {
-          this.destroyers[id]();
-          delete this.destroyers[id];
-        }
-      };
-      document.addEventListener(event, callback, options);
+    addConListener(event: string, handler: EventListener): void {
+      this.onDestroy(() => this.container.removeEventListener(event, handler));
+      this.container.addEventListener(event, handler);
+    }
+    addDocListener(event: string, handler: EventListener): void {
+      this.onDestroy(() => document.removeEventListener(event, handler));
+      document.addEventListener(event, handler);
     }
     onDestroy(handler: () => void, handerId?: string): string {
       const id = handerId || Date.now() + "";

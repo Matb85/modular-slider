@@ -1,5 +1,4 @@
 import { EVENTS, type SliderI } from "@/types";
-import { ONCE } from "@/types";
 
 interface Carousel extends SliderI {
   /** set carousel to a truthy value in the init function - might be useful for plugins
@@ -120,7 +119,7 @@ const Carousel = {
         this.ismoving = false;
         resolve();
       };
-      this.addConListener(EVENTS.TR_END, callback, ONCE);
+      this.addTempConListener(EVENTS.TR_END, "base-tr-end", callback);
     });
   },
   slideNext(this: Carousel, dur = this.settings.transitionSpeed): Promise<void> {
@@ -178,7 +177,7 @@ const Carousel = {
         iscompleted = true;
         resolve();
       };
-      this.addConListener(EVENTS.TR_END, callback, ONCE);
+      this.addTempConListener(EVENTS.TR_END, "slideby-tr-end", callback);
     });
   },
 } as Carousel;
