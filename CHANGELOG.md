@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/Matb85/modular-slider/compare/v0.9.0...v0.10.0) (2022-05-17)
+
+
+### Bug Fixes
+
+* :bug: fix event listeners in base.ts ([0a32931](https://github.com/Matb85/modular-slider/commit/0a329310da287f7075cacc319997f86a571dcd7e))
+* :lipstick: fix list rendering issues ([e8db974](https://github.com/Matb85/modular-slider/commit/e8db9742e2d89f7d9c3fe3f8382bd5b6839d668c))
+
+
+### Enhancements
+
+* :bulb: add comments to the SlideI interface ([30f8f7d](https://github.com/Matb85/modular-slider/commit/30f8f7d426c27a976a6ea9bf7a935c6738a0a7f0))
+* :recycle: prefer eventas to timeouts ([a3187f5](https://github.com/Matb85/modular-slider/commit/a3187f56dece34ca2af0cb8650726de29e7cf93a))
+* :recycle: rename registerListener to addConListener & registerDocumentListener to addDocListener ([3030d25](https://github.com/Matb85/modular-slider/commit/3030d25885f646dbcd8e11662a54a2660d565708))
+* :recycle: rework the destroying logic ([874f3df](https://github.com/Matb85/modular-slider/commit/874f3df9b5c54cc4190f1e016ca471b225eedcb6))
+* :recycle: scope custom events ([44ffdf5](https://github.com/Matb85/modular-slider/commit/44ffdf54c3827e1b4692165db732fb2ef3dbc9f6))
+* :recycle: support ms-transitionend by default in base.ts ([b2a7821](https://github.com/Matb85/modular-slider/commit/b2a78219d854bd4ba441d397c843a4ed0706d910))
+* :sparkles: add EVENTS enum ([a148896](https://github.com/Matb85/modular-slider/commit/a1488960fe4b157bbb90633a5e76674d3bc05572))
+* :sparkles: create a dedicated file for ts utils ([b7f3108](https://github.com/Matb85/modular-slider/commit/b7f3108ed13c9c37ed302a8e34d74be0c9cf495b))
+* :sparkles: create addTempConListener utility ([8227862](https://github.com/Matb85/modular-slider/commit/8227862e55f492efabd1e74083b23f5fd1fd6d6d))
+* :sparkles: create goTo method ([1317d44](https://github.com/Matb85/modular-slider/commit/1317d442afdf0a322c18bc702a84452e3e9b77c2))
+* :zap: use requestAnimationFrame, refactor helperCounter & counter, fix slideTo - all in carousel.ts ([c9869e2](https://github.com/Matb85/modular-slider/commit/c9869e23932a084ca62d2fc46b0c62b8152520ee))
+* **mixins:** :truck: use PascalCase for mixins ([a3b676b](https://github.com/Matb85/modular-slider/commit/a3b676b0305acce79835d7eb04283433d997c298))
+* **plugins:** :sparkles: make duplicating a separate plugin ([e31fcd0](https://github.com/Matb85/modular-slider/commit/e31fcd0740da0867908a756bf99091c32dba7ed9))
+* **plugins:** :zap: carousel.ts - remove DOM changes altogether ([cb6e01e](https://github.com/Matb85/modular-slider/commit/cb6e01ed76f5de0f27e76a489a9ac1d6cbd388c7))
+
 ## [0.9.0](https://github.com/Matb85/modular-slider/compare/v0.8.6...v0.9.0) (2022-05-10)
 
 

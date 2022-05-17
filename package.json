@@ -1,6 +1,6 @@
 {
   "name": "modular-slider",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "license": "ISC",
   "description": "A zero dependency slider with a modular approach, written in Typescript",
   "scripts": {
