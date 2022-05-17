@@ -11,6 +11,7 @@
   <button on:click="{() => sl.slidePrev()}" class="button">slider.slidePrev()</button>
   <button on:click="{() => sl.slideNext()}" class="button">slider.slideNext()</button>
   <button on:click="{() => sl.slideTo(0)}" class="button">slider.slideTo(0)</button>
+  <button on:click="{() => sl.goTo(1)}" class="button">slider.goTo(1)</button>
 </section>
 
 <section class="button-container">

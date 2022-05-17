@@ -67,6 +67,8 @@ export interface SliderI {
   slideBy(dist: number, dur?: number): Promise<void>;
   /** navigates to a desired slide */
   slideTo(to: number, dur?: number): Promise<void>;
+  /** **immediately** navigates to a desired slide */
+  goTo(to: number): Promise<void>;
 
   /** 3.lifecycle helpers */
 

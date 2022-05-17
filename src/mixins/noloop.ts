@@ -28,7 +28,9 @@ const Noloop = {
         this.pos.start = this.getTransX();
         resolve();
       };
-      this.addTempConListener(EVENTS.TR_END, "noloop-tr-end", callback);
+
+      if (dur !== 0) this.addTempConListener(EVENTS.TR_END, "noloop-tr-end", callback);
+      else callback();
     });
   },
   slideNext(this: Noloop, dur = this.settings.transitionSpeed): Promise<void> {
@@ -43,6 +45,9 @@ const Noloop = {
   slideBy(this: Noloop, dist = 0, dur?: number): Promise<void> {
     if (dist === 0) return new Promise<void>(resolve => resolve());
     return this.base(dist, dur);
+  },
+  goTo(this: Noloop, dist = 0): Promise<void> {
+    return this.slideTo(dist, 0);
   },
 } as Noloop;
 

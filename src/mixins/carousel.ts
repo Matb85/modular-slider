@@ -5,7 +5,8 @@ interface Carousel extends SliderI {
    * in this mixin it is used as a helper
    */
   carousel: number;
-  helperCounter: number;
+  get helperCounter(): number;
+  get counter(): number;
   movefor(this: SliderI): void;
   moveback(this: SliderI): void;
   base(this: Carousel, dist: number, dur: number, direction: () => void): Promise<void>;
@@ -149,13 +150,8 @@ const Carousel = {
     this.pos.start = this.getTransX();
     /** mock the "moving" event usually fired by the touchmove/mousemove handler */
     let iscompleted = false;
-    let start: number;
-    const animate = (timestamp: number) => {
-      if (start === undefined) {
-        start = timestamp;
-      }
+    const animate = () => {
       this.container.dispatchEvent(new CustomEvent(EVENTS.MV));
-      console.log(Math.round(timestamp - start));
       if (!iscompleted) window.requestAnimationFrame(animate);
     };
     window.requestAnimationFrame(animate);
@@ -178,6 +174,26 @@ const Carousel = {
         resolve();
       };
       this.addTempConListener(EVENTS.TR_END, "slideby-tr-end", callback);
+    });
+  },
+  goTo(this: Carousel, to): Promise<void> {
+    const dist = to - this.counter;
+    /** an "early" return to avoid unnecessary burden if dist == 0 */
+    if (dist === 0 || this.ismoving === true) return new Promise<void>(resolve => resolve());
+
+    return new Promise(resolve => {
+      this.pos.start = this.getTransX();
+      this.transformAbsolute(this.pos.start - this.slideWidth * dist);
+
+      if (dist > 0)
+        for (let i = 0; i < dist; i++) {
+          this.movefor();
+        }
+      else
+        for (let i = 0; i < -1 * dist; i++) {
+          this.moveback();
+        }
+      resolve();
     });
   },
 } as Carousel;

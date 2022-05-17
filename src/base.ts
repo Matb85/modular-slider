@@ -39,6 +39,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     slideNext: (dur?: number) => Promise<void>;
     slidePrev: (dur?: number) => Promise<void>;
     slideBy: (dist?: number) => Promise<void>;
+    goTo: (dist?: number) => Promise<void>;
     slideTo: (to?: number) => Promise<void>;
     init: () => void;
     constructor(settings: Defaults) {
@@ -48,7 +49,6 @@ export default function getBase(): new (settings: Defaults) => SliderI {
       this.container.style.setProperty("--number-of-slides", this.slides.length.toString());
       this.slideWidth = this.calcSlideWidth();
       this.slideDisplay = this.getSlidesPerView();
-
       this.addDocListener("resize", () => {
         this.slideWidth = this.calcSlideWidth();
         this.slideDisplay = this.getSlidesPerView();
