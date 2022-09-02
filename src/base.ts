@@ -101,6 +101,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     }
 
     /** 3.lifecycle helpers */
+
     addTempConListener(event: string, name: string, handler: EventListener): void {
       this.onDestroy(() => this.container.removeEventListener(event, handler), name);
       this.container.addEventListener(event, handler, ONCE);
