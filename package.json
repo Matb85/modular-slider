@@ -4,7 +4,7 @@
   "license": "ISC",
   "description": "A zero dependency slider with a modular approach, written in Typescript",
   "scripts": {
-    "dev": "TARGET=DOCS vite dev",
+    "dev": "TARGET=DOCS vite dev --port 3000",
     "build": "vite build && pnpm build:types",
     "build:types": "tsc --project ./tsconfig.build.json",
     "build:docs": "TARGET=DOCS vite build",
@@ -37,20 +37,20 @@
     "url": "https://github.com/Matb85/modular-slider/issues"
   },
   "devDependencies": {
-    "@mdi/js": "^6.6.96",
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.42",
+    "@mdi/js": "^7.0.96",
+    "@sveltejs/vite-plugin-svelte": "^1.0.4",
     "@tsconfig/svelte": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
-    "autoprefixer": "^10.4.5",
-    "eslint": "^8.14.0",
-    "husky": "^7.0.4",
-    "postcss": "^8.4.12",
-    "prettier": "^2.6.2",
-    "svelte": "^3.47.0",
-    "tailwindcss": "^3.0.24",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "autoprefixer": "^10.4.8",
+    "eslint": "^8.23.0",
+    "husky": "^8.0.1",
+    "postcss": "^8.4.16",
+    "prettier": "^2.7.1",
+    "svelte": "^3.50.0",
+    "tailwindcss": "^3.1.8",
     "typescript": "^4.6.4",
-    "vite": "^2.9.6"
+    "vite": "^3.0.9"
   },
   "optionalDependencies": {
     "sharp": "^0.29.3",
