@@ -16,10 +16,9 @@ const Carousel = {
   },
   updateDOM(this: Carousel, dist: number) {
     this.counter -= dist;
-    console.log(this.counter);
+
     /** prevent the counter from exceeding the number of slides */
     if (this.counter < -1 * this.slides.length + 1 || this.counter >= this.slides.length) {
-      console.log("reset");
       this.counter = 0;
       this.transform(0);
     }
@@ -45,7 +44,7 @@ const Carousel = {
        * uses an early return to avoid too much nested code*/
       if (Math.abs(this.pos.start - this.getTransX()) / this.slideWidth < 1) return;
       /** align the slides according to the direction */
-      console.log("moving");
+
       if (this.pos.x1 > 0) {
         this.updateDOM(1);
       } else {
@@ -78,8 +77,6 @@ const Carousel = {
         this.clearTransition();
         this.updateDOM(dist);
         this.ismoving = false;
-        console.log("trend", this.counter);
-
         resolve();
       }, dur);
     });
@@ -127,15 +124,13 @@ const Carousel = {
         this.container.dispatchEvent(new CustomEvent(EVENTS.MV));
         if (runtime < dur) window.requestAnimationFrame(animate);
         else {
-          console.log(relativeProgress, (this.slideWidth * dist) / 2);
           this.updateDOM(dist > 0 ? 1 : -1);
-          console.log("end");
 
           this.ismoving = false;
           resolve();
         }
       };
-      console.log("start");
+
       window.requestAnimationFrame(animate);
     });
   },
