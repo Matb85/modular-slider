@@ -7,6 +7,7 @@
   <WithPagination />
   <WithAutoplay />
   <WithPhotos />
+  <Mixed />
 </main>
 <InfoFooter />
 
@@ -31,6 +32,7 @@ import WithButtons from "~/components/sliders/WithButtons.svelte";
 import WithPagination from "~/components/sliders/WithPagination.svelte";
 import WithAutoplay from "~/components/sliders/WithAutoplay.svelte";
 import WithPhotos from "~/components/sliders/WithPhotos.svelte";
+import Mixed from "~/components/sliders/Mixed.svelte";
 
 import InfoFooter from "~/components/InfoFooter.svelte";
 import "~/prismjs/prism.js";
