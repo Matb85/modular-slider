@@ -8,31 +8,27 @@ interface Carousel extends SliderI {
   updateDOM(this: Carousel, dist: number): void;
   init(this: Carousel): Promise<void>;
 }
-let TEMP_START_POS = 0;
 /** utilities specific to this mixin */
 const Carousel = {
   updateDOM(this: Carousel, dist: number) {
     this.counter -= dist;
     console.log(this.counter);
-    // prevent the counter from exceeding the number of slides
+    /** prevent the counter from exceeding the number of slides */
     if (this.counter < -1 * this.slides.length + 1 || this.counter >= this.slides.length) {
       console.log("reset");
-      for (const slide of this.slides) slide.style.setProperty("--translate-factor", "0");
       this.counter = 0;
-      this.transform(-1);
-      TEMP_START_POS = this.slideWidth * 0;
-      return;
+      this.transform(0);
     }
     const c = Math.abs(this.counter);
     let shouldMove = true;
     if (this.counter < 0) {
       for (let i = 0; i < this.slides.length; i++) {
-        if (i == c) shouldMove = false;
+        if (i == c - 1) shouldMove = false;
         this.slides[i].style.setProperty("--translate-factor", shouldMove ? "1" : "0");
       }
     } else {
       for (let i = this.slides.length - 1; i >= 0; i--) {
-        if (i == this.slides.length - 1 - c) shouldMove = false;
+        if (i == this.slides.length - 2 - c) shouldMove = false;
         this.slides[i].style.setProperty("--translate-factor", shouldMove ? "-1" : "0");
       }
     }
@@ -57,8 +53,9 @@ const Carousel = {
     this.addConListener(EVENTS.MV, moving);
 
     /** append or insertBefore a slide when swiping so the transition does not have any gaps */
-    this.transform(-1);
+    this.transform(0);
     // await this.slideTo(this.settings.initialSlide);
+    this.slides[this.slides.length - 1].style.setProperty("--translate-factor", "-1");
 
     /** return to the initial state when destroying */
     this.onDestroy(() => {
@@ -71,13 +68,11 @@ const Carousel = {
       this.ismoving = true;
 
       this.setTransition(dur);
-      this.transform(this.counter - dist - 1);
+      this.transform(this.counter - dist);
 
       const callback = () => {
         this.clearTransition();
         this.updateDOM(dist);
-        /** return to the initial state if the counter has a too big value */
-
         this.ismoving = false;
         resolve();
       };
@@ -99,61 +94,55 @@ const Carousel = {
     dur = this.settings.transitionSpeed * (Math.abs(dist) / this.slides.length + 1)
   ): Promise<void> {
     return new Promise(resolve => {
-      /** an "early" return to avoid unnecessary burden if dist == 0 */
+      /** an "early" return to avoid unnecessary burden if dist equals 0 or 1 */
       if (dist === 0 || this.ismoving === true) return resolve();
-      /** if dist == 1 || dist == -1 return a much simpler method*/
-      if (Math.abs(dist) == 1) {
-        if (dist > 0) return this.slideNext();
-        else return this.slidePrev();
-      }
+      if (Math.abs(dist) == 1) this.base(dist, dur);
+
       this.ismoving = true;
+
       /** mock some touchEvent/mouseEvent data */
       this.pos.x1 = dist;
-      TEMP_START_POS = this.pos.start = this.getTransX();
+      this.pos.start = this.getTransX();
       /** mock the "moving" event usually fired by the touchmove/mousemove handler */
       let starttime: number;
-      /** based on https://medium.com/burst/understanding-animation-with-duration-and-easing-using-requestanimationframe-7e3fd1688d6c */
+      let oldProgress = 0;
+      /** based on https://medium.com/burst/understanding-animation-with-duration-and-easing-using-requestanimationframe-7e3fd1688d6c
+       * it is supposed to mock the touch/mouse move event
+       */
       const animate = (timestamp: number) => {
         if (!starttime) starttime = timestamp;
         /** How long have we been animating in total? */
         const runtime = timestamp - starttime;
-
         /** How much has our animation progressed relative to our duration goal?
          * The result is a number (float) between 0 and 1. So 0 is zero percent en 1 is one hundred percent. */
         const relativeProgress = this.slideWidth * dist * easeInOutQuad(runtime / dur);
-        this.transformAbsolute(TEMP_START_POS - relativeProgress);
+        this.transformAbsolute(this.getTransX() - relativeProgress + oldProgress);
+        oldProgress = relativeProgress;
+
         this.container.dispatchEvent(new CustomEvent(EVENTS.MV));
         if (runtime < dur) window.requestAnimationFrame(animate);
         else {
-          console.log("end");
+          console.log(relativeProgress, (this.slideWidth * dist) / 2);
           this.updateDOM(dist > 0 ? 1 : -1);
+          console.log("end");
 
           this.ismoving = false;
           resolve();
         }
       };
-
+      console.log("start");
       window.requestAnimationFrame(animate);
     });
   },
-  goTo(this: Carousel, to): Promise<void> {
-    const dist =
-      to - this.counter == 1 ? 0 : this.counter <= 0 ? this.counter * -1 + 1 : this.slides.length - this.counter + 1;
-    /** an "early" return to avoid unnecessary burden if dist == 0 */
-    if (dist === 0 || this.ismoving === true) return new Promise<void>(resolve => resolve());
-
+  goTo(this: Carousel, to: number): Promise<void> {
     return new Promise(resolve => {
-      this.pos.start = this.getTransX();
-      this.transformAbsolute(this.pos.start - this.slideWidth * dist);
+      /** an "early" return to avoid unnecessary burden if dist == 0 */
+      if (this.ismoving === true) return resolve();
 
-      if (dist > 0)
-        for (let i = 0; i < dist; i++) {
-          this.updateDOM(1);
-        }
-      else
-        for (let i = 0; i < -1 * dist; i++) {
-          this.updateDOM(-1);
-        }
+      this.pos.start = this.getTransX();
+      this.transform(-1 * to);
+      this.updateDOM(this.counter + to);
+
       resolve();
     });
   },
