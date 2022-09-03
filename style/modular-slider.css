@@ -5,7 +5,7 @@
   /* the position MUST be set to relative because some carousel transitions use the left css property */
   @apply relative h-auto w-auto
   flex flex-nowrap
-  list-none;
+  list-none m-0 p-0;
 }
 .MS-wrapper .MS-con > * {
   flex: 0 0 auto;
