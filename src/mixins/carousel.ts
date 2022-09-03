@@ -10,6 +10,10 @@ interface Carousel extends SliderI {
 }
 /** utilities specific to this mixin */
 const Carousel = {
+  getCurrentSlide(): number {
+    if (this.counter <= 0) return this.counter * -1;
+    else return this.slides.length - this.counter;
+  },
   updateDOM(this: Carousel, dist: number) {
     this.counter -= dist;
     console.log(this.counter);
@@ -70,13 +74,14 @@ const Carousel = {
       this.setTransition(dur);
       this.transform(this.counter - dist);
 
-      const callback = () => {
+      setTimeout(() => {
         this.clearTransition();
         this.updateDOM(dist);
         this.ismoving = false;
+        console.log("trend", this.counter);
+
         resolve();
-      };
-      this.addTempConListener(EVENTS.TR_END, "base-tr-end", callback);
+      }, dur);
     });
   },
   slideNext(this: Carousel, dur = this.settings.transitionSpeed): Promise<void> {
@@ -86,7 +91,7 @@ const Carousel = {
     return this.base(-1, dur);
   },
   slideTo(this: Carousel, to = 0, dur?: number): Promise<void> {
-    return this.slideBy(to - this.counter, dur);
+    return this.slideBy(to - this.getCurrentSlide(), dur);
   },
   slideBy(
     this: Carousel,
