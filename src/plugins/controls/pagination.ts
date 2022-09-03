@@ -12,8 +12,7 @@ export default (options: Options) =>
     const pagcontainer = document.querySelector(options.container) as HTMLElement;
     const dots = [document.querySelector(options.dots) as HTMLElement];
     dots[0].dataset.id = "0";
-    const dotsamount =
-      typeof this.carousel !== "undefined" ? this.slides.length : this.slides.length - this.slideDisplay + 1;
+    const dotsamount = "updateDOM" in this ? this.slides.length : this.slides.length - this.slideDisplay + 1;
 
     /** clone the dot */
     for (let i = 1; i < dotsamount; i++) {
@@ -24,11 +23,11 @@ export default (options: Options) =>
     }
     /** a function for updating the dot that represents the current slide */
     const updatePagination = () => {
-      const curdot = dots[Math.abs(this.counter)];
+      const curdot = dots[this.getCurrentSlide()];
       const curdotID = parseInt(curdot.dataset.id as string);
       dots.forEach(d => d.classList.remove(...options.addClass));
       curdot.classList.add(options.addClass[0]);
-      /** if the user provided more classes, apply them to neighbouring dots */
+      /** if the user provided more classes, apply them to neighboring dots */
       if (options.addClass[1])
         for (let i = 0; i < options.addClass.length; i++) {
           if (dots[curdotID + i]) dots[curdotID + i].classList.add(options.addClass[i]);
