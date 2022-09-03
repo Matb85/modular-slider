@@ -54,7 +54,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
         this.slideDisplay = this.getSlidesPerView();
       });
 
-      /** emit ms-transitionend event for unity */
+      /** emit MS-transitionend event for unity */
       const transitionend = () => this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
       this.addConListener("transitionend", transitionend);
       this.addConListener("transitioncancel", transitionend);

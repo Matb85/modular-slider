@@ -93,9 +93,9 @@ export interface SliderI {
 export const ONCE = { once: true };
 
 export enum EVENTS {
-  TR_END = "ms-transitionend",
+  TR_END = "MS-transitionend",
   TR_START = "transitionstart",
-  MV = "ms-moving",
-  DRAG_START = "ms-pointerdragstart",
-  DRAG_END = "ms-pointerdragend",
+  MV = "MS-moving",
+  DRAG_START = "MS-pointerdragstart",
+  DRAG_END = "MS-pointerdragend",
 }

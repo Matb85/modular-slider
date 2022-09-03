@@ -12,5 +12,5 @@ export default (addClass = "loaded", options: IntersectionObserverInit = { rootM
         img.addEventListener("load", () => img.classList.add(addClass));
       });
     }, options);
-    this.container.querySelectorAll(".ms-lazy").forEach(img => observer.observe(img));
+    this.container.querySelectorAll(".MS-lazy").forEach(img => observer.observe(img));
   };
