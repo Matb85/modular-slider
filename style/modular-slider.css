@@ -1,19 +1,19 @@
-.ms-outer-con {
+.MS-wrapper {
   overflow: hidden; /* hide the slides that should be out of view */
 }
-.ms-outer-con .ms-inner-con {
+.MS-wrapper .MS-con {
   /* the position MUST be set to relative because some carousel transitions use the left css property */
   @apply relative h-auto w-auto
   flex flex-nowrap
   list-none;
 }
-.ms-outer-con .ms-inner-con > * {
+.MS-wrapper .MS-con > * {
   flex: 0 0 auto;
   margin-left: var(--slide-margin, 0px);
   margin-right: var(--slide-margin, 0px);
 }
-.ms-outer-con .ms-inner-con *,
-.ms-outer-con .ms-inner-con img {
+.MS-wrapper .MS-con *,
+.MS-wrapper .MS-con img {
   -webkit-user-drag: none; /* prevent images from being dragged */
   user-select: none;
 }
@@ -25,10 +25,10 @@
     --slides-per-view: 2; // the number of how many slides are displayed at once
     they can be put in this element or in the :root 
   */
-.ms-outer-con:not(.width-in-percentage) {
+.MS-wrapper.MS-fixed {
   width: calc((var(--slide-width) + 2 * var(--slide-margin, 0px)) * var(--slides-per-view));
 }
-.ms-outer-con:not(.width-in-percentage) .ms-inner-con > * {
+.MS-wrapper.MS-fixed .MS-con > * {
   width: var(--slide-width);
 }
 
@@ -39,14 +39,15 @@
   --slides-per-view: 2; // the number of how many slides are displayed at once - this one is compulsory!
   --slide-margin: 25px; // the left and right margin of each element
 */
-.ms-outer-con.width-in-percentage .ms-inner-con {
+.MS-wrapper:not(.MS-fixed) .MS-con {
   width: calc(100% * var(--number-of-slides) / var(--slides-per-view));
 }
-.ms-outer-con.width-in-percentage .ms-inner-con > * {
+.MS-wrapper:not(.MS-fixed) .MS-con > * {
   width: calc((100%) / var(--number-of-slides) - 2 * var(--slide-margin, 0px));
 }
 
-.ms-outer-con .ms-inner-con > * {
+/* necessary for the carousel mode to work, as it makes use of --translate-factor */
+.MS-wrapper .MS-con > * {
   --translate-factor: 0;
   transform: translate3d(
     calc((100% + 2 * var(--slide-margin, 0px)) * var(--number-of-slides) * var(--translate-factor)),

@@ -1,8 +1,8 @@
 <h3 class="header-3">A slider with buttons</h3>
-<section class="ms-outer-con mx-auto">
-  <ul id="slider-with-btns" class="ms-inner-con blue-items">
+<section class="MS-wrapper MS-fixed mx-auto">
+  <ul id="slider-with-btns" class="MS-con blue-items">
     {#each sliderItems as item}
-      <li class="ms-item">{item}</li>
+      <li class="MS-item">{item}</li>
     {/each}
   </ul>
 </section>

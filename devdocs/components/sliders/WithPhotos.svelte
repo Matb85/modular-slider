@@ -1,20 +1,20 @@
 <h3 class="header-3">A slider with photo lazy-loading</h3>
-<section class="ms-outer-con mx-auto">
-  <ul id="slider-with-photos" class="ms-inner-con blue-items">
+<section class="MS-wrapper MS-fixed mx-auto">
+  <ul id="slider-with-photos" class="MS-con blue-items">
     <li class="img-con">
-      <img class="ms-lazy" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="birds" />
+      <img class="MS-lazy" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="birds" />
     </li>
     <li class="img-con">
-      <img class="ms-lazy" src="./assets/thumbnail_gorge.jpg" data-src="./assets/gorge.jpg" alt="gorge" />
+      <img class="MS-lazy" src="./assets/thumbnail_gorge.jpg" data-src="./assets/gorge.jpg" alt="gorge" />
     </li>
     <li class="img-con">
-      <img class="ms-lazy" src="./assets/thumbnail_mountains.jpg" data-src="./assets/mountains.jpg" alt="mountains" />
+      <img class="MS-lazy" src="./assets/thumbnail_mountains.jpg" data-src="./assets/mountains.jpg" alt="mountains" />
     </li>
     <li class="img-con">
-      <img class="ms-lazy" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="bird" />
+      <img class="MS-lazy" src="./assets/thumbnail_bird.jpg" data-src="./assets/bird.jpg" alt="bird" />
     </li>
     <li class="img-con">
-      <img class="ms-lazy" src="./assets/thumbnail_gorge.jpg" data-src="./assets/gorge.jpg" alt="gorge" />
+      <img class="MS-lazy" src="./assets/thumbnail_gorge.jpg" data-src="./assets/gorge.jpg" alt="gorge" />
     </li>
   </ul>
 </section>
@@ -22,14 +22,14 @@
 <SliderCode>{code}</SliderCode>
 
 <style>
-.ms-outer-con .ms-inner-con .img-con {
+.MS-wrapper MS-fixed .MS-con .img-con {
   overflow: hidden;
 }
-.ms-outer-con .ms-inner-con .img-con :global(img.loaded) {
+.MS-wrapper MS-fixed .MS-con .img-con :global(img.loaded) {
   filter: blur(0vw);
   transform: scale(1);
 }
-.ms-outer-con div.img-con img {
+.MS-wrapper MS-fixed div.img-con img {
   transition: 0.4s transform, 0.4s filter;
   filter: blur(2vw);
   transform: scale(1.05);

@@ -40,7 +40,7 @@ a {
 .header-3 {
   @apply text-4xl sm:text-5xl text-center mb-6 mt-16;
 }
-.ms-inner-con.blue-items .ms-item {
+.MS-con.blue-items .MS-item {
   @apply h-48 bg-blue-500 text-white text-7xl flex items-center justify-center cursor-pointer;
 }
 
