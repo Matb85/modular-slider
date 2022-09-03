@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/Matb85/modular-slider/compare/v0.10.0...v0.11.0) (2022-09-03)
+
+
+### Bug Fixes
+
+* :fire: fix the slideBy & goTo methods ([b41c46a](https://github.com/Matb85/modular-slider/commit/b41c46a40feaee54c8f2e8b397ab8e31073e4009))
+* :label: fix TS types ([6d7d649](https://github.com/Matb85/modular-slider/commit/6d7d64912418cb41e81515cb311881b79a2ae3d0))
+* :lipstick: delete unnecessary tailwind css ([85988bd](https://github.com/Matb85/modular-slider/commit/85988bd0cef6428601734170f17dc23d45e6fde2))
+* **plugins:** :ambulance: ensure the usage of correct dots in the pagination slider ([efb7872](https://github.com/Matb85/modular-slider/commit/efb787252c1f516ac087e9e68b157d9b274f8449))
+* **plugins:** :bug: fix the pagination plugin ([8d916bf](https://github.com/Matb85/modular-slider/commit/8d916bff0baba9418ccfd9065eb4258436594c81))
+
+
+### Enhancements
+
+* :lipstick: rename the css classes ([730d910](https://github.com/Matb85/modular-slider/commit/730d910daacec7f45150922ceef09a91ec624ac2))
+* :recycle: ensure all events and classes are namespaced with the MS- prefix ([4751a47](https://github.com/Matb85/modular-slider/commit/4751a473b55f5e01a164e5ae5e709ca20fbceba0))
+* :recycle: redo the Carousel plugin ([33141e1](https://github.com/Matb85/modular-slider/commit/33141e157a62c0c305868576a03c51ef6613fe55))
+* :sparkles: add getCurrentSlide method ([7ae6bd4](https://github.com/Matb85/modular-slider/commit/7ae6bd4a1c44bae608120d5695dddb41405eed5d))
+* **mixins:** :fire: implement getCurrentSlide & use setTimeout in the base function ([e317216](https://github.com/Matb85/modular-slider/commit/e31721691696d9051e94c7d4fe0c70433a00a727))
+
 ## [0.10.0](https://github.com/Matb85/modular-slider/compare/v0.9.0...v0.10.0) (2022-05-17)
 
 
