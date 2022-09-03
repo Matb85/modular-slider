@@ -41,7 +41,10 @@ export interface SliderI {
    * @returns {number} the number of slides
    */
   getSlidesPerView(): number;
-
+  /** returns the number of the current slide
+   * @returns {number} from 0 to numberOfSlides - 1
+   */
+  getCurrentSlide(): number;
   /** 2. transforming utilities*/
 
   /** sets the container's X value to the length of one slide mulitplied by given number of slides

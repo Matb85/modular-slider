@@ -42,6 +42,7 @@ export default function getBase(): new (settings: Defaults) => SliderI {
     goTo: (dist?: number) => Promise<void>;
     slideTo: (to?: number) => Promise<void>;
     init: () => void;
+    getCurrentSlide: () => number;
     constructor(settings: Defaults) {
       this.settings = { ...defaults, ...settings } as Required<Defaults>;
       this.container = document.getElementById(settings.container) as HTMLElement;
