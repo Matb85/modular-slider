@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import sveltePreprocess from "svelte-preprocess";
+
 // https://vitejs.dev/config/
 const dedupe = ["svelte"];
 const name = "modular-slider";
@@ -13,7 +15,12 @@ export default defineConfig(({ command }) => {
   if (process.env.TARGET == "DOCS")
     return {
       base: command == "build" ? "/modular-slider/" : "/",
-      plugins: [svelte()],
+      plugins: [
+        svelte({
+          configFile: false,
+          preprocess: sveltePreprocess({ typescript: true, postcss: true }),
+        }),
+      ],
       resolve: { dedupe, alias },
       root: "./devdocs",
       build: {

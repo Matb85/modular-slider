@@ -27,15 +27,15 @@
 
 <SliderCode>{code}</SliderCode>
 
-<script>
+<script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import Slider from "../factories/carouselFactory";
+import Slider, { type SliderType } from "../factories/carouselFactory";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 let value = 2;
 
-let sl;
+let sl: SliderType;
 let disabled = false;
 
 function initiate() {
@@ -43,6 +43,7 @@ function initiate() {
     container: "carousel-slider",
     transitionSpeed: 400,
     initialSlide: 4,
+    plugins: [],
   });
   disabled = false;
 }
@@ -60,5 +61,6 @@ const Slider = setup(Carousel, SlideHandler);
 new Slider({
     container: "slider",
     initialSlide: 4,
+    plugins: [],
 });`;
 </script>

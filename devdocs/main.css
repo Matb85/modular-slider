@@ -59,10 +59,3 @@ input.button {
 .button-container {
   @apply flex flex-wrap  justify-center gap-4 mt-4 max-w-full px-4;
 }
-
-.dot {
-  @apply h-4 w-4 rounded-full bg-indigo-400 hover:bg-indigo-800 focus:outline-none;
-}
-.current {
-  @apply bg-indigo-800;
-}

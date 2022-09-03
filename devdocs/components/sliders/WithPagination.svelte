@@ -11,6 +11,15 @@
 </section>
 <SliderCode>{code}</SliderCode>
 
+<style lang="postcss" global>
+.dot {
+  @apply h-4 w-4 rounded-full bg-indigo-400 hover:bg-indigo-800 focus:outline-none;
+}
+.current {
+  @apply bg-indigo-800;
+}
+</style>
+
 <script>
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
