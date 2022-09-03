@@ -9,14 +9,13 @@ Modular Slider aims to deliver just what you want, while using the best of EcmaS
 - :label: written in Typescript
 - :zap: relies on promises and async/await
 - :art: modular architecture -> optimized for tree-shaking
-- :fire: absolutely no DOM manipulation (only class/style attribute changes) by default
+- :fire: absolutely no DOM manipulation (only class/style attribute tweaks) by default
 - :rocket: weighs nothing in your final build
-- :boom: supports SSR - tested in Nuxt.js
+- :boom: supports SSR - tested in [Nuxt.js](https://nuxtjs.org/) & [SvelteKit](https://kit.svelte.dev/)
 
-**TODO** WebKit/Safari support still in progress!
+**TODO** WebKit/Safari support is still in progress due to vague support of pointer events.
 
-**Prease Note:**
-**this package ships not transpiled! use a tool like babel if necessary**
+**this package ships as an esm module.**
 
 ### Architecture
 
@@ -24,7 +23,7 @@ Modular Slider consists of **_Mixins_**, **_Plugins_** and a **_Setup_** functio
 
 #### Mixins
 
-Mixins are classes (abstract in TS) that provide basic functionalities of the slider (i.e. touch/mose events handling, transtions). Their names are **PascalCase** Currently, there are three mixins:
+Mixins are objects that provide basic functionalities of the slider (i.e. touch/mouse events handling, transtions). Their names are **PascalCase** Currently, there are three mixins:
 
 - SlideHandler - provides event handling - **compulsory if you want to drag the slider with mouse/touch**
 - Carousel - provides methods for a carousel slider (with a loop)
@@ -32,7 +31,7 @@ Mixins are classes (abstract in TS) that provide basic functionalities of the sl
 
 #### Plugins
 
-Plugins are functions that enrich your slider with non critical feature. Their names are all **lowercase**. Here are the currently available plugins:
+Plugins are functions that enrich your slider with non critical features. Their names are all **lowercase**. Here are the currently available plugins:
 
 - Buttons - adds next/previous slide buttons
 - Pagination - adds pagination
@@ -45,10 +44,12 @@ the setup function is used to combine mixins - basically this is the function th
 
 ### Usage
 
-First of all download the package via npm:
+First of all download the package:
 
 ```
 npm i modular-slider
+pnpm i modular-slider
+yarn add modular-slider
 ```
 
 Once you've done that, take a look at an example setup:
@@ -57,11 +58,11 @@ Once you've done that, take a look at an example setup:
 
 ```html
 <!-- the markup must include:-->
-<!-- an OUTER CONTAINER with .ms-outer-con class-->
-<!-- an INNER CONTAINER with .ms-inner-con class-->
+<!-- an OUTER CONTAINER with .MS-wrapper MS-fixed class-->
+<!-- an INNER CONTAINER with .MS-con class-->
 <!-- and some slides inside - their class DOES NOT matter -->
-<section class="your-slider ms-outer-con width-in-percentage">
-  <ul id="first-slider" class="ms-inner-con">
+<section class="your-slider MS-wrapper MS-fixed">
+  <ul id="first-slider" class="MS-con">
     <li class="nested-item">1</li>
     <li class="nested-item">2</li>
     <li class="nested-item">3</li>
@@ -77,7 +78,7 @@ Once you've done that, take a look at an example setup:
 </section>
 ```
 
-2. import css from "modular-slider/dist/modular-slider.css" and follow [**one of the available strategies**](#css-strategies). This example uses the _width-in-percentage_ strategy
+2. import css from "modular-slider/dist/modular-slider.css" and follow [**one of the available options**](#css-options). This example uses the default option
 
 ```scss
 @import "~modular-slider/dist/modular-slider.css";
@@ -113,27 +114,17 @@ new Slider({
 
 **[You can find more examples here](https://matb85.github.io/modular-slider/)**
 
-### CSS strategies
+### CSS options
 
-by default modular slider provides two css strategies. They both require some css variables that you may put either in the **:root** or **.ms-outer-con** element.
+by default modular slider provides two css options. They both require some css variables that you may put either in the **:root** or **.MS-wrapper** element.
 
-1. Fixed width (default)
-   the slides have a specified width - the container subordinates to them
-
-```scss
-.ms-outer-con.your-slider {
-  --slide-width: 15rem; // the width of each slide
-  --slide-margin: 25px; // the left and right margin of each element
-  --slides-per-view: 2; // the number of how many slides are displayed at once
-  // don't specify the width - it will be calculated based on the variables above
-}
-```
-
-1. Width in percentage (add **width-in-percentage** class)
+1. Width in percentage (default)
    the outer container has a specified width and the slides subordinate to it
 
+> e.g. the container has width set to **30rem** or **80%** whereas slides have width set to **50%**
+
 ```scss
-.ms-outer-con.your-slider {
+.your-slider.MS-wrapper {
   // you DON'T have to set --number-of-slides - it's just a fallback value just in case something goes wrong
   --number-of-slides: 6; // the number of the slides, total
   --slides-per-view: 2; // the number of how many slides are displayed at once
@@ -142,7 +133,21 @@ by default modular slider provides two css strategies. They both require some cs
 }
 ```
 
-**Good to know** by default --slide-margin is set to 0px.
+2. Fixed width (add **.MS-fixed** class)
+   the slides have a specified width - the container subordinates to them
+
+> e.g. the container **does not** have a set width whereas slides have width set to **15rem**
+
+```css
+.your-slider.MS-fixed.MS-wrapper {
+  --slide-width: 15rem; // the width of each slide
+  --slide-margin: 25px; // the left and right margin of each element
+  --slides-per-view: 2; // the number of how many slides are displayed at once
+  // don't specify the width - it will be calculated based on the variables above
+}
+```
+
+**by default --slide-margin is set to 0px.**
 
 ### Contributing
 
