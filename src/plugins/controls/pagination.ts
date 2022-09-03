@@ -10,7 +10,7 @@ export default (options: Options) =>
   function pagination(this: SliderI) {
     /** get reference for the pagination container & duplicate dots */
     const pagcontainer = document.querySelector(options.container) as HTMLElement;
-    const dots = [document.querySelector(options.dots) as HTMLElement];
+    const dots = [document.querySelector(options.container + " " + options.dots) as HTMLElement];
     dots[0].dataset.id = "0";
     const dotsamount = "updateDOM" in this ? this.slides.length : this.slides.length - this.slideDisplay + 1;
 
