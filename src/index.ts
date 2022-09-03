@@ -12,9 +12,12 @@ import duplicate from "./plugins/addons/duplicate";
 import lazyloading from "./plugins/addons/lazyloading";
 export { pagination, autoplay, buttons, lazyloading, duplicate };
 
-/** export the setup and getbase function */
+/** export the setup and getBase function */
 import getBase, { setup } from "./base";
 export { setup, getBase };
 
+/** export types */
+import type { SliderI } from "./types";
+export { SliderI };
 /** import css */
 import "../style/modular-slider.css";

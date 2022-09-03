@@ -1,10 +1,15 @@
 import { type SliderI, EVENTS } from "@/types";
 
-export default {
+interface SlideHandler extends SliderI {
+  init(this: SlideHandler): Promise<void>;
+}
+const SlideHandler = {
   init(this: SliderI) {
     this.addTempConListener("pointerdown", "pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent));
   },
-};
+} as SlideHandler;
+
+export default SlideHandler;
 
 function pointerDown(this: SliderI, pEvent: PointerEvent) {
   this.pos.start = this.getTransX();
