@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.11.1](https://github.com/Matb85/modular-slider/compare/v0.11.0...v0.11.1) (2022-10-21)
+
+
+### Bug Fixes
+
+* :bug: add an early return to this in carousel of |dist|=1 ([4e0d9fc](https://github.com/Matb85/modular-slider/commit/4e0d9fcab06c11995b5161e0617c43847e9da046))
+
 ## [0.11.0](https://github.com/Matb85/modular-slider/compare/v0.10.0...v0.11.0) (2022-09-03)
 
 
