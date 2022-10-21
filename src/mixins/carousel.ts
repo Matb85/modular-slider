@@ -98,7 +98,7 @@ const Carousel = {
     return new Promise(resolve => {
       /** an "early" return to avoid unnecessary burden if dist equals 0 or 1 */
       if (dist === 0 || this.ismoving === true) return resolve();
-      if (Math.abs(dist) == 1) this.base(dist, dur);
+      if (Math.abs(dist) == 1) return this.base(dist, dur);
 
       this.ismoving = true;
 
