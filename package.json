@@ -12,7 +12,7 @@
     "release": "standard-version",
     "imgs": "node ./assets/imageresizer.js",
     "lint": "eslint src/** && pnpm build:types",
-    "prepare": "husky install",
+    "prepare": "husky",
     "prepublishOnly": "npm run build"
   },
   "main": "dist/modular-slider.es.mjs",
