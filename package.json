@@ -10,7 +10,7 @@
     "build:types": "tsc --project ./tsconfig.build.json",
     "build:docs": "TARGET=DOCS vite build",
     "release": "standard-version",
-    "imgs": "node ./assets/imageresizer.js",
+    "imgs": "node ./assets/imageresizer.cjs",
     "lint": "eslint src/** && pnpm build:types",
     "prepare": "husky",
     "prepublishOnly": "npm run build"

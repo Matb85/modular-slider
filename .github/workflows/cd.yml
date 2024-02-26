@@ -21,7 +21,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Enable Corepack
-        run: corepack enable && corepack prepare pnpm@6.32.11
+        run: corepack enable && corepack prepare pnpm@8
 
       - name: Cache pnpm modules
         uses: actions/cache@v4
