@@ -1,4 +1,4 @@
-import type { SliderI } from "@/types";
+import { EVENTS, type SliderI } from "@/types";
 
 interface Noloop extends SliderI {
   /** set carousel to a truthy value in the init function - might be useful for plugins
@@ -29,6 +29,7 @@ const Noloop = {
         this.clearTransition();
         this.ismoving = false;
         this.pos.start = this.getTransX();
+        this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
         resolve();
       };
 

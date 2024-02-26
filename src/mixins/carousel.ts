@@ -77,6 +77,7 @@ const Carousel = {
         this.clearTransition();
         this.updateDOM(dist);
         this.ismoving = false;
+        this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
         resolve();
       }, dur);
     });
@@ -93,15 +94,18 @@ const Carousel = {
   slideBy(
     this: Carousel,
     dist = 0,
-    dur = this.settings.transitionSpeed * (Math.abs(dist) / this.slides.length + 1)
+    dur = this.settings.transitionSpeed * (Math.abs(dist) / this.slides.length + 1),
   ): Promise<void> {
+    if (Math.abs(dist) == 1) return this.base(dist, dur);
+
     return new Promise(resolve => {
       /** an "early" return to avoid unnecessary burden if dist equals 0 or 1 */
-      if (dist === 0 || this.ismoving === true) return resolve();
-      if (Math.abs(dist) == 1) return this.base(dist, dur);
+      if (dist === 0 || this.ismoving === true) {
+        this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
+        return resolve();
+      }
 
       this.ismoving = true;
-
       /** mock some touchEvent/mouseEvent data */
       this.pos.x1 = dist;
       this.pos.start = this.getTransX();
@@ -127,6 +131,7 @@ const Carousel = {
           this.updateDOM(dist > 0 ? 1 : -1);
 
           this.ismoving = false;
+          this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
           resolve();
         }
       };
@@ -143,6 +148,7 @@ const Carousel = {
       this.transform(-1 * to);
       this.updateDOM(this.counter + to);
 
+      this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
       resolve();
     });
   },

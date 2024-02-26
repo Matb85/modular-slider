@@ -25,7 +25,7 @@ export default (interval = 5000) =>
         controls.resume();
         observer.unobserve(this.container);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(this.container);

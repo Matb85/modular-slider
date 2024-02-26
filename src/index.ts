@@ -17,7 +17,7 @@ import getBase, { setup } from "./base";
 export { setup, getBase };
 
 /** export types */
-import type { SliderI } from "./types";
-export { SliderI };
+import type { SliderI, EVENTS } from "./types";
+export type { SliderI, EVENTS };
 /** import css */
 import "../style/modular-slider.css";

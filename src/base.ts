@@ -1,5 +1,5 @@
 import type { SliderI, Defaults } from "@/types";
-import { defaults, EVENTS, ONCE } from "@/types";
+import { defaults, ONCE } from "@/types";
 /** copies methods and properties from mixin classes to the derived class
  * it is a modified version of the function here: {@link https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern}
  */
@@ -54,11 +54,6 @@ export default function getBase(): new (settings: Defaults) => SliderI {
         this.slideWidth = this.calcSlideWidth();
         this.slideDisplay = this.getSlidesPerView();
       });
-
-      /** emit MS-transitionend event for unity */
-      const transitionend = () => this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
-      this.addConListener("transitionend", transitionend);
-      this.addConListener("transitioncancel", transitionend);
 
       /** initiate mixins */
       for (const init of this.inits) init.call(this);
