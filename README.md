@@ -13,8 +13,6 @@ Modular Slider aims to deliver just what you want, while using the best of EcmaS
 - :rocket: weighs nothing in your final build
 - :boom: supports SSR - tested in [Nuxt.js](https://nuxtjs.org/) & [SvelteKit](https://kit.svelte.dev/)
 
-**TODO** WebKit/Safari support is still in progress due to vague support of pointer events.
-
 **this package ships as an esm module.**
 
 ### Architecture
