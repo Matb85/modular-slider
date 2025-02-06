@@ -1,19 +1,19 @@
 # Modular Slider
 
-## A zero dependency slider with a modular approach, written in Typescript
+## A dependency-free slider with NO DOM manipulations, written in Typescript
 
 ### [Check out the demos here](https://matb85.github.io/modular-slider/)
 
 Modular Slider aims to deliver just what you want, while using the best of EcmaScript goodies. Here are some of its features:
 
-- :label: written in Typescript
-- :zap: relies on promises and async/await
-- :art: modular architecture -> optimized for tree-shaking
-- :fire: absolutely no DOM manipulation (only class/style attribute tweaks) by default
-- :rocket: weighs nothing in your final build
-- :boom: supports SSR - tested in [Nuxt.js](https://nuxtjs.org/) & [SvelteKit](https://kit.svelte.dev/)
+- :label: written in Typescript and ESM
+- :zap: relies on promises, async/await and event listeners
+- :art: modular architecture - optimized for tree-shaking, weighs nothing in your final build
+- :fire: absolutely no DOM manipulations - no removing, adding or cloning nodes, just class and style attribute tweaks
+- :rocket: works perfectly with any frontend framework - does not break down v-dom thanks to no DOM manipulations
+- :boom: supports SSR - tested in [Nuxt.js](https://nuxt.com/) & [SvelteKit](https://svelte.dev/)
 
-**this package ships as an esm module.**
+**This package ships as an esm module only.**
 
 ### Architecture
 
@@ -145,7 +145,7 @@ by default modular slider provides two css options. They both require some css v
 }
 ```
 
-**by default --slide-margin is set to 0px.**
+**By default --slide-margin is set to 0px.**
 
 ### Contributing
 
