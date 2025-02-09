@@ -6,6 +6,7 @@ import { defaults, ONCE } from "@/types";
  */
 export abstract class SliderBase implements SliderI {
     public carousel: boolean;
+    public counter = 0;
     public settings: Required<Defaults>;
     public container: HTMLElement;
     public slides: HTMLCollectionOf<HTMLElement>;
@@ -17,8 +18,6 @@ export abstract class SliderBase implements SliderI {
 
     public slideWidth: number;
     public slidesPerView: number;
-
-    protected counter = 0;
 
     public abstract slideNext(dur?: number): Promise<void>;
 

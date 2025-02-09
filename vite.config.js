@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { sveltePreprocess } from "svelte-preprocess";
 import tailwindcss from "@tailwindcss/vite";
+import dts from "vite-plugin-dts";
 
 const dedupe = ["svelte"];
 const name = "modular-slider";
@@ -37,5 +38,6 @@ export default defineConfig(({ command }) => {
                 lib: { entry, name, formats: ["es"], fileName: format => name + "." + format + ".mjs" },
                 outDir: "dist",
             },
+            plugins: [dts({ tsconfigPath: "./tsconfig.build.json" })],
         };
 });

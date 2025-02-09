@@ -17,6 +17,7 @@ export type Defaults = RequiredBy<typeof defaults, "container">;
  */
 export interface SliderI {
     carousel?: any;
+    counter: number;
     settings: Required<Defaults>;
     container: HTMLElement;
     slides: HTMLCollectionOf<HTMLElement>;
