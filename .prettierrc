@@ -4,5 +4,6 @@
   "svelteBracketNewLine": false,
   "svelteIndentScriptAndStyle": false,
   "printWidth": 120,
+  "tabWidth": 4,
   "arrowParens": "avoid"
 }

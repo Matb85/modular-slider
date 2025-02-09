@@ -11,7 +11,7 @@
     "build:docs": "TARGET=DOCS vite build",
     "release": "standard-version",
     "imgs": "node ./assets/imageresizer.cjs",
-    "lint": "eslint src/** && pnpm build:types",
+    "lint": "eslint src/** --fix && pnpm build:types",
     "prepare": "husky",
     "prepublishOnly": "npm run build"
   },
@@ -46,7 +46,6 @@
     "@typescript-eslint/eslint-plugin": "^8.23.0",
     "@typescript-eslint/parser": "^8.23.0",
     "eslint": "^9.20.0",
-    "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
     "husky": "^9.1.7",
     "postcss": "^8.5.1",
