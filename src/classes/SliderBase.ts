@@ -56,15 +56,15 @@ export abstract class SliderBase implements SliderI {
 
     /** 1. updating utilities */
 
-    getTransX(): number {
+    public getTransX(): number {
         return parseFloat(window.getComputedStyle(this.container).transform.split(", ")[4]);
     }
 
-    getProperty(el: HTMLElement, elProp: string): number {
+    public getProperty(el: HTMLElement, elProp: string): number {
         return parseInt(window.getComputedStyle(el).getPropertyValue(elProp));
     }
 
-    calcSlideWidth(): number {
+    public calcSlideWidth(): number {
         return (
             this.slides[0].offsetWidth +
             this.getProperty(this.slides[0], "margin-left") +
@@ -72,56 +72,56 @@ export abstract class SliderBase implements SliderI {
         );
     }
 
-    getSlidesPerView(): number {
+    public getSlidesPerView(): number {
         const slidesPerView = this.getProperty(this.container.parentElement as HTMLElement, "--slides-per-view");
         return !isNaN(slidesPerView) ? slidesPerView : this.getProperty(document.documentElement, "--slides-per-view");
     }
 
     /** 2. transforming utilities*/
 
-    transform(dist: number): void {
+    public transform(dist: number): void {
         this.container.style.transform = "translate3d(" + this.slideWidth * dist + "px,0,0)";
     }
 
-    transformAbsolute(absoluteDist: number): void {
+    public transformAbsolute(absoluteDist: number): void {
         this.container.style.transform = "translate3d(" + absoluteDist + "px,0,0)";
     }
 
-    setTransition(dur: number) {
+    public setTransition(dur: number) {
         this.container.style.transition = "transform " + dur + "ms " + this.settings.easing;
     }
 
-    clearTransition() {
+    public clearTransition() {
         this.container.style.transition = "initial";
     }
 
     /** 3.lifecycle helpers */
-    dispatchEvent(event: EVENTS): void {
+    public dispatchEvent(event: EVENTS): void {
         this.container.dispatchEvent(new CustomEvent(event));
     }
 
-    addTempConListener(event: string, name: string, handler: EventListener): void {
+    public addTempConListener(event: string, name: string, handler: EventListener): void {
         this.onDestroy(() => this.container.removeEventListener(event, handler), name);
         this.container.addEventListener(event, handler, ONCE);
     }
 
-    addConListener(event: string, handler: EventListener): void {
+    public addConListener(event: string, handler: EventListener): void {
         this.onDestroy(() => this.container.removeEventListener(event, handler));
         this.container.addEventListener(event, handler);
     }
 
-    addDocListener(event: string, handler: EventListener): void {
+    public addDocListener(event: string, handler: EventListener): void {
         this.onDestroy(() => document.removeEventListener(event, handler));
         document.addEventListener(event, handler);
     }
 
-    onDestroy(handler: () => void, handlerId?: string): string {
+    public onDestroy(handler: () => void, handlerId?: string): string {
         const id = handlerId || Date.now() + "";
         this.destroyers[id] = handler;
         return id;
     }
 
-    destroy() {
+    public destroy() {
         for (const destroyer in this.destroyers) this.destroyers[destroyer]();
         this.transform(0);
         this.isDestroyed = true;
