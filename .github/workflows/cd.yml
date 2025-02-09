@@ -5,12 +5,6 @@ on: [push, pull_request]
 jobs:
   cd:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [20]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
