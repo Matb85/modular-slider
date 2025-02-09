@@ -31,7 +31,7 @@
 <script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import { NoLoop, slideHandler } from "@/index";
+import { NoLoop, swipeHandler } from "@/index";
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 let value = $state(2);
 
@@ -43,7 +43,7 @@ function initiate() {
     container: "basic-slider",
     transitionSpeed: 400,
     initialSlide: 2,
-    plugins: [slideHandler()],
+    plugins: [swipeHandler()],
   });
   disabled = false;
 }
@@ -54,11 +54,11 @@ function destroy() {
 
 onMount(initiate);
 onDestroy(destroy);
-export const code = `import { NoLoop, slideHandler } from "modular-slider";
+export const code = `import { NoLoop, swipeHandler } from "modular-slider";
 
 new NoLoop({
     container: "slider",
     initialSlide: 2,
-    plugins: [slideHandler()]
+    plugins: [swipeHandler()]
 });`;
 </script>

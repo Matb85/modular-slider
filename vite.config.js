@@ -1,50 +1,41 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { sveltePreprocess } from "svelte-preprocess";
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from "@tailwindcss/vite";
 
-// https://vitejs.dev/config/
 const dedupe = ["svelte"];
 const name = "modular-slider";
 const entry = "./src/index.ts";
 const alias = {
-  "@": process.cwd() + "/src",
-  "~": process.cwd() + "/devdocs",
+    "@": process.cwd() + "/src",
+    "~": process.cwd() + "/devdocs",
 };
 
 export default defineConfig(({ command }) => {
-  if (process.env.TARGET === "DOCS")
-    return {
-      base: command === "build" ? "/modular-slider/" : "/",
-      plugins: [
-        tailwindcss(),
-        svelte({
-          configFile: false,
-          preprocess: sveltePreprocess({ typescript: true }),
-        }),
-      ],
-      resolve: { dedupe, alias },
-      root: "./devdocs",
-      build: {
-        minify: true,
-        outDir: "../docs",
-        emptyOutDir: true,
-      },
-    };
-  else
-    return {
-      resolve: { dedupe, alias },
-      build: {
-        rollupOptions: {
-          output: {
-            assetFileNames: assetInfo => {
-              if (assetInfo.name === "style.css") return "modular-slider.css";
-              return assetInfo.name;
+    if (process.env.TARGET === "DOCS")
+        return {
+            base: command === "build" ? "/modular-slider/" : "/",
+            plugins: [
+                tailwindcss(),
+                svelte({
+                    configFile: false,
+                    preprocess: sveltePreprocess({ typescript: true }),
+                }),
+            ],
+            resolve: { dedupe, alias },
+            root: "./devdocs",
+            build: {
+                minify: true,
+                outDir: "../docs",
+                emptyOutDir: true,
             },
-          },
-        },
-        lib: { entry, name, formats: ["es"], fileName: format => name + "." + format + ".mjs" },
-        outDir: "dist",
-      },
-    };
+        };
+    else
+        return {
+            resolve: { dedupe, alias },
+            build: {
+                lib: { entry, name, formats: ["es"], fileName: format => name + "." + format + ".mjs" },
+                outDir: "dist",
+            },
+        };
 });

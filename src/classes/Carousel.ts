@@ -1,8 +1,8 @@
 import { EVENTS, type SliderI } from "@/types";
-import { SliderBase } from "@/base";
+import { SliderBase } from "@/classes/SliderBase";
 
 /** utilities specific to this mixin */
-export default class Carousel extends SliderBase implements SliderI {
+export class Carousel extends SliderBase implements SliderI {
     public getCurrentSlide(): number {
         if (this.counter <= 0) return this.counter * -1;
         else return this.slides.length - this.counter;

@@ -37,7 +37,7 @@ export interface SliderI {
     calcSlideWidth(): number;
     /** get CSS property value from the element's ComputedStyle */
     getProperty(el: HTMLElement, elProp: string): number;
-    /** returns the numbe of slides that are visible at the same time
+    /** returns the number of slides that are visible at the same time
      * @returns {number} the number of slides
      */
     getSlidesPerView(): number;
@@ -45,6 +45,7 @@ export interface SliderI {
      * @returns {number} from 0 to numberOfSlides - 1
      */
     getCurrentSlide(): number;
+
     /** 2. transforming utilities*/
 
     /** sets the container's X value to the length of one slide mulitplied by given number of slides
@@ -56,7 +57,7 @@ export interface SliderI {
      * mainly used for handling touch/mouse events
      * It ONLY changes the slider's translate X value
      * @param {number} dist the desired X value in px */
-    transformAbsolute(Absolutedist: number): void;
+    transformAbsolute(absoluteDist: number): void;
     /** sets the css transition timing with a given transition-duration
      * @param {number} dur css transition-duration in ms */
     setTransition(dur: number): void;
@@ -82,7 +83,7 @@ export interface SliderI {
     /** registers an event listener to the window and removes it on the destroy hook */
     addDocListener(event: string, handler: EventListener): void;
     /** register an event listener called on the destroy hook */
-    onDestroy(handler: () => void, handerId?: string): string;
+    onDestroy(handler: () => void, handlerId?: string): string;
     /** destroys the slider instance and:
      * - reverts CSS DOM tweaks
      * - cleans up all event listeners */

@@ -1,7 +1,7 @@
 import { EVENTS, type SliderI } from "@/types";
-import { SliderBase } from "@/base";
+import { SliderBase } from "@/classes/SliderBase";
 
-export default class Noloop extends SliderBase implements SliderI {
+export class NoLoop extends SliderBase implements SliderI {
     protected init() {
         return this.base(this.settings.initialSlide, 0);
     }

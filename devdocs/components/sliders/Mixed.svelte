@@ -21,7 +21,7 @@
 <script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import {Carousel, slideHandler, pagination, buttons, autoplay } from "@/index";
+import {Carousel, swipeHandler, pagination, buttons, autoplay } from "@/index";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
@@ -31,7 +31,7 @@ onMount(async () => {
     container: "slider-mixed",
     initialSlide: 4,
     plugins: [
-      slideHandler(),
+      swipeHandler(),
       pagination({
         container: "#slider-pagination-mixed-slider",
         dots: ".dot",
@@ -44,13 +44,13 @@ onMount(async () => {
 });
 onDestroy(() => slider.destroy());
 
-export const code = `import { Carousel, slideHandler, pagination, buttons, autoplay } from "modular-slider";
+export const code = `import { Carousel, swipeHandler, pagination, buttons, autoplay } from "modular-slider";
 
 new Carousel({
     container: "slider",
     initialSlide: 4,
     plugins: [
-        slideHandler(),
+        swipeHandler(),
         pagination({
             container: "#slider-pagination",
             dots: ".dot",

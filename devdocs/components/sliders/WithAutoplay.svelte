@@ -18,7 +18,7 @@
 <script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import { autoplay, Carousel, slideHandler } from "@/index";
+import { autoplay, Carousel, swipeHandler } from "@/index";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
@@ -37,18 +37,18 @@ onMount(async () => {
   slider = new Carousel({
     container: "slider-with-autoplay",
     initialSlide: 3,
-    plugins: [slideHandler(), autoplay(3000)],
+    plugins: [swipeHandler(), autoplay(3000)],
   });
 });
 onDestroy(() => slider.destroy());
 
-export const code = `import { Carousel, slideHandler, autoplay } from "modular-slider";
+export const code = `import { Carousel, swipeHandler, autoplay } from "modular-slider";
 
 new Slider({
     container: "slider",
     initialSlide: 3,
     plugins: [
-        slideHandler(),
+        swipeHandler(),
         autoplay(3000),
     ]
 });`;

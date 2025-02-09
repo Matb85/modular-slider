@@ -18,7 +18,7 @@
 <script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import { Carousel, slideHandler, buttons } from "@/index";
+import { Carousel, swipeHandler, buttons } from "@/index";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
@@ -27,16 +27,16 @@ onMount(async () => {
   slider = new Carousel({
     container: "slider-with-btns",
     initialSlide: 0,
-    plugins: [slideHandler(), buttons({ nextBtn: "#with-buttons-next", prevBtn: "#with-buttons-prev" })],
+    plugins: [swipeHandler(), buttons({ nextBtn: "#with-buttons-next", prevBtn: "#with-buttons-prev" })],
   });
 });
 onDestroy(() => slider.destroy());
 
-export const code = `import { Carousel, slideHandler, buttons } from "modular-slider";
+export const code = `import { Carousel, swipeHandler, buttons } from "modular-slider";
 
 new Slider({
     container: "slider",
     initialSlide: 0,
-    plugins: [slideHandler(), buttons({ nextBtn: "#next", prevBtn: "#prev" })],
+    plugins: [swipeHandler(), buttons({ nextBtn: "#next", prevBtn: "#prev" })],
 });`;
 </script>
