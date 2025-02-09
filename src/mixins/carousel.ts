@@ -1,20 +1,14 @@
 import { EVENTS, type SliderI } from "@/types";
+import { SliderBase } from "@/base";
 
-interface Carousel extends SliderI {
-    /** set carousel to a truthy value in the init function - might be useful for plugins
-     * in this mixin it is used as a helper
-     */
-    base(this: Carousel, dist: number, dur: number): Promise<void>;
-    updateDOM(this: Carousel, dist: number): void;
-    init(this: Carousel): Promise<void>;
-}
 /** utilities specific to this mixin */
-const Carousel = {
-    getCurrentSlide(): number {
+export default class Carousel extends SliderBase implements SliderI {
+    public getCurrentSlide(): number {
         if (this.counter <= 0) return this.counter * -1;
         else return this.slides.length - this.counter;
-    },
-    updateDOM(this: Carousel, dist: number) {
+    }
+
+    private updateDOM(dist: number) {
         this.counter -= dist;
 
         /** prevent the counter from exceeding the number of slides */
@@ -35,9 +29,9 @@ const Carousel = {
                 this.slides[i].style.setProperty("--translate-factor", shouldMove ? "-1" : "0");
             }
         }
-    },
+    }
     /** essential logic & methods */
-    async init(this: Carousel) {
+    public async init() {
         const moving = () => {
             /** run only if the translation of the container is:
              *  bigger or equal to the width of one slide (including its left and right margin)
@@ -64,11 +58,12 @@ const Carousel = {
         this.onDestroy(() => {
             for (const slide of this.slides) slide.style.setProperty("--translate-factor", "0");
         });
-    },
-    base(this: Carousel, dist: number, dur: number): Promise<void> {
+    }
+
+    private base(dist: number, dur: number): Promise<void> {
         return new Promise(resolve => {
-            if (this.ismoving === true) return resolve();
-            this.ismoving = true;
+            if (this.isMoving) return resolve();
+            this.isMoving = true;
 
             this.setTransition(dur);
             this.transform(this.counter - dist);
@@ -76,22 +71,30 @@ const Carousel = {
             setTimeout(() => {
                 this.clearTransition();
                 this.updateDOM(dist);
-                this.ismoving = false;
+                this.isMoving = false;
                 this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
                 resolve();
             }, dur);
         });
-    },
-    slideNext(this: Carousel, dur = this.settings.transitionSpeed): Promise<void> {
+    }
+
+    public slideNext(dur = this.settings.transitionSpeed): Promise<void> {
         return this.base(1, dur);
-    },
-    slidePrev(this: Carousel, dur = this.settings.transitionSpeed): Promise<void> {
+    }
+
+    public slidePrev(dur = this.settings.transitionSpeed): Promise<void> {
         return this.base(-1, dur);
-    },
-    slideTo(this: Carousel, to = 0, dur?: number): Promise<void> {
+    }
+
+    public slideTo(to = 0, dur?: number): Promise<void> {
         return this.slideBy(to - this.getCurrentSlide(), dur);
-    },
-    slideBy(
+    }
+
+    private easeInOutQuad(x: number): number {
+        return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+    }
+
+    public slideBy(
         this: Carousel,
         dist = 0,
         dur = this.settings.transitionSpeed * (Math.abs(dist) / this.slides.length + 1),
@@ -100,12 +103,12 @@ const Carousel = {
 
         return new Promise(resolve => {
             /** an "early" return to avoid unnecessary burden if dist equals 0 or 1 */
-            if (dist === 0 || this.ismoving === true) {
+            if (dist === 0 || this.isMoving) {
                 this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
                 return resolve();
             }
 
-            this.ismoving = true;
+            this.isMoving = true;
             /** mock some touchEvent/mouseEvent data */
             this.pos.x1 = dist;
             this.pos.start = this.getTransX();
@@ -121,7 +124,7 @@ const Carousel = {
                 const runtime = timestamp - starttime;
                 /** How much has our animation progressed relative to our duration goal?
                  * The result is a number (float) between 0 and 1. So 0 is zero percent en 1 is one hundred percent. */
-                const relativeProgress = this.slideWidth * dist * easeInOutQuad(runtime / dur);
+                const relativeProgress = this.slideWidth * dist * this.easeInOutQuad(runtime / dur);
                 this.transformAbsolute(this.getTransX() - relativeProgress + oldProgress);
                 oldProgress = relativeProgress;
 
@@ -130,7 +133,7 @@ const Carousel = {
                 else {
                     this.updateDOM(dist > 0 ? 1 : -1);
 
-                    this.ismoving = false;
+                    this.isMoving = false;
                     this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
                     resolve();
                 }
@@ -138,11 +141,12 @@ const Carousel = {
 
             window.requestAnimationFrame(animate);
         });
-    },
-    goTo(this: Carousel, to: number): Promise<void> {
+    }
+
+    goTo(to: number): Promise<void> {
         return new Promise(resolve => {
             /** an "early" return to avoid unnecessary burden if dist == 0 */
-            if (this.ismoving === true) return resolve();
+            if (this.isMoving) return resolve();
 
             this.pos.start = this.getTransX();
             this.transform(-1 * to);
@@ -151,11 +155,6 @@ const Carousel = {
             this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
             resolve();
         });
-    },
-} as Carousel;
-
-export default Carousel;
-
-function easeInOutQuad(x: number): number {
-    return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+    }
 }
+

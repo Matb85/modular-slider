@@ -1,23 +1,20 @@
 import { EVENTS, type SliderI } from "@/types";
+import { SliderBase } from "@/base";
 
-interface Noloop extends SliderI {
-    /** set carousel to a truthy value in the init function - might be useful for plugins
-     * in this mixin it is used as a helper
-     */
-    base(this: Noloop, dist: number, dur?: number): Promise<void>;
-}
-const Noloop = {
-    init(this: Noloop) {
-        this.base(this.settings.initialSlide, 0);
-    },
-    getCurrentSlide(): number {
+export default class Noloop extends SliderBase implements SliderI {
+    protected init() {
+        return this.base(this.settings.initialSlide, 0);
+    }
+
+    public getCurrentSlide(): number {
         return this.counter * -1;
-    },
-    base(this: Noloop, dist: number, dur = this.settings.transitionSpeed): Promise<void> {
-        return new Promise(resolve => {
-            if (this.ismoving === true) return resolve();
+    }
 
-            this.ismoving = true;
+    private base(dist: number, dur = this.settings.transitionSpeed): Promise<void> {
+        return new Promise(resolve => {
+            if (this.isMoving) return resolve();
+
+            this.isMoving = true;
             this.counter -= dist;
             if (this.counter > 0) this.counter = 0;
             if (this.counter < -1 * (this.slides.length - this.slideDisplay))
@@ -27,7 +24,7 @@ const Noloop = {
             this.transform(this.counter);
             const callback = () => {
                 this.clearTransition();
-                this.ismoving = false;
+                this.isMoving = false;
                 this.pos.start = this.getTransX();
                 this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
                 resolve();
@@ -36,23 +33,26 @@ const Noloop = {
             if (dur !== 0) setTimeout(() => callback(), dur);
             else callback();
         });
-    },
-    slideNext(this: Noloop, dur = this.settings.transitionSpeed): Promise<void> {
+    }
+
+    slideNext(dur = this.settings.transitionSpeed): Promise<void> {
         return this.base(Math.ceil((this.pos.start - this.getTransX()) / this.slideWidth) || 1, dur);
-    },
-    slidePrev(this: Noloop, dur = this.settings.transitionSpeed): Promise<void> {
+    }
+
+    slidePrev(dur = this.settings.transitionSpeed): Promise<void> {
         return this.base(Math.floor((this.pos.start - this.getTransX()) / this.slideWidth) || -1, dur);
-    },
-    slideTo(this: Noloop, to = 0, dur?: number): Promise<void> {
+    }
+
+    slideTo(to = 0, dur?: number): Promise<void> {
         return this.slideBy(to - Math.abs(this.counter), dur);
-    },
-    slideBy(this: Noloop, dist = 0, dur?: number): Promise<void> {
+    }
+
+    slideBy(dist = 0, dur?: number): Promise<void> {
         if (dist === 0) return new Promise<void>(resolve => resolve());
         return this.base(dist, dur);
-    },
-    goTo(this: Noloop, dist = 0): Promise<void> {
-        return this.slideTo(dist, 0);
-    },
-} as Noloop;
+    }
 
-export default Noloop;
+    goTo(dist = 0): Promise<void> {
+        return this.slideTo(dist, 0);
+    }
+}

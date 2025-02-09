@@ -1,4 +1,5 @@
 <h3 class="header-3">A slider with photo lazy-loading</h3>
+
 <section class="MS-wrapper MS-fixed mx-auto">
   <ul id="slider-with-photos" class="MS-con blue-items">
     <li class="img-con">
@@ -21,15 +22,17 @@
 
 <SliderCode>{code}</SliderCode>
 
-<style>
-.MS-wrapper MS-fixed .MS-con .img-con {
+<style lang="postcss">
+@reference "~/tailwind.css";
+
+.MS-wrapper.MS-fixed .MS-con .img-con {
   overflow: hidden;
 }
-.MS-wrapper MS-fixed .MS-con .img-con :global(img.loaded) {
+.MS-wrapper.MS-fixed .MS-con .img-con :global(img.loaded) {
   filter: blur(0vw);
   transform: scale(1);
 }
-.MS-wrapper MS-fixed div.img-con img {
+.MS-wrapper.MS-fixed div.img-con img {
   transition: 0.4s transform, 0.4s filter;
   filter: blur(2vw);
   transform: scale(1.05);
@@ -40,28 +43,25 @@
 <script>
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import Slider from "../factories/carouselFactory";
-import { lazyloading } from "@/index";
+import { Carousel, lazyLoading, slideHandler } from "@/index";
 
 let slider;
 onMount(async () => {
-  slider = new Slider({
+  slider = new Carousel({
     container: "slider-with-photos",
     transitionSpeed: 400,
     initialSlide: 2,
-    plugins: [lazyloading()],
+    plugins: [slideHandler(), lazyLoading()],
   });
 });
 onDestroy(() => slider.destroy());
 
-export const code = `import { setup, SlideHandler, Carousel, lazyloading } from "modular-slider";
+export const code = `import { Carousel, slideHandler, lazyLoading } from "modular-slider";
 
-const Slider = setup(Carousel, SlideHandler);
-new Slider({
-    container: "slider",
+new Carousel({
+    container: "slider-with-photos",
+    transitionSpeed: 400,
     initialSlide: 2,
-    plugins: [
-        plugins: [lazyloading()],
-    ]
-});`;
+    plugins: [slideHandler(), lazyLoading()],
+ });`;
 </script>

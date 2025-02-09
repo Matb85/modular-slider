@@ -7,7 +7,7 @@
   </div>
   <div class="navbar-icons flex flex-row items-baseline gap-2">
     {#each icons as icon}
-      <a href="{icon.url}">
+      <a href="{icon.url}" aria-label="icon">
         <svg viewBox="0 0 24 24">
           <path d="{icon.path}"></path>
         </svg>
@@ -16,7 +16,7 @@
   </div>
 </nav>
 
-<style>
+<style lang="postcss">
     @reference "~/tailwind.css";
 
     .navbar-icons svg {

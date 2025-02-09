@@ -24,7 +24,7 @@ export interface SliderI {
     slideWidth: number;
     slideDisplay: number;
     counter: number;
-    ismoving: boolean;
+    isMoving: boolean;
     plugins: Record<string, any>;
 
     /** 1. updating utilities */
@@ -75,7 +75,6 @@ export interface SliderI {
 
     /** 3.lifecycle helpers */
 
-    init(): void;
     /** registers a listener that fires only ONCE, used for transitions */
     addTempConListener(event: string, name: string, handler: EventListener): void;
     /** registers an event listener to the slider's container and removes it on the destroy hook */

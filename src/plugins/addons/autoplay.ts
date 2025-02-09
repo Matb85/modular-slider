@@ -3,18 +3,18 @@ import type { SliderI } from "@/types";
 export default (interval = 5000) =>
     function autoplay(this: SliderI) {
         /** setup */
-        let isrunning = false;
+        let isRunning = false;
         let autoplay: ReturnType<typeof setInterval>;
         /** the api */
         const controls = {
             pause: () => {
                 clearInterval(autoplay);
-                isrunning = false;
+                isRunning = false;
             },
             resume: () => {
-                if (isrunning) return;
+                if (isRunning) return;
                 autoplay = setInterval(async () => await this.slideNext(), interval);
-                isrunning = true;
+                isRunning = true;
             },
         };
         /** start when the slider is visible */

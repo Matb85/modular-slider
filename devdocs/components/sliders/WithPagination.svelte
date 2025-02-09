@@ -7,35 +7,36 @@
   </ul>
 </section>
 <section id="slider-pagination" class="mt-4 flex justify-center gap-2">
-  <button class="dot"></button>
+  <button class="dot" aria-label="slider button"></button>
 </section>
+
 <SliderCode>{code}</SliderCode>
 
-<style global>
+<style lang="postcss" global>
     @reference "~/tailwind.css";
 
     .dot {
-  @apply h-4 w-4 rounded-full bg-indigo-400 hover:bg-indigo-800 focus:outline-none;
-}
-.current {
-  @apply bg-indigo-800;
-}
+    @apply h-4 w-4 rounded-full bg-indigo-400 hover:bg-indigo-800 focus:outline-none;
+  }
+  .current {
+    @apply bg-indigo-800;
+  }
 </style>
 
-<script>
+<script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import Slider from "../factories/carouselFactory";
-import { pagination } from "@/index";
+import { Carousel, slideHandler, pagination} from "@/index";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
-let slider;
+let slider: Carousel;
 onMount(async () => {
-  slider = new Slider({
+  slider = new Carousel({
     container: "slider-with-pagination",
     initialSlide: 4,
     plugins: [
+      slideHandler(),
       pagination({
         container: "#slider-pagination",
         dots: ".dot",
@@ -46,13 +47,13 @@ onMount(async () => {
 });
 onDestroy(() => slider.destroy());
 
-export const code = `import { setup, SlideHandler, Carousel, pagination } from "modular-slider";
+export const code = `import { Carousel, slideHandler, pagination } from "modular-slider";
 
-const Slider = setup(Carousel, SlideHandler);
 new Slider({
     container: "slider",
     initialSlide: 4,
     plugins: [
+        slideHandler(),
         pagination({
             container: "#slider-pagination",
             dots: ".dot",

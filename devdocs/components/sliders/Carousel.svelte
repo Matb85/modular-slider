@@ -30,20 +30,21 @@
 <script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import Slider, { type SliderType } from "../factories/carouselFactory";
+import { Carousel ,slideHandler} from "@/index";
+
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 let value = $state(2);
 
-let sl: SliderType = $state();
+let sl: Carousel;
 let disabled = $state(false);
 
 function initiate() {
-  sl = new Slider({
+  sl = new Carousel({
     container: "carousel-slider",
     transitionSpeed: 400,
     initialSlide: 4,
-    plugins: [],
+    plugins: [slideHandler()],
   });
   disabled = false;
 }
@@ -55,12 +56,11 @@ function destroy() {
 onMount(initiate);
 onDestroy(destroy);
 
-export const code = `import { setup, SlideHandler, Carousel } from "modular-slider";
+export const code = `import { Carousel, SlideHandler } from "modular-slider";
 
-const Slider = setup(Carousel, SlideHandler);
-new Slider({
+new Carousel({
     container: "slider",
     initialSlide: 4,
-    plugins: [],
+    plugins: [slideHandler()],
 });`;
 </script>

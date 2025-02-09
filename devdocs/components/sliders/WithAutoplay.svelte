@@ -1,4 +1,5 @@
 <h3 class="header-3">A slider with autoplay</h3>
+
 <section class="MS-wrapper MS-fixed mx-auto">
   <ul id="slider-with-autoplay" class="MS-con blue-items">
     {#each sliderItems as item}
@@ -6,47 +7,48 @@
     {/each}
   </ul>
 </section>
+
 <section class="flex justify-center gap-4 mt-4">
-  <button onclick={pause} disabled="{ispaused}" class="button">pause</button>
-  <button onclick={resume} disabled="{!ispaused}" class="button">resume</button>
+  <button onclick={pause} disabled="{isPaused}" class="button">pause</button>
+  <button onclick={resume} disabled="{!isPaused}" class="button">resume</button>
 </section>
+
 <SliderCode>{code}</SliderCode>
 
-<script>
+<script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import Slider from "../factories/carouselFactory";
-import { autoplay } from "@/index";
+import { autoplay, Carousel, slideHandler } from "@/index";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
-let ispaused = $state(false);
-let slider;
+let isPaused = $state(false);
+let slider: Carousel;
 function pause() {
   slider.plugins.autoplay.pause();
-  ispaused = true;
+  isPaused = true;
 }
 function resume() {
   slider.plugins.autoplay.resume();
-  ispaused = false;
+  isPaused = false;
 }
 
 onMount(async () => {
-  slider = new Slider({
+  slider = new Carousel({
     container: "slider-with-autoplay",
     initialSlide: 3,
-    plugins: [autoplay(3000)],
+    plugins: [slideHandler(), autoplay(3000)],
   });
 });
 onDestroy(() => slider.destroy());
 
-export const code = `import { setup, SlideHandler, Carousel, autoplay } from "modular-slider";
+export const code = `import { Carousel, slideHandler, autoplay } from "modular-slider";
 
-const Slider = setup(Carousel, SlideHandler);
 new Slider({
     container: "slider",
     initialSlide: 3,
     plugins: [
+        slideHandler(),
         autoplay(3000),
     ]
 });`;

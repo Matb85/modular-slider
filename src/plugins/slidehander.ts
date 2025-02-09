@@ -1,30 +1,24 @@
-import { type SliderI, EVENTS } from "@/types";
+import { EVENTS, type SliderI } from "@/types";
 
-interface SlideHandler extends SliderI {
-    init(this: SlideHandler): Promise<void>;
-}
-const SlideHandler = {
-    init(this: SliderI) {
+export default () =>
+    function SlideHandler(this: SliderI) {
         this.addTempConListener("pointerdown", "pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent));
-    },
-} as SlideHandler;
-
-export default SlideHandler;
+    };
 
 function pointerDown(this: SliderI, pEvent: PointerEvent) {
     this.pos.start = this.getTransX();
     this.pos.x2 = pEvent.clientX;
-    this.ismoving = true;
+    this.isMoving = true;
     switch (pEvent.pointerType) {
         case "mouse":
             this.container.dispatchEvent(new CustomEvent(EVENTS.DRAG_START, {}));
             document.onmousemove = mouseMove.bind(this);
-            document.onmouseup = dragstop.bind(this);
+            document.onmouseup = dragStop.bind(this);
             break;
         case "touch":
             this.container.dispatchEvent(new CustomEvent(EVENTS.DRAG_START, {}));
             document.ontouchmove = touchMove.bind(this);
-            document.ontouchend = dragstop.bind(this);
+            document.ontouchend = dragStop.bind(this);
             break;
     }
 }
@@ -35,6 +29,7 @@ function mouseMove(this: SliderI, mEvent: MouseEvent) {
     this.transformAbsolute(this.getTransX() - this.pos.x1);
     this.container.dispatchEvent(new CustomEvent(EVENTS.MV));
 }
+
 function touchMove(this: SliderI, tEvent: TouchEvent) {
     this.pos.x1 = this.pos.x2 - tEvent.touches[0].clientX;
     this.pos.x2 = tEvent.touches[0].clientX;
@@ -45,12 +40,12 @@ function touchMove(this: SliderI, tEvent: TouchEvent) {
     this.container.dispatchEvent(new CustomEvent(EVENTS.MV));
 }
 
-async function dragstop(this: SliderI) {
+async function dragStop(this: SliderI) {
     document.onmousemove = null;
     document.ontouchmove = null;
     document.ontouchend = null;
     document.onmouseup = null;
-    this.ismoving = false;
+    this.isMoving = false;
     this.container.dispatchEvent(new CustomEvent(EVENTS.DRAG_END, {}));
     this.container.onpointerdown = null;
     if (this.pos.start != this.getTransX()) {

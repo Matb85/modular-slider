@@ -1,6 +1,7 @@
 <script lang="ts">
+    import type { Snippet } from "svelte";
   interface Props {
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let { children }: Props = $props();
@@ -8,12 +9,12 @@
 
 <pre
   class="code-container">
-    <code class="language-js mx-auto">{@render children?.()}</code>
+    <code class="language-js">{@render children?.()}</code>
 </pre>
 
-<style>
+<style lang="postcss">
     @reference "~/tailwind.css";
-.code-container {
-  @apply w-11/12 max-w-3xl mx-auto my-4;
-}
+    .code-container {
+      @apply w-11/12 max-w-3xl mx-auto my-4;
+    }
 </style>
