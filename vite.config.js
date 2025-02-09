@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import sveltePreprocess from "svelte-preprocess";
+import { sveltePreprocess } from "svelte-preprocess";
+import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 const dedupe = ["svelte"];
@@ -12,13 +13,14 @@ const alias = {
 };
 
 export default defineConfig(({ command }) => {
-  if (process.env.TARGET == "DOCS")
+  if (process.env.TARGET === "DOCS")
     return {
-      base: command == "build" ? "/modular-slider/" : "/",
+      base: command === "build" ? "/modular-slider/" : "/",
       plugins: [
+        tailwindcss(),
         svelte({
           configFile: false,
-          preprocess: sveltePreprocess({ typescript: true, postcss: true }),
+          preprocess: sveltePreprocess({ typescript: true }),
         }),
       ],
       resolve: { dedupe, alias },
@@ -36,7 +38,7 @@ export default defineConfig(({ command }) => {
         rollupOptions: {
           output: {
             assetFileNames: assetInfo => {
-              if (assetInfo.name == "style.css") return "modular-slider.css";
+              if (assetInfo.name === "style.css") return "modular-slider.css";
               return assetInfo.name;
             },
           },

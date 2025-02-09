@@ -11,8 +11,10 @@
 </section>
 <SliderCode>{code}</SliderCode>
 
-<style lang="postcss" global>
-.dot {
+<style global>
+    @reference "~/tailwind.css";
+
+    .dot {
   @apply h-4 w-4 rounded-full bg-indigo-400 hover:bg-indigo-800 focus:outline-none;
 }
 .current {

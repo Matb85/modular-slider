@@ -7,8 +7,8 @@
   </ul>
 </section>
 <section class="flex justify-center gap-4 mt-4">
-  <button on:click="{pause}" disabled="{ispaused}" class="button">pause</button>
-  <button on:click="{resume}" disabled="{!ispaused}" class="button">resume</button>
+  <button onclick={pause} disabled="{ispaused}" class="button">pause</button>
+  <button onclick={resume} disabled="{!ispaused}" class="button">resume</button>
 </section>
 <SliderCode>{code}</SliderCode>
 
@@ -20,7 +20,7 @@ import { autoplay } from "@/index";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 
-let ispaused = false;
+let ispaused = $state(false);
 let slider;
 function pause() {
   slider.plugins.autoplay.pause();

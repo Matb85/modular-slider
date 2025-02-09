@@ -8,21 +8,21 @@
   </ul>
 </section>
 <section class="button-container">
-  <button on:click="{() => sl.slidePrev()}" class="button">slider.slidePrev()</button>
-  <button on:click="{() => sl.slideNext()}" class="button">slider.slideNext()</button>
-  <button on:click="{() => sl.slideTo(0)}" class="button">slider.slideTo(0)</button>
-  <button on:click="{() => sl.goTo(1)}" class="button">slider.goTo(1)</button>
+  <button onclick={() => sl.slidePrev()} class="button">slider.slidePrev()</button>
+  <button onclick={() => sl.slideNext()} class="button">slider.slideNext()</button>
+  <button onclick={() => sl.slideTo(0)} class="button">slider.slideTo(0)</button>
+  <button onclick={() => sl.goTo(1)} class="button">slider.goTo(1)</button>
 </section>
 
 <section class="button-container">
   <input class="button w-24 bg-slate-200" type="number" bind:value max="{sliderItems.length}" min="1" />
-  <button on:click="{() => sl.slideBy(-1 * value)}" class="button">slider.slideBy({-1 * value})</button>
-  <button on:click="{() => sl.slideBy(value)}" class="button">slider.slideBy({value})</button>
+  <button onclick={() => sl.slideBy(-1 * value)} class="button">slider.slideBy({-1 * value})</button>
+  <button onclick={() => sl.slideBy(value)} class="button">slider.slideBy({value})</button>
 </section>
 
 <section class="button-container">
-  <button on:click="{destroy}" disabled="{disabled}" class="button red">slider.destroy()</button>
-  <button on:click="{initiate}" disabled="{!disabled}" class="button red">reinitiate</button>
+  <button onclick={destroy} disabled="{disabled}" class="button red">slider.destroy()</button>
+  <button onclick={initiate} disabled="{!disabled}" class="button red">reinitiate</button>
 </section>
 
 <SliderCode>{code}</SliderCode>
@@ -33,10 +33,10 @@ import { onMount, onDestroy } from "svelte";
 import Slider, { type SliderType } from "../factories/carouselFactory";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
-let value = 2;
+let value = $state(2);
 
-let sl: SliderType;
-let disabled = false;
+let sl: SliderType = $state();
+let disabled = $state(false);
 
 function initiate() {
   sl = new Slider({

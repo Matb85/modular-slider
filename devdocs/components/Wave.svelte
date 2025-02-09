@@ -6,7 +6,7 @@
   ></path>
 </svg>
 
-<script>
-let clazz;
-export { clazz as class };
+<script lang="ts">
+  let { class: clazz } = $props();
+
 </script>

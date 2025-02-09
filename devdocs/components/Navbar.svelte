@@ -17,7 +17,9 @@
 </nav>
 
 <style>
-.navbar-icons svg {
+    @reference "~/tailwind.css";
+
+    .navbar-icons svg {
   @apply h-6 fill-current text-gray-800;
 }
 </style>

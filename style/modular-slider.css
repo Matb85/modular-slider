@@ -1,3 +1,5 @@
+@reference "~/tailwind.css";
+
 .MS-wrapper {
   overflow: hidden; /* hide the slides that should be out of view */
 }
