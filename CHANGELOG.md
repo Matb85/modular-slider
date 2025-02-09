@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/Matb85/modular-slider/compare/v1.0.1...v1.0.2) (2025-02-09)
+
+
+### Bug Fixes
+
+* don't use tailwind in modular-slider.css ([03e83c2](https://github.com/Matb85/modular-slider/commit/03e83c2f9b28c4a42d286bb5354fb628b0a032ae))
+
 ### [1.0.1](https://github.com/Matb85/modular-slider/compare/v1.0.0...v1.0.1) (2025-02-09)
 
 
