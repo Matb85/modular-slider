@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/Matb85/modular-slider/compare/v0.11.2...v1.0.0) (2025-02-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* make naming consistent
+* make naming consistent
+* make naming consistent
+* rename slideHandler to swipeHandler, update docs
+* forgo the idea of mixins
+* forgo the idea of mixins
+
+### Bug Fixes
+
+* cd.yml ([99e1b9d](https://github.com/Matb85/modular-slider/commit/99e1b9dcc70bfac36e274dee79e8409e5aad7be2))
+
+
+### Enhancements
+
+* forgo the idea of mixins ([c5c39e3](https://github.com/Matb85/modular-slider/commit/c5c39e3b5787443e60a51a540d9d5ce21df94d0c))
+* forgo the idea of mixins ([b54dfda](https://github.com/Matb85/modular-slider/commit/b54dfdaded6449f6065665cd74145f433aad30cb))
+* make naming consistent ([a459f79](https://github.com/Matb85/modular-slider/commit/a459f7981d54457bb62510b03b254c315cfaf5be))
+* make naming consistent ([1ab7222](https://github.com/Matb85/modular-slider/commit/1ab7222ed750b8128971e9759b4f0918b73b94b9))
+* make naming consistent ([f8e3d7b](https://github.com/Matb85/modular-slider/commit/f8e3d7b87d66b7148e46bdb463a9f3bb6542b2d3))
+* make slideBy more robust in the Carousel class ([b3289ed](https://github.com/Matb85/modular-slider/commit/b3289edec47f36517b82c6159a4f832a412ab9a3))
+* rename slideHandler to swipeHandler, update docs ([42ab1ae](https://github.com/Matb85/modular-slider/commit/42ab1ae7204b0276364dabc3966687d9d45201fd))
+* reorder class fields ([42d97aa](https://github.com/Matb85/modular-slider/commit/42d97aa73e89729cfa710ca73fb04c6521788e6e))
+
 ### [0.11.2](https://github.com/Matb85/modular-slider/compare/v0.11.1...v0.11.2) (2024-02-26)
 
 
