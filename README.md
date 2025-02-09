@@ -143,8 +143,10 @@ By default, modular slider provides two css options. They both require some css 
 
 **By default --slide-margin is set to 0px.**
 
-### Contributing
+## Contributing
 
 Modular Slider by design encourages users to enhance it. Don't like the event handlers? Want the buttons/pagination to automatically generate themselves? Write a plugin that will do that. If you have created such an improvement, fell free to share it. PRs are welcome! :fire:
 
-## [See the changelog here](https://github.com/Matb85/modular-slider/blob/master/CHANGELOG.md)
+## [Changelog](https://github.com/Matb85/modular-slider/blob/master/CHANGELOG.md)
+
+## [License](https://github.com/Matb85/modular-slider/blob/master/LICENSE.txt)
