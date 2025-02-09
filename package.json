@@ -19,6 +19,13 @@
   "files": [
     "dist/*"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/modular-slider.es.mjs",
+      "default": "./dist/modular-slider.es.mjs"
+    },
+    "./modular-slider.css": "./dist/modular-slider.css"
+  },
   "types": "dist/index.d.ts",
   "keywords": [
     "slider",
