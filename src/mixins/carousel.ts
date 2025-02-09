@@ -157,4 +157,3 @@ export default class Carousel extends SliderBase implements SliderI {
         });
     }
 }
-
