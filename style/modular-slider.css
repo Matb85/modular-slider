@@ -1,13 +1,16 @@
-@reference "~/tailwind.css";
-
 .MS-wrapper {
   overflow: hidden; /* hide the slides that should be out of view */
 }
 .MS-wrapper .MS-con {
   /* the position MUST be set to relative because some carousel transitions use the left css property */
-  @apply relative h-auto w-auto
-  flex flex-nowrap
-  list-none m-0 p-0;
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  list-style-type: none;
 }
 .MS-wrapper .MS-con > * {
   flex: 0 0 auto;
