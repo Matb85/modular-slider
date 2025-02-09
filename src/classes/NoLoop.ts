@@ -2,9 +2,7 @@ import { EVENTS, type SliderI } from "@/types";
 import { SliderBase } from "@/classes/SliderBase";
 
 export class NoLoop extends SliderBase implements SliderI {
-    protected init() {
-        return this.base(this.settings.initialSlide, 0);
-    }
+    protected init() {}
 
     public getCurrentSlide(): number {
         return this.counter * -1;
@@ -17,8 +15,8 @@ export class NoLoop extends SliderBase implements SliderI {
             this.isMoving = true;
             this.counter -= dist;
             if (this.counter > 0) this.counter = 0;
-            if (this.counter < -1 * (this.slides.length - this.slideDisplay))
-                this.counter = -1 * (this.slides.length - this.slideDisplay);
+            if (this.counter < -1 * (this.slides.length - this.slidesPerView))
+                this.counter = -1 * (this.slides.length - this.slidesPerView);
 
             this.setTransition(dur);
             this.transform(this.counter);
@@ -35,24 +33,24 @@ export class NoLoop extends SliderBase implements SliderI {
         });
     }
 
-    slideNext(dur = this.settings.transitionSpeed): Promise<void> {
+    public slideNext(dur = this.settings.transitionSpeed): Promise<void> {
         return this.base(Math.ceil((this.pos.start - this.getTransX()) / this.slideWidth) || 1, dur);
     }
 
-    slidePrev(dur = this.settings.transitionSpeed): Promise<void> {
+    public slidePrev(dur = this.settings.transitionSpeed): Promise<void> {
         return this.base(Math.floor((this.pos.start - this.getTransX()) / this.slideWidth) || -1, dur);
     }
 
-    slideTo(to = 0, dur?: number): Promise<void> {
+    public slideTo(to = 0, dur?: number): Promise<void> {
         return this.slideBy(to - Math.abs(this.counter), dur);
     }
 
-    slideBy(dist = 0, dur?: number): Promise<void> {
+    public slideBy(dist = 0, dur?: number): Promise<void> {
         if (dist === 0) return new Promise<void>(resolve => resolve());
         return this.base(dist, dur);
     }
 
-    goTo(dist = 0): Promise<void> {
+    public goTo(dist = 0): Promise<void> {
         return this.slideTo(dist, 0);
     }
 }

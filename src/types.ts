@@ -22,8 +22,7 @@ export interface SliderI {
     slides: HTMLCollectionOf<HTMLElement>;
     pos: { start: number; x1: number; x2: number; y1: number; y2: number };
     slideWidth: number;
-    slideDisplay: number;
-    counter: number;
+    slidesPerView: number;
     isMoving: boolean;
     plugins: Record<string, any>;
 
@@ -48,7 +47,7 @@ export interface SliderI {
 
     /** 2. transforming utilities*/
 
-    /** sets the container's X value to the length of one slide mulitplied by given number of slides
+    /** sets the container's X value to the length of one slide multiplied by given number of slides
      * mainly used for transforming to another slide
      * It ONLY changes the slider's translate X value
      * @param {number} dist  - the desired slide */
@@ -56,7 +55,7 @@ export interface SliderI {
     /** transforms the container to an absolute number of px
      * mainly used for handling touch/mouse events
      * It ONLY changes the slider's translate X value
-     * @param {number} dist the desired X value in px */
+     * @param {number} absoluteDist the desired X value in px */
     transformAbsolute(absoluteDist: number): void;
     /** sets the css transition timing with a given transition-duration
      * @param {number} dur css transition-duration in ms */
@@ -99,8 +98,8 @@ export const ONCE = { once: true };
 
 export enum EVENTS {
     TR_END = "MS-transitionend",
-    TR_START = "transitionstart",
+    TR_START = "transitionstart", // the native transitionstart event
     MV = "MS-moving",
-    DRAG_START = "MS-pointerdragstart",
-    DRAG_END = "MS-pointerdragend",
+    DRAG_START = "MS-pointer-drag-start",
+    DRAG_END = "MS-pointer-drag-end",
 }

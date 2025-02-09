@@ -12,7 +12,7 @@ export const pagination = (options: Options) =>
         const pagContainer = document.querySelector(options.container) as HTMLElement;
         const dots = [document.querySelector(options.container + " " + options.dots) as HTMLElement];
         dots[0].dataset.id = "0";
-        const dotsAmount = "updateDOM" in this ? this.slides.length : this.slides.length - this.slideDisplay + 1;
+        const dotsAmount = "updateDOM" in this ? this.slides.length : this.slides.length - this.slidesPerView + 1;
 
         /** clone the dot */
         for (let i = 1; i < dotsAmount; i++) {

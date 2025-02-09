@@ -5,18 +5,20 @@ import { defaults, ONCE } from "@/types";
  * the base class
  */
 export abstract class SliderBase implements SliderI {
-    carousel: boolean;
-    settings: Required<Defaults>;
-    container: HTMLElement;
-    slides: HTMLCollectionOf<HTMLElement>;
-    pos = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
-    slideWidth: number;
-    slideDisplay: number;
-    plugins: Record<string, any> = {};
-    destroyers: Record<string, () => void> = {};
-    counter = 0;
-    isMoving = false;
-    isDestroyed = false;
+    public carousel: boolean;
+    public settings: Required<Defaults>;
+    public container: HTMLElement;
+    public slides: HTMLCollectionOf<HTMLElement>;
+    public pos = { start: 0, x1: 0, x2: 0, y1: 0, y2: 0 };
+    public plugins: Record<string, any> = {};
+    public destroyers: Record<string, () => void> = {};
+    public isMoving = false;
+    public isDestroyed = false;
+
+    public slideWidth: number;
+    public slidesPerView: number;
+
+    protected counter = 0;
 
     public abstract slideNext(dur?: number): Promise<void>;
 
@@ -28,9 +30,9 @@ export abstract class SliderBase implements SliderI {
 
     public abstract slideTo(to?: number): Promise<void>;
 
-    protected abstract init(): void;
-
     public abstract getCurrentSlide(): number;
+
+    protected abstract init(): void;
 
     constructor(settings: Defaults) {
         this.settings = { ...defaults, ...settings } as Required<Defaults>;
@@ -38,10 +40,10 @@ export abstract class SliderBase implements SliderI {
         this.slides = this.container.children as HTMLCollectionOf<HTMLElement>;
         this.container.style.setProperty("--number-of-slides", this.slides.length.toString());
         this.slideWidth = this.calcSlideWidth();
-        this.slideDisplay = this.getSlidesPerView();
+        this.slidesPerView = this.getSlidesPerView();
         this.addDocListener("resize", () => {
             this.slideWidth = this.calcSlideWidth();
-            this.slideDisplay = this.getSlidesPerView();
+            this.slidesPerView = this.getSlidesPerView();
         });
 
         this.init();

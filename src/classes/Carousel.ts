@@ -8,13 +8,13 @@ export class Carousel extends SliderBase implements SliderI {
         else return this.slides.length - this.counter;
     }
 
-    private updateDOM(dist: number) {
+    private updateFactors(dist: number) {
         this.counter -= dist;
 
         /** prevent the counter from exceeding the number of slides */
         if (this.counter < -1 * this.slides.length + 1 || this.counter >= this.slides.length) {
             this.counter = 0;
-            this.transform(0);
+            this.transformAbsolute(0);
         }
         const c = Math.abs(this.counter);
         let shouldMove = true;
@@ -30,19 +30,19 @@ export class Carousel extends SliderBase implements SliderI {
             }
         }
     }
+
     /** essential logic & methods */
-    public async init() {
+    protected async init() {
         const moving = () => {
             /** run only if the translation of the container is:
-             *  bigger or equal to the width of one slide (including its left and right margin)
-             * uses an early return to avoid too much nested code*/
+             * bigger or equal to the width of one slide (including its left and right margin) */
             if (Math.abs(this.pos.start - this.getTransX()) / this.slideWidth < 1) return;
-            /** align the slides according to the direction */
 
+            /** align the slides according to the direction */
             if (this.pos.x1 > 0) {
-                this.updateDOM(1);
+                this.updateFactors(1);
             } else {
-                this.updateDOM(-1);
+                this.updateFactors(-1);
             }
             /** reset the "relative translation" so the condition at the beginning works correctly */
             this.pos.start = this.getTransX();
@@ -51,7 +51,7 @@ export class Carousel extends SliderBase implements SliderI {
 
         /** append or insertBefore a slide when swiping so the transition does not have any gaps */
         this.transform(0);
-        // await this.slideTo(this.settings.initialSlide);
+
         this.slides[this.slides.length - 1].style.setProperty("--translate-factor", "-1");
 
         /** return to the initial state when destroying */
@@ -70,7 +70,7 @@ export class Carousel extends SliderBase implements SliderI {
 
             setTimeout(() => {
                 this.clearTransition();
-                this.updateDOM(dist);
+                this.updateFactors(dist);
                 this.isMoving = false;
                 this.dispatchEvent(EVENTS.TR_END);
                 resolve();
@@ -123,18 +123,21 @@ export class Carousel extends SliderBase implements SliderI {
                 /** How long have we been animating in total? */
                 const runtime = timestamp - startTime;
                 /** How much has our animation progressed relative to our duration goal?
-                 * The result is a number (float) between 0 and 1. So 0 is zero percent en 1 is one hundred percent. */
-                const relativeProgress = this.slideWidth * dist * this.easeInOutQuad(runtime / dur);
-                this.transformAbsolute(this.getTransX() - relativeProgress + oldProgress);
-                oldProgress = relativeProgress;
+                 * The result is a number (float) between 0 and 1. So 0 is 0% and 1 is 100%. */
+                const progress = this.slideWidth * dist * this.easeInOutQuad(runtime / dur);
+                this.transformAbsolute(this.getTransX() - progress + oldProgress);
+                oldProgress = progress;
 
-                this.container.dispatchEvent(new CustomEvent(EVENTS.MV));
-                if (runtime < dur) window.requestAnimationFrame(animate);
+                this.dispatchEvent(EVENTS.MV);
+
+                if (Math.abs(progress - this.slideWidth * dist) > 1) window.requestAnimationFrame(animate);
                 else {
-                    this.updateDOM(dist > 0 ? 1 : -1);
+                    this.updateFactors(dist > 0 ? 1 : -1);
 
                     this.isMoving = false;
                     this.dispatchEvent(EVENTS.TR_END);
+
+                    //this.goTo(this.getCurrentSlide());
                     resolve();
                 }
             };
@@ -150,7 +153,7 @@ export class Carousel extends SliderBase implements SliderI {
 
             this.pos.start = this.getTransX();
             this.transform(-1 * to);
-            this.updateDOM(this.counter + to);
+            this.updateFactors(this.counter + to);
 
             this.dispatchEvent(EVENTS.TR_END);
             resolve();

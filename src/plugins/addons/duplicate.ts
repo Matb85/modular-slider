@@ -4,12 +4,12 @@ import type { SliderI } from "@/types";
 export const duplicate = () =>
     function (this: SliderI) {
         /** duplicate slides if there are less than this.slideDisplay + 2 */
-        if (this.slideDisplay + 2 > this.slides.length) {
+        if (this.slidesPerView + 2 > this.slides.length) {
             do {
                 for (let i = 0, sLength = this.slides.length; i < sLength; i++) {
                     this.container.appendChild(this.slides[i].cloneNode(true));
                 }
-            } while (this.slideDisplay + 2 > this.slides.length);
+            } while (this.slidesPerView + 2 > this.slides.length);
         }
 
         return null;
