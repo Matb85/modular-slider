@@ -18,9 +18,9 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "default": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "default": "./dist/index.mjs"
     },
     "./modular-slider.css": "./dist/modular-slider.css"
   },
