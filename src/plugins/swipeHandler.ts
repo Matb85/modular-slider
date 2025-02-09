@@ -1,6 +1,6 @@
 import { EVENTS, type SliderI } from "@/types";
 
-export const swipeHandler= () =>
+export const swipeHandler = () =>
     function (this: SliderI) {
         this.addTempConListener("pointerdown", "pointerdown", pEvent => pointerDown.call(this, pEvent as PointerEvent));
     };
