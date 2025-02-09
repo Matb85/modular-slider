@@ -8,25 +8,31 @@ export class Carousel extends SliderBase implements SliderI {
         else return this.slides.length - this.counter;
     }
 
+    private translateSlide(slideIndex: number, translateFactor: number) {
+        const x = this.slideWidth * this.slides.length * translateFactor;
+        this.slides[slideIndex].style.transform = `translate3d(${x}px, 0, 0)`;
+    }
+
     private updateFactors(dist: number) {
         this.counter -= dist;
 
         /** prevent the counter from exceeding the number of slides */
         if (this.counter < -1 * this.slides.length + 1 || this.counter >= this.slides.length) {
+            const fullWidth = this.slideWidth * this.slides.length;
+            this.transformAbsolute(this.counter > 0 ? this.getTransX() - fullWidth : this.getTransX() + fullWidth);
             this.counter = 0;
-            this.transformAbsolute(0);
         }
         const c = Math.abs(this.counter);
         let shouldMove = true;
         if (this.counter < 0) {
             for (let i = 0; i < this.slides.length; i++) {
                 if (i == c - 1) shouldMove = false;
-                this.slides[i].style.setProperty("--translate-factor", shouldMove ? "1" : "0");
+                this.translateSlide(i, shouldMove ? 1 : 0);
             }
         } else {
             for (let i = this.slides.length - 1; i >= 0; i--) {
                 if (i == this.slides.length - 2 - c) shouldMove = false;
-                this.slides[i].style.setProperty("--translate-factor", shouldMove ? "-1" : "0");
+                this.translateSlide(i, shouldMove ? -1 : 0);
             }
         }
     }
@@ -36,27 +42,21 @@ export class Carousel extends SliderBase implements SliderI {
         const moving = () => {
             /** run only if the translation of the container is:
              * bigger or equal to the width of one slide (including its left and right margin) */
-            if (Math.abs(this.pos.start - this.getTransX()) / this.slideWidth < 1) return;
-
+            if (Math.abs(this.pos.start - this.getTransX()) < this.slideWidth) return;
             /** align the slides according to the direction */
-            if (this.pos.x1 > 0) {
-                this.updateFactors(1);
-            } else {
-                this.updateFactors(-1);
-            }
+            this.updateFactors(this.pos.x1 > 0 ? 1 : -1);
             /** reset the "relative translation" so the condition at the beginning works correctly */
             this.pos.start = this.getTransX();
         };
         this.addConListener(EVENTS.MV, moving);
 
-        /** append or insertBefore a slide when swiping so the transition does not have any gaps */
         this.transform(0);
-
-        this.slides[this.slides.length - 1].style.setProperty("--translate-factor", "-1");
+        /** move the last slide to the left */
+        this.translateSlide(this.slides.length - 1, -1);
 
         /** return to the initial state when destroying */
         this.onDestroy(() => {
-            for (const slide of this.slides) slide.style.setProperty("--translate-factor", "0");
+            for (let i = 0; i < this.slides.length; i++) this.translateSlide(i, 0);
         });
     }
 
@@ -90,6 +90,8 @@ export class Carousel extends SliderBase implements SliderI {
         return this.slideBy(to - this.getCurrentSlide(), dur);
     }
 
+    /** How much has our animation progressed relative to our duration goal?
+     * The result is a number (float) between 0 and 1. So 0 is 0% and 1 is 100%. */
     private easeInOutQuad(x: number): number {
         return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
     }
@@ -122,8 +124,7 @@ export class Carousel extends SliderBase implements SliderI {
                 if (!startTime) startTime = timestamp;
                 /** How long have we been animating in total? */
                 const runtime = timestamp - startTime;
-                /** How much has our animation progressed relative to our duration goal?
-                 * The result is a number (float) between 0 and 1. So 0 is 0% and 1 is 100%. */
+
                 const progress = this.slideWidth * dist * this.easeInOutQuad(runtime / dur);
                 this.transformAbsolute(this.getTransX() - progress + oldProgress);
                 oldProgress = progress;
@@ -137,7 +138,6 @@ export class Carousel extends SliderBase implements SliderI {
                     this.isMoving = false;
                     this.dispatchEvent(EVENTS.TR_END);
 
-                    //this.goTo(this.getCurrentSlide());
                     resolve();
                 }
             };
@@ -149,7 +149,7 @@ export class Carousel extends SliderBase implements SliderI {
     goTo(to: number): Promise<void> {
         return new Promise(resolve => {
             /** an "early" return to avoid unnecessary burden if dist == 0 */
-            if (this.isMoving) return resolve();
+            if (this.isMoving || this.getCurrentSlide() === to) return resolve();
 
             this.pos.start = this.getTransX();
             this.transform(-1 * to);

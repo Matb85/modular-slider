@@ -47,13 +47,3 @@
 .MS-wrapper:not(.MS-fixed) .MS-con > * {
   width: calc((100%) / var(--number-of-slides) - 2 * var(--slide-margin, 0px));
 }
-
-/* necessary for the carousel mode to work, as it makes use of --translate-factor */
-.MS-wrapper .MS-con > * {
-  --translate-factor: 0;
-  transform: translate3d(
-    calc((100% + 2 * var(--slide-margin, 0px)) * var(--number-of-slides) * var(--translate-factor)),
-    0,
-    0
-  );
-}
