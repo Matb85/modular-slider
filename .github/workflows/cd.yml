@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   cd:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -13,23 +13,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v4
 
       - name: Setup node env
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 22
 
       - name: Enable Corepack
-        run: corepack enable && corepack prepare pnpm@8
-
-      - name: Cache pnpm modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-
+        run: corepack enable && corepack prepare pnpm@10
 
       - name: Install dependencies
         run: pnpm --version && pnpm install --frozen-lockfile
@@ -41,7 +33,7 @@ jobs:
         run: pnpm run build:docs
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs

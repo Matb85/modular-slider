@@ -46,11 +46,13 @@ First of all download the package:
 $ npm i modular-slider
 $ pnpm i modular-slider
 $ yarn add modular-slider
+$ bun install modular-slider
+$ deno install npm:modular-slider
 ```
 
 Once you've done that, take a look at an example setup:
 
-1. Add markup, that includes:
+1. Add markup:
 
 - outer **container** with **id** and **.MS-wrapper** class
 - inner **container** with **.MS-con** class 

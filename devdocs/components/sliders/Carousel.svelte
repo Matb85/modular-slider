@@ -30,8 +30,7 @@
 <script lang="ts">
 import SliderCode from "~/components/SliderCode.svelte";
 import { onMount, onDestroy } from "svelte";
-import { Carousel ,swipeHandler} from "@/index";
-
+import { Carousel, swipeHandler } from "@/index";
 
 const sliderItems = [0, 1, 2, 3, 4, 5, 6];
 let value = $state(2);
