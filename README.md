@@ -29,17 +29,14 @@ Base classes provide basic functionalities of the slider. Their names are **Pasc
 
 ### Plugins
 
-Plugins are functions that enrich your slider with non-critical features. Their names are all **lowercase**. Here are the currently available plugins:
+Plugins are functions that enrich your slider with non-critical features. Their names are all **camelCase**. Here are the currently available plugins:
 
 - swipeHandler - provides event handling - **compulsory if you want to drag the slider with mouse/touch**
 - buttons - adds next/previous slide buttons
 - pagination - adds pagination
 - autoplay - adds autoplay
-- lazyLoading - enables lazy loading images in the slider
-
-### The setup function
-
-the setup function is used to combine mixins - basically this is the function that puts it all together!
+- duplicate - useful for Carousels, makes sure that there are no fewer sliders than the set number of slides per view + 2 which is required for the loop
+- lazyLoading - enables lazy loading images in the slider, loads image's srcset when the slide is in view
 
 ## Usage
 

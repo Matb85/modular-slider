@@ -5,12 +5,12 @@ import { NoLoop } from "./classes/NoLoop";
 export { SliderBase, Carousel, NoLoop };
 
 /** export plugins */
-import buttons from "./plugins/controls/buttons";
-import pagination from "./plugins/controls/pagination";
-import autoplay from "./plugins/addons/autoplay";
-import duplicate from "./plugins/addons/duplicate";
-import lazyLoading from "./plugins/addons/lazyloading";
-import swipeHandler from "./plugins/swipeHandler";
+import { buttons } from "./plugins/controls/buttons";
+import { pagination } from "./plugins/controls/pagination";
+import { autoplay } from "./plugins/addons/autoplay";
+import { duplicate } from "./plugins/addons/duplicate";
+import { lazyLoading } from "./plugins/addons/lazyloading";
+import { swipeHandler } from "./plugins/swipeHandler";
 
 export { pagination, autoplay, buttons, lazyLoading, duplicate, swipeHandler };
 

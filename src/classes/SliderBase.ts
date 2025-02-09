@@ -1,4 +1,4 @@
-import type { Defaults, SliderI } from "@/types";
+import { type Defaults, EVENTS, type SliderI } from "@/types";
 import { defaults, ONCE } from "@/types";
 
 /**
@@ -48,6 +48,8 @@ export abstract class SliderBase implements SliderI {
 
         /** initiate plugins */
         for (const plugin of this.settings.plugins) this.plugins[plugin.name] = plugin.call(this);
+
+        this.goTo(this.settings.initialSlide);
     }
 
     /** 1. updating utilities */
@@ -92,6 +94,9 @@ export abstract class SliderBase implements SliderI {
     }
 
     /** 3.lifecycle helpers */
+    dispatchEvent(event: EVENTS): void {
+        this.container.dispatchEvent(new CustomEvent(event));
+    }
 
     addTempConListener(event: string, name: string, handler: EventListener): void {
         this.onDestroy(() => this.container.removeEventListener(event, handler), name);

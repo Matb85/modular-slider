@@ -6,8 +6,8 @@ interface Options {
     addClass: string[];
 }
 
-export default (options: Options) =>
-    function pagination(this: SliderI) {
+export const pagination = (options: Options) =>
+    function (this: SliderI) {
         /** get reference for the pagination container & duplicate dots */
         const pagContainer = document.querySelector(options.container) as HTMLElement;
         const dots = [document.querySelector(options.container + " " + options.dots) as HTMLElement];

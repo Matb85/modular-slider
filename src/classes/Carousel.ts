@@ -72,7 +72,7 @@ export class Carousel extends SliderBase implements SliderI {
                 this.clearTransition();
                 this.updateDOM(dist);
                 this.isMoving = false;
-                this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
+                this.dispatchEvent(EVENTS.TR_END);
                 resolve();
             }, dur);
         });
@@ -104,7 +104,7 @@ export class Carousel extends SliderBase implements SliderI {
         return new Promise(resolve => {
             /** an "early" return to avoid unnecessary burden if dist equals 0 or 1 */
             if (dist === 0 || this.isMoving) {
-                this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
+                this.dispatchEvent(EVENTS.TR_END);
                 return resolve();
             }
 
@@ -113,15 +113,15 @@ export class Carousel extends SliderBase implements SliderI {
             this.pos.x1 = dist;
             this.pos.start = this.getTransX();
             /** mock the "moving" event usually fired by the touchmove/mousemove handler */
-            let starttime: number;
+            let startTime: number;
             let oldProgress = 0;
             /** based on https://medium.com/burst/understanding-animation-with-duration-and-easing-using-requestanimationframe-7e3fd1688d6c
              * it is supposed to mock the touch/mouse move event
              */
             const animate = (timestamp: number) => {
-                if (!starttime) starttime = timestamp;
+                if (!startTime) startTime = timestamp;
                 /** How long have we been animating in total? */
-                const runtime = timestamp - starttime;
+                const runtime = timestamp - startTime;
                 /** How much has our animation progressed relative to our duration goal?
                  * The result is a number (float) between 0 and 1. So 0 is zero percent en 1 is one hundred percent. */
                 const relativeProgress = this.slideWidth * dist * this.easeInOutQuad(runtime / dur);
@@ -134,7 +134,7 @@ export class Carousel extends SliderBase implements SliderI {
                     this.updateDOM(dist > 0 ? 1 : -1);
 
                     this.isMoving = false;
-                    this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
+                    this.dispatchEvent(EVENTS.TR_END);
                     resolve();
                 }
             };
@@ -152,7 +152,7 @@ export class Carousel extends SliderBase implements SliderI {
             this.transform(-1 * to);
             this.updateDOM(this.counter + to);
 
-            this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
+            this.dispatchEvent(EVENTS.TR_END);
             resolve();
         });
     }

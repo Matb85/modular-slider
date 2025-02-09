@@ -1,7 +1,7 @@
 import type { SliderI } from "@/types";
 
-export default (interval = 5000) =>
-    function autoplay(this: SliderI) {
+export const autoplay = (interval = 5000) =>
+    function (this: SliderI) {
         /** setup */
         let isRunning = false;
         let autoplay: ReturnType<typeof setInterval>;

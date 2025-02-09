@@ -5,8 +5,8 @@ interface Options {
     prevBtn: string;
 }
 
-export default (options: Options) =>
-    function buttons(this: SliderI) {
+export const buttons = (options: Options) =>
+    function (this: SliderI) {
         const nextBtn = document.querySelector(options.nextBtn) as HTMLElement;
         const prevBtn = document.querySelector(options.prevBtn) as HTMLElement;
         nextBtn.onclick = btnAct.bind(this, 1);

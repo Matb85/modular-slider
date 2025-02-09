@@ -1,7 +1,10 @@
 import type { SliderI } from "@/types";
 
-export default (addClass = "loaded", options: IntersectionObserverInit = { rootMargin: "0px", threshold: 0.5 }) =>
-    function lazyloading(this: SliderI) {
+export const lazyLoading = (
+    addClass = "loaded",
+    options: IntersectionObserverInit = { rootMargin: "0px", threshold: 0.5 },
+) =>
+    function (this: SliderI) {
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.intersectionRatio <= 0) return;

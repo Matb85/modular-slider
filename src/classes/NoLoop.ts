@@ -26,7 +26,7 @@ export class NoLoop extends SliderBase implements SliderI {
                 this.clearTransition();
                 this.isMoving = false;
                 this.pos.start = this.getTransX();
-                this.container.dispatchEvent(new CustomEvent(EVENTS.TR_END));
+                this.dispatchEvent(EVENTS.TR_END);
                 resolve();
             };
 

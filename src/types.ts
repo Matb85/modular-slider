@@ -76,6 +76,8 @@ export interface SliderI {
 
     /** 3.lifecycle helpers */
 
+    /** dispatches an event on the slider's container */
+    dispatchEvent(event: EVENTS): void;
     /** registers a listener that fires only ONCE, used for transitions */
     addTempConListener(event: string, name: string, handler: EventListener): void;
     /** registers an event listener to the slider's container and removes it on the destroy hook */
