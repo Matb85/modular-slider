@@ -14,18 +14,21 @@
     "prepare": "husky",
     "prepublishOnly": "npm run build"
   },
-  "main": "dist/modular-slider.es.mjs",
-  "files": [
-    "dist/*"
-  ],
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/modular-slider.es.mjs",
-      "default": "./dist/modular-slider.es.mjs"
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     },
     "./modular-slider.css": "./dist/modular-slider.css"
   },
-  "types": "dist/index.d.ts",
+  "files": [
+    "dist/*",
+    "README.md",
+    "LICENSE.txt"
+  ],
   "keywords": [
     "slider",
     "carousel",

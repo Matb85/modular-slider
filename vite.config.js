@@ -35,7 +35,7 @@ export default defineConfig(({ command }) => {
         return {
             resolve: { dedupe, alias },
             build: {
-                lib: { entry, name, formats: ["es"], fileName: format => name + "." + format + ".mjs" },
+                lib: { entry, name, formats: ["es"], fileName: format => "index.mjs" },
                 outDir: "dist",
             },
             plugins: [dts({ tsconfigPath: "./tsconfig.build.json" })],
