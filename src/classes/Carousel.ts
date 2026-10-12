@@ -3,6 +3,10 @@ import { SliderBase } from "@/classes/SliderBase";
 
 /** utilities specific to this mixin */
 export class Carousel extends SliderBase implements SliderI {
+    /** the translate X value last applied to each slide, used for skipping the writes that change nothing
+     * assigned in init() - the base constructor calls it before the field initializers of this class would run */
+    declare private slideOffsets: number[];
+
     public getCurrentSlide(): number {
         if (this.counter <= 0) return this.counter * -1;
         else return this.slides.length - this.counter;
@@ -41,23 +45,30 @@ export class Carousel extends SliderBase implements SliderI {
             /** mock the "moving" event usually fired by the touchmove/mousemove handler */
             let startTime: number;
             let oldProgress = 0;
+            /** the number of slides that have been aligned on the way */
+            let steps = 0;
             /** based on https://medium.com/burst/understanding-animation-with-duration-and-easing-using-requestanimationframe-7e3fd1688d6c
              * it is supposed to mock the touch/mouse move event
              */
             const animate = (timestamp: number) => {
+                if (this.isDestroyed) return resolve();
                 if (!startTime) startTime = timestamp;
-                /** How long have we been animating in total? */
-                const runtime = timestamp - startTime;
+                /** How much has the animation progressed? From 0 to 1
+                 * it must not exceed 1 - the easing turns back there and the animation would never arrive */
+                const t = dur > 0 ? Math.min(1, (timestamp - startTime) / dur) : 1;
 
-                const progress = this.slideWidth * dist * this.easeInOutQuad(runtime / dur);
+                const progress = this.slideWidth * dist * this.easeInOutQuad(t);
                 this.transformAbsolute(this.getTransX() - progress + oldProgress);
                 oldProgress = progress;
 
+                steps += this.alignSlides();
                 this.dispatchEvent(EVENTS.MV);
 
-                if (Math.abs(progress - this.slideWidth * dist) > 1) window.requestAnimationFrame(animate);
+                if (t < 1) window.requestAnimationFrame(animate);
                 else {
-                    this.updateSlides(dist > 0 ? 1 : -1);
+                    /** align the slides that are left & land exactly on the desired slide */
+                    for (; steps < Math.abs(dist); steps++) this.updateSlides(dist > 0 ? 1 : -1);
+                    this.transform(this.counter);
 
                     this.isMoving = false;
                     this.dispatchEvent(EVENTS.TR_END);
@@ -86,16 +97,9 @@ export class Carousel extends SliderBase implements SliderI {
 
     /** essential logic & methods */
     protected async init() {
-        const moving = () => {
-            /** run only if the translation of the container is:
-             * bigger or equal to the width of one slide (including its left and right margin) */
-            if (Math.abs(this.pos.start - this.getTransX()) < this.slideWidth) return;
-            /** align the slides according to the direction */
-            this.updateSlides(this.pos.x1 > 0 ? 1 : -1);
-            /** reset the "relative translation" so the condition at the beginning works correctly */
-            this.pos.start = this.getTransX();
-        };
-        this.addConListener(EVENTS.MV, moving);
+        this.carousel = true;
+        this.slideOffsets = [];
+        this.addConListener(EVENTS.MV, () => this.alignSlides());
 
         this.transform(0);
         /** move the last slide to the left */
@@ -107,6 +111,25 @@ export class Carousel extends SliderBase implements SliderI {
         });
     }
 
+    protected realign() {
+        this.transform(this.counter);
+        this.updateSlides(0);
+        this.pos.start = this.getTransX();
+    }
+
+    /** aligns the slides while the container is being moved by a pointer or an animation
+     * @returns the number of slides the slider has been aligned by */
+    private alignSlides(): number {
+        let steps = 0;
+        while (this.slideWidth > 0 && Math.abs(this.pos.start - this.getTransX()) >= this.slideWidth) {
+            this.updateSlides(this.pos.start > this.getTransX() ? 1 : -1);
+            /** continue from the slide that has just been aligned, what is left of the translation is kept */
+            this.pos.start = this.slideWidth * this.counter;
+            steps++;
+        }
+        return steps;
+    }
+
     /** How much has our animation progressed relative to our duration goal?
      * The result is a number (float) between 0 and 1. So 0 is 0% and 1 is 100%. */
     private easeInOutQuad(x: number): number {
@@ -115,6 +138,8 @@ export class Carousel extends SliderBase implements SliderI {
 
     private translateSlide(slideIndex: number, translateFactor: number) {
         const x = this.slideWidth * this.slides.length * translateFactor;
+        if (this.slideOffsets[slideIndex] === x) return;
+        this.slideOffsets[slideIndex] = x;
         this.slides[slideIndex].style.transform = `translate3d(${x}px, 0, 0)`;
     }
 
@@ -151,6 +176,7 @@ export class Carousel extends SliderBase implements SliderI {
             this.transform(this.counter - dist);
 
             setTimeout(() => {
+                if (this.isDestroyed) return resolve();
                 this.clearTransition();
                 this.updateSlides(dist);
                 this.isMoving = false;

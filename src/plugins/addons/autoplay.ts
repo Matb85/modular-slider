@@ -1,43 +1,58 @@
-import type { SliderI } from "@/types";
+import { namedPlugin, type SliderI } from "@/types";
 
 export const autoplay = (interval = 5000) =>
-    function (this: SliderI) {
+    namedPlugin("autoplay", function (this: SliderI) {
         /** setup */
         let isRunning = false;
+        let isVisible = false;
+        /** set by pause() - only resume() may start the slider again, coming back into view may not */
+        let isPaused = false;
         let autoplay: ReturnType<typeof setInterval>;
+        const start = () => {
+            if (isRunning || isPaused || !isVisible || document.hidden) return;
+            autoplay = setInterval(async () => await this.slideNext(), interval);
+            isRunning = true;
+        };
+        const stop = () => {
+            clearInterval(autoplay);
+            isRunning = false;
+        };
         /** the api */
         const controls = {
             pause: () => {
-                clearInterval(autoplay);
-                isRunning = false;
+                isPaused = true;
+                stop();
             },
             resume: () => {
-                if (isRunning) return;
-                autoplay = setInterval(async () => await this.slideNext(), interval);
-                isRunning = true;
+                isPaused = false;
+                start();
             },
         };
-        /** start when the slider is visible */
         const observer = new IntersectionObserver(
             entries => {
-                const entry = entries[0];
-                if (!entry.isIntersecting) return;
-                controls.resume();
-                observer.unobserve(this.container);
+                isVisible = entries[entries.length - 1].isIntersecting;
+                if (isVisible) start();
+                else stop();
             },
             { threshold: 0.1 },
         );
 
-        observer.observe(this.container);
+        /** observe the wrapper - only a part of the container is ever in view */
+        observer.observe(this.container.parentElement || this.container);
 
         /** pause autoplay when the page is hidden */
         this.addDocListener("visibilitychange", function () {
             if (document.hidden) {
-                controls.pause();
+                stop();
             } else {
-                controls.resume();
+                start();
             }
         });
 
+        this.onDestroy(() => {
+            stop();
+            observer.disconnect();
+        });
+
         return controls;
-    };
+    });

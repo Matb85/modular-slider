@@ -16,7 +16,7 @@ export type Defaults = RequiredBy<typeof defaults, "container">;
  * the interface for the base
  */
 export interface SliderI {
-    carousel?: any;
+    carousel: boolean;
     counter: number;
     settings: Required<Defaults>;
     container: HTMLElement;
@@ -30,6 +30,7 @@ export interface SliderI {
     /** 1. updating utilities */
 
     /** checks the slider's translate X value
+     * the value is kept in JS, during a transition it is the value the slider is heading to
      * @returns {number} the slider's translate X value in px */
     getTransX(): number;
     /** checks the width of each slide (each slide is assumed to have the same width)
@@ -45,6 +46,9 @@ export interface SliderI {
      * @returns {number} from 0 to numberOfSlides - 1
      */
     getCurrentSlide(): number;
+    /** measures the slider again and realigns it if its dimensions have changed
+     * called automatically when the slider is resized */
+    refresh(): void;
 
     /** 2. transforming utilities*/
 
@@ -82,7 +86,7 @@ export interface SliderI {
     addTempConListener(event: string, name: string, handler: EventListener): void;
     /** registers an event listener to the slider's container and removes it on the destroy hook */
     addConListener(event: string, handler: EventListener): void;
-    /** registers an event listener to the window and removes it on the destroy hook */
+    /** registers an event listener to the document and removes it on the destroy hook */
     addDocListener(event: string, handler: EventListener): void;
     /** register an event listener called on the destroy hook */
     onDestroy(handler: () => void, handlerId?: string): string;
@@ -97,10 +101,16 @@ export interface SliderI {
 
 export const ONCE = { once: true };
 
+/** gives a plugin the name its return value is kept under in the slider's plugins
+ * the name of the function itself can't be relied on - minifiers change or drop it */
+export const namedPlugin = <T extends (this: SliderI) => unknown>(name: string, plugin: T): T =>
+    Object.defineProperty(plugin, "name", { value: name });
+
 export enum EVENTS {
     TR_END = "MS-transitionend",
     TR_START = "transitionstart", // the native transitionstart event
     MV = "MS-moving",
     DRAG_START = "MS-pointer-drag-start",
     DRAG_END = "MS-pointer-drag-end",
+    RESIZE = "MS-resize", // the slider has been realigned to its new dimensions
 }

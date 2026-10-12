@@ -1,10 +1,10 @@
-import type { SliderI } from "@/types";
+import { namedPlugin, type SliderI } from "@/types";
 
 export const lazyLoading = (
     addClass = "loaded",
     options: IntersectionObserverInit = { rootMargin: "0px", threshold: 0.5 },
 ) =>
-    function (this: SliderI) {
+    namedPlugin("lazyLoading", function (this: SliderI) {
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.intersectionRatio <= 0) return;
@@ -16,4 +16,6 @@ export const lazyLoading = (
             });
         }, options);
         this.container.querySelectorAll(".MS-lazy").forEach(img => observer.observe(img));
-    };
+
+        this.onDestroy(() => observer.disconnect());
+    });

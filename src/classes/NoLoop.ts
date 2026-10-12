@@ -27,7 +27,23 @@ export class NoLoop extends SliderBase implements SliderI {
         return this.slideTo(dist, 0);
     }
 
-    protected init() {}
+    protected init() {
+        this.carousel = false;
+        this.transform(0);
+    }
+
+    protected realign() {
+        /** the last reachable slide depends on the number of slides per view */
+        this.clampCounter();
+        this.transform(this.counter);
+        this.pos.start = this.getTransX();
+    }
+
+    private clampCounter() {
+        const min = -1 * Math.max(0, this.slides.length - this.slidesPerView);
+        if (this.counter > 0) this.counter = 0;
+        if (this.counter < min) this.counter = min;
+    }
 
     private base(dist: number, dur = this.settings.transitionSpeed): Promise<void> {
         return new Promise(resolve => {
@@ -35,13 +51,12 @@ export class NoLoop extends SliderBase implements SliderI {
 
             this.isMoving = true;
             this.counter -= dist;
-            if (this.counter > 0) this.counter = 0;
-            if (this.counter < -1 * (this.slides.length - this.slidesPerView))
-                this.counter = -1 * (this.slides.length - this.slidesPerView);
+            this.clampCounter();
 
             this.setTransition(dur);
             this.transform(this.counter);
             const callback = () => {
+                if (this.isDestroyed) return resolve();
                 this.clearTransition();
                 this.isMoving = false;
                 this.pos.start = this.getTransX();
